@@ -4,28 +4,68 @@
 
 ### Overview
 
-The data processing pipeline converts raw estuary data into a web-ready GeoJSON format suitable for Leaflet.js visualization.
+The data processing pipeline reads real estuary data from open-access scientific datasets and converts them into web-ready GeoJSON format suitable for Leaflet.js visualization.
+
+### Data Sources
+
+1. **Dürr et al. (2011)** - Worldwide typology shapefiles (~6,200 estuary catchments)
+   - File: `data/Worldwide-typology-Shapefile-Durr_2011/typology_catchments.shp`
+   - Provides: Estuary typology, basin areas, ocean/sea names, geographical boundaries
+
+2. **Baum et al. (2024)** - Large estuary morphometry CSV (271 embayments)
+   - File: `data/Large-estuaries-Baum_2024/Baum_2024_Geomorphology.csv`
+   - Provides: Mouth width, embayment length, geomorphotype classification
+
+3. **Athanasiou et al. (2024)** - Global Coastal Characteristics (optional, not included)
+   - File: `data/GCC-Panagiotis-Athanasiou_2024/GCC_geophysical.csv` (>200MB)
+   - Provides: Land use, slope, elevation, mangrove coverage at 1km resolution
+   - Download from: https://zenodo.org/records/11072020
 
 ### Process Flow
 
-1. **Data Collection**: Gather estuary data from scientific sources
-2. **Classification**: Assign geomorphological types based on published criteria
-3. **Validation**: Verify coordinates, attributes, and data completeness
-4. **GeoJSON Generation**: Convert to standardized GeoJSON format
-5. **Output**: Save to `data/estuaries.geojson`
+1. **Data Loading**: Read Dürr et al. (2011) shapefile with GeoPandas
+2. **Filtering**: Select valid estuaries (exclude endorheic, glaciated, arheic systems)
+3. **Sampling**: Choose representative estuaries for visualization (prioritize larger basins)
+4. **Enrichment**: Match with Baum et al. (2024) morphometry where available
+5. **Geometry Extraction**: Convert polygons to point centroids for web mapping
+6. **Metadata Addition**: Add provenance fields (data sources, DOIs)
+7. **GeoJSON Generation**: Write to `data/estuaries.geojson`
+8. **Validation**: Verify structure and attribute completeness
 
 ### Python Script Details
 
 **File**: `scripts/process_estuary_data.py`
 
-**Functions**:
-- `create_sample_estuary_data()`: Creates the estuary dataset with classifications
-- `main()`: Orchestrates data processing and file output
+**Dependencies**:
+```bash
+pip install geopandas pandas pyproj
+```
 
-**Data Structure**:
+**Functions**:
+- `load_durr_data(shapefile_path)`: Loads and filters Dürr et al. (2011) shapefile
+- `load_baum_data(csv_path)`: Loads Baum et al. (2024) CSV
+- `create_estuary_features(durr_gdf, baum_df)`: Creates GeoJSON features with enrichment
+- `main()`: Orchestrates the complete data processing pipeline
+
+**Type Mapping** (from Dürr FIN_TYP codes):
+- Type 1: Small Delta
+- Type 2: Tidal System
+- Type 3: Lagoon
+- Type 4: Fjord/Fjaerd
+- Type 5: Large River
+- Type 51: Large River with Tidal Delta
+- Type 6: Karst
+
+**Output Data Structure**:
 ```python
 {
     "type": "FeatureCollection",
+    "metadata": {
+        "data_sources": [...],
+        "note": "Laruelle et al. (2025) used only for validation...",
+        "gcc_note": "GCC data can be added by downloading...",
+        "generated_date": "ISO timestamp"
+    },
     "features": [
         {
             "type": "Feature",
@@ -35,12 +75,19 @@ The data processing pipeline converts raw estuary data into a web-ready GeoJSON 
             },
             "properties": {
                 "name": "Estuary Name",
-                "type": "Geomorphological Type",
-                "country": "Country Name",
-                "description": "Scientific description",
-                "area_km2": 1000,
-                "depth_m": 50,
-                "river": "River Name"
+                "type": "Geomorphological Type (e.g., Small Delta (Type I))",
+                "type_code": 1,
+                "basin_area_km2": 1000.5,
+                "sea_name": "Ocean/Sea Name",
+                "ocean_name": "Ocean Name",
+                "data_source": "Dürr et al. (2011)",
+                "data_source_doi": "10.1007/s12237-011-9381-y",
+                # Optional Baum enrichment fields:
+                "baum_embayment_name": "...",
+                "baum_mouth_width_m": 5000,
+                "baum_length_m": 8000,
+                "baum_geomorphotype": "...",
+                "baum_data_source": "Baum et al. (2024)"
             }
         }
     ]

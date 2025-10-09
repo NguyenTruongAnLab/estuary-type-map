@@ -1,447 +1,256 @@
 #!/usr/bin/env python3
 """
-Process estuary data and classify by geomorphological shape types.
-Data source: Laruelle et al. (2024, Estuaries and Coasts)
+Process estuary data from open-access scientific datasets.
 
-This script processes global estuary datasets and generates a GeoJSON file
+Data sources:
+- Dürr et al. (2011): Worldwide typology of nearshore coastal systems
+  DOI: 10.1007/s12237-011-9381-y
+- Baum et al. (2024): Large structural estuaries (supplementary data)
+- Athanasiou et al. (2024): Global Coastal Characteristics (GCC) - optional enrichment
+  DOI: 10.5281/zenodo.8200199
+
+This script processes real estuary datasets and generates a GeoJSON file
 with estuary locations and their classifications.
+
+Note: Laruelle et al. (2025) is used only for validation and global area
+statistics. No shape, polygon, or direct attribute data is used from that study.
 """
 
 import json
 import sys
+import os
+from pathlib import Path
 
-def create_sample_estuary_data():
+try:
+    import geopandas as gpd
+    import pandas as pd
+except ImportError as e:
+    print(f"Error: Required packages not installed: {e}", file=sys.stderr)
+    print("Please install: pip install geopandas pandas pyproj", file=sys.stderr)
+    sys.exit(1)
+
+
+# Type mapping from Dürr et al. (2011) FIN_TYP codes to descriptive names
+DURR_TYPE_MAP = {
+    -9999: "Unknown",
+    0: "Endorheic/Glaciated",
+    1: "Small Delta (Type I)",
+    2: "Tidal System (Type II)",
+    3: "Lagoon (Type III)",
+    4: "Fjord/Fjaerd (Type IV)",
+    5: "Large River (Type Va)",
+    51: "Large River with Tidal Delta (Type Vb)",
+    6: "Karst (Type VI)",
+    7: "Arheic (Type VII)"
+}
+
+# Simplified type mapping for web display (matches frontend filters)
+SIMPLE_TYPE_MAP = {
+    1: "Delta",
+    2: "Coastal Plain",  # Tidal systems are often coastal plain
+    3: "Lagoon",
+    4: "Fjord",
+    5: "Delta",  # Large rivers with deltas
+    51: "Delta",  # Large rivers with tidal deltas
+    6: "Coastal Plain",  # Karst systems
+    7: "Coastal Plain"
+}
+
+
+def load_durr_data(shapefile_path):
     """
-    Creates sample estuary data classified by geomorphological types.
+    Load estuary data from Dürr et al. (2011) shapefile.
     
-    In a production environment, this would fetch and process actual data from:
-    Laruelle, G.G., et al. (2024). A global classification of estuaries based on 
-    their geomorphological characteristics. Estuaries and Coasts.
+    Args:
+        shapefile_path: Path to the typology_catchments.shp file
     
-    Types based on geomorphological classification:
-    - Delta: River-dominated, sediment-rich formations
-    - Fjord: Glacially carved, deep narrow inlets
-    - Lagoon: Coastal water bodies separated by barrier islands
-    - Ria: Drowned river valley
-    - Coastal Plain: Wide, shallow estuaries on flat coastal areas
-    - Bar-Built: Formed behind barrier islands or spits
-    - Tectonic: Formed by geological faulting or subsidence
+    Returns:
+        GeoDataFrame with estuary catchment data
     """
+    print(f"Loading Dürr et al. (2011) shapefile: {shapefile_path}")
+    gdf = gpd.read_file(shapefile_path)
     
-    estuaries = {
-        "type": "FeatureCollection",
-        "features": [
-            # Deltas
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [90.3563, 22.5726]},
-                "properties": {
-                    "name": "Ganges-Brahmaputra Delta",
-                    "type": "Delta",
-                    "country": "Bangladesh/India",
-                    "description": "World's largest river delta, highly sediment-laden",
-                    "area_km2": 105000,
-                    "river": "Ganges, Brahmaputra"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [29.7167, 45.2167]},
-                "properties": {
-                    "name": "Danube Delta",
-                    "type": "Delta",
-                    "country": "Romania/Ukraine",
-                    "description": "Major European delta with extensive wetlands",
-                    "area_km2": 5800,
-                    "river": "Danube"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [31.1656, 30.4167]},
-                "properties": {
-                    "name": "Nile Delta",
-                    "type": "Delta",
-                    "country": "Egypt",
-                    "description": "Historic delta, one of the world's most productive agricultural regions",
-                    "area_km2": 24000,
-                    "river": "Nile"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-91.1767, 29.1550]},
-                "properties": {
-                    "name": "Mississippi Delta",
-                    "type": "Delta",
-                    "country": "USA",
-                    "description": "Bird's-foot delta, heavily engineered system",
-                    "area_km2": 12000,
-                    "river": "Mississippi"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [106.7000, 10.5000]},
-                "properties": {
-                    "name": "Mekong Delta",
-                    "type": "Delta",
-                    "country": "Vietnam",
-                    "description": "Rice bowl of Vietnam, extensive distributary network",
-                    "area_km2": 40000,
-                    "river": "Mekong"
-                }
-            },
-            
-            # Fjords
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [7.0667, 60.8667]},
-                "properties": {
-                    "name": "Sognefjord",
-                    "type": "Fjord",
-                    "country": "Norway",
-                    "description": "Longest and deepest fjord in Norway, glacially carved",
-                    "area_km2": 350,
-                    "depth_m": 1308
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [8.5000, 61.6000]},
-                "properties": {
-                    "name": "Geirangerfjord",
-                    "type": "Fjord",
-                    "country": "Norway",
-                    "description": "UNESCO World Heritage Site, steep mountains and waterfalls",
-                    "area_km2": 15,
-                    "depth_m": 260
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-72.9167, -45.4500]},
-                "properties": {
-                    "name": "Baker Channel",
-                    "type": "Fjord",
-                    "country": "Chile",
-                    "description": "Part of Chilean fjord system, pristine glacial estuary",
-                    "area_km2": 280,
-                    "depth_m": 450
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [166.5500, -45.3833]},
-                "properties": {
-                    "name": "Milford Sound",
-                    "type": "Fjord",
-                    "country": "New Zealand",
-                    "description": "Fiordland fjord, surrounded by peaks and rainforest",
-                    "area_km2": 16,
-                    "depth_m": 290
-                }
-            },
-            
-            # Lagoons
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [12.3500, 45.4333]},
-                "properties": {
-                    "name": "Venetian Lagoon",
-                    "type": "Lagoon",
-                    "country": "Italy",
-                    "description": "Large shallow lagoon, separated from Adriatic by barrier islands",
-                    "area_km2": 550,
-                    "depth_m": 2
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-80.8500, 35.2333]},
-                "properties": {
-                    "name": "Pamlico Sound",
-                    "type": "Lagoon",
-                    "country": "USA",
-                    "description": "Largest lagoon along US Atlantic coast, protected by Outer Banks",
-                    "area_km2": 5180,
-                    "depth_m": 6
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-97.3000, 27.8000]},
-                "properties": {
-                    "name": "Laguna Madre",
-                    "type": "Lagoon",
-                    "country": "USA/Mexico",
-                    "description": "Hypersaline lagoon system, important seagrass habitat",
-                    "area_km2": 2000,
-                    "depth_m": 1
-                }
-            },
-            
-            # Rias
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-8.7833, 42.5833]},
-                "properties": {
-                    "name": "Ria de Vigo",
-                    "type": "Ria",
-                    "country": "Spain",
-                    "description": "Drowned river valley, major fishing and aquaculture area",
-                    "area_km2": 176,
-                    "depth_m": 60
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-9.0000, 42.3333]},
-                "properties": {
-                    "name": "Ria de Arousa",
-                    "type": "Ria",
-                    "country": "Spain",
-                    "description": "Largest of the Galician rias, extensive mussel farming",
-                    "area_km2": 230,
-                    "depth_m": 67
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-4.1667, 50.2500]},
-                "properties": {
-                    "name": "Plymouth Sound",
-                    "type": "Ria",
-                    "country": "UK",
-                    "description": "Natural harbor formed by drowned river valleys",
-                    "area_km2": 9,
-                    "depth_m": 15
-                }
-            },
-            
-            # Coastal Plain Estuaries
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-76.5000, 37.0000]},
-                "properties": {
-                    "name": "Chesapeake Bay",
-                    "type": "Coastal Plain",
-                    "country": "USA",
-                    "description": "Largest estuary in USA, drowned river valley in coastal plain",
-                    "area_km2": 11600,
-                    "depth_m": 21
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [0.8833, 51.4833]},
-                "properties": {
-                    "name": "Thames Estuary",
-                    "type": "Coastal Plain",
-                    "country": "UK",
-                    "description": "Major shipping route, wide funnel-shaped estuary",
-                    "area_km2": 285,
-                    "depth_m": 10
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [151.2500, -33.8500]},
-                "properties": {
-                    "name": "Sydney Harbour",
-                    "type": "Ria",
-                    "country": "Australia",
-                    "description": "Drowned river valley, deep water harbor",
-                    "area_km2": 55,
-                    "depth_m": 45
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-122.4167, 37.8000]},
-                "properties": {
-                    "name": "San Francisco Bay",
-                    "type": "Tectonic",
-                    "country": "USA",
-                    "description": "Tectonic estuary formed by faulting, highly productive",
-                    "area_km2": 4160,
-                    "depth_m": 12
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-3.0000, 51.3667]},
-                "properties": {
-                    "name": "Severn Estuary",
-                    "type": "Coastal Plain",
-                    "country": "UK",
-                    "description": "Funnel-shaped estuary with second highest tidal range in world",
-                    "area_km2": 557,
-                    "depth_m": 15
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [114.1833, 22.2833]},
-                "properties": {
-                    "name": "Pearl River Estuary",
-                    "type": "Delta",
-                    "country": "China",
-                    "description": "Highly urbanized delta system, major shipping hub",
-                    "area_km2": 2700,
-                    "river": "Pearl River"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [121.8667, 31.2333]},
-                "properties": {
-                    "name": "Yangtze Estuary",
-                    "type": "Delta",
-                    "country": "China",
-                    "description": "One of world's largest river estuaries by discharge",
-                    "area_km2": 6600,
-                    "river": "Yangtze"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [103.8333, 1.2667]},
-                "properties": {
-                    "name": "Singapore Strait",
-                    "type": "Bar-Built",
-                    "country": "Singapore/Malaysia/Indonesia",
-                    "description": "Major shipping route, bar-built estuary system",
-                    "area_km2": 1030,
-                    "depth_m": 23
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [138.5833, -34.9167]},
-                "properties": {
-                    "name": "Murray Mouth",
-                    "type": "Bar-Built",
-                    "country": "Australia",
-                    "description": "Bar-built estuary, mouth of Murray-Darling system",
-                    "area_km2": 200,
-                    "river": "Murray"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [18.4333, -33.9167]},
-                "properties": {
-                    "name": "Table Bay",
-                    "type": "Coastal Plain",
-                    "country": "South Africa",
-                    "description": "Natural harbor, open coastal embayment",
-                    "area_km2": 88,
-                    "depth_m": 20
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-43.1833, -22.9167]},
-                "properties": {
-                    "name": "Guanabara Bay",
-                    "type": "Ria",
-                    "country": "Brazil",
-                    "description": "Drowned river valley, major urban harbor",
-                    "area_km2": 412,
-                    "depth_m": 30
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-57.9500, -34.8667]},
-                "properties": {
-                    "name": "Rio de la Plata",
-                    "type": "Coastal Plain",
-                    "country": "Argentina/Uruguay",
-                    "description": "Widest estuary in the world, funnel-shaped",
-                    "area_km2": 35000,
-                    "depth_m": 5
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [139.7500, 35.6833]},
-                "properties": {
-                    "name": "Tokyo Bay",
-                    "type": "Coastal Plain",
-                    "country": "Japan",
-                    "description": "Highly urbanized bay estuary, major port system",
-                    "area_km2": 922,
-                    "depth_m": 40
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [4.4167, 51.9167]},
-                "properties": {
-                    "name": "Rhine-Meuse-Scheldt Delta",
-                    "type": "Delta",
-                    "country": "Netherlands",
-                    "description": "Complex delta system, highly engineered",
-                    "area_km2": 4000,
-                    "river": "Rhine, Meuse, Scheldt"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [-6.2000, 53.3500]},
-                "properties": {
-                    "name": "Dublin Bay",
-                    "type": "Coastal Plain",
-                    "country": "Ireland",
-                    "description": "Shallow coastal embayment with extensive intertidal areas",
-                    "area_km2": 125,
-                    "depth_m": 10
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {"type": "Point", "coordinates": [144.9500, -37.8333]},
-                "properties": {
-                    "name": "Port Phillip Bay",
-                    "type": "Ria",
-                    "country": "Australia",
-                    "description": "Large bay with narrow entrance, drowned valley",
-                    "area_km2": 1930,
-                    "depth_m": 24
-                }
-            }
-        ]
-    }
+    # Filter to meaningful estuaries (exclude endorheic, glaciated, arheic, unknown)
+    # Focus on types 1-6, 51 (actual coastal systems)
+    valid_types = [1, 2, 3, 4, 5, 6, 51]
+    gdf = gdf[gdf['FIN_TYP'].isin(valid_types)].copy()
     
-    return estuaries
+    # Filter to named basins with reasonable area
+    gdf = gdf[
+        (gdf['RECORDNAME'].notna()) & 
+        (gdf['RECORDNAME'] != 'None') &
+        (gdf['BASINAREA'] > 100)  # Filter small unnamed catchments
+    ].copy()
+    
+    print(f"Found {len(gdf)} valid estuary catchments")
+    return gdf
+
+
+def load_baum_data(csv_path):
+    """
+    Load large estuary data from Baum et al. (2024).
+    
+    Args:
+        csv_path: Path to the Baum_2024_Geomorphology.csv file
+    
+    Returns:
+        DataFrame with large estuary morphometry data
+    """
+    print(f"Loading Baum et al. (2024) CSV: {csv_path}")
+    df = pd.read_csv(csv_path)
+    print(f"Found {len(df)} large structural estuaries")
+    return df
+
+
+def create_estuary_features(durr_gdf, baum_df=None):
+    """
+    Create GeoJSON features from Dürr data, enriched with Baum data where available.
+    
+    Args:
+        durr_gdf: GeoDataFrame from Dürr et al. (2011)
+        baum_df: Optional DataFrame from Baum et al. (2024)
+    
+    Returns:
+        List of GeoJSON features
+    """
+    features = []
+    
+    # Group by basin and aggregate
+    for idx, row in durr_gdf.iterrows():
+        # Get centroid for point representation
+        centroid = row.geometry.centroid
+        
+        # Extract properties
+        properties = {
+            "name": row['RECORDNAME'],
+            "type": SIMPLE_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),  # Simple type for frontend
+            "type_detailed": DURR_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),  # Detailed type
+            "type_code": int(row['FIN_TYP']),
+            "basin_area_km2": round(row['BASINAREA'], 2) if pd.notna(row['BASINAREA']) else None,
+            "sea_name": row['SEANAME'] if pd.notna(row['SEANAME']) else None,
+            "ocean_name": row['OCEANNAME'] if pd.notna(row['OCEANNAME']) else None,
+            "data_source": "Dürr et al. (2011)",
+            "data_source_doi": "10.1007/s12237-011-9381-y"
+        }
+        
+        # Try to match with Baum data if available
+        if baum_df is not None:
+            # Simple name matching (could be improved with fuzzy matching)
+            baum_match = baum_df[
+                baum_df['Embayment'].str.lower().str.contains(
+                    row['RECORDNAME'].lower(), na=False
+                )
+            ]
+            if len(baum_match) > 0:
+                baum_row = baum_match.iloc[0]
+                properties.update({
+                    "baum_embayment_name": baum_row['Embayment'],
+                    "baum_mouth_width_m": baum_row['Lm'],
+                    "baum_length_m": baum_row['Lb'],
+                    "baum_geomorphotype": baum_row['Geomorphotype'],
+                    "baum_data_source": "Baum et al. (2024)"
+                })
+        
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [round(centroid.x, 4), round(centroid.y, 4)]
+            },
+            "properties": properties
+        }
+        
+        features.append(feature)
+    
+    return features
 
 def main():
     """Main function to process estuary data and generate GeoJSON output."""
-    print("Processing estuary data...")
+    print("=" * 60)
+    print("Processing Real Estuary Data")
+    print("=" * 60)
     
-    # Create sample data (in production, would fetch from actual sources)
-    estuary_data = create_sample_estuary_data()
+    # Determine base path
+    script_dir = Path(__file__).parent
+    base_dir = script_dir.parent
+    data_dir = base_dir / 'data'
+    
+    # Load Dürr et al. (2011) shapefile
+    durr_shapefile = data_dir / 'Worldwide-typology-Shapefile-Durr_2011' / 'typology_catchments.shp'
+    if not durr_shapefile.exists():
+        print(f"Error: Dürr shapefile not found at {durr_shapefile}", file=sys.stderr)
+        sys.exit(1)
+    
+    durr_gdf = load_durr_data(str(durr_shapefile))
+    
+    # Load Baum et al. (2024) CSV (optional)
+    baum_csv = data_dir / 'Large-estuaries-Baum_2024' / 'Baum_2024_Geomorphology.csv'
+    baum_df = None
+    if baum_csv.exists():
+        baum_df = load_baum_data(str(baum_csv))
+    else:
+        print(f"Warning: Baum CSV not found at {baum_csv}, skipping enrichment")
+    
+    # Sample a reasonable number of estuaries for the map
+    # (Too many points would clutter the visualization)
+    print("\nSelecting representative estuaries...")
+    
+    # Prioritize larger basins and diverse types
+    durr_sample = durr_gdf.sort_values('BASINAREA', ascending=False).head(100)
+    
+    print(f"Selected {len(durr_sample)} estuaries for visualization")
+    
+    # Create GeoJSON features
+    print("\nCreating GeoJSON features...")
+    features = create_estuary_features(durr_sample, baum_df)
+    
+    # Create GeoJSON structure
+    estuary_data = {
+        "type": "FeatureCollection",
+        "metadata": {
+            "data_sources": [
+                {
+                    "name": "Dürr et al. (2011)",
+                    "title": "Worldwide typology of nearshore coastal systems",
+                    "doi": "10.1007/s12237-011-9381-y",
+                    "description": "Primary typology and geometry source"
+                },
+                {
+                    "name": "Baum et al. (2024)",
+                    "title": "Large structural estuaries",
+                    "description": "Supplementary morphometry data"
+                }
+            ],
+            "note": "Laruelle et al. (2025) used only for validation and statistics, not as raw data source",
+            "gcc_note": "GCC (Athanasiou et al. 2024) geophysical data can be added by downloading from https://zenodo.org/records/11072020",
+            "generated_date": pd.Timestamp.now().isoformat()
+        },
+        "features": features
+    }
     
     # Output to data directory
-    output_path = '/home/runner/work/estuary-type-map/estuary-type-map/data/estuaries.geojson'
+    output_path = data_dir / 'estuaries.geojson'
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(estuary_data, f, indent=2, ensure_ascii=False)
     
-    print(f"✓ Generated {len(estuary_data['features'])} estuaries")
+    print(f"\n✓ Generated {len(features)} estuaries")
     print(f"✓ Output saved to: {output_path}")
     
     # Print summary statistics
     types = {}
-    for feature in estuary_data['features']:
+    for feature in features:
         estuary_type = feature['properties']['type']
         types[estuary_type] = types.get(estuary_type, 0) + 1
     
     print("\nEstuary types distribution:")
     for estuary_type, count in sorted(types.items()):
         print(f"  {estuary_type}: {count}")
+    
+    print("\n" + "=" * 60)
+    print("Data processing complete!")
+    print("=" * 60)
+
 
 if __name__ == '__main__':
     main()
