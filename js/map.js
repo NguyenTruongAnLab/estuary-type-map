@@ -46,7 +46,19 @@ function initMap() {
 async function loadEstuaryData() {
     try {
         const response = await fetch('data/estuaries.geojson');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         estuaryData = await response.json();
+        
+        // Validate data structure
+        if (!estuaryData || !estuaryData.features || !Array.isArray(estuaryData.features)) {
+            throw new Error('Invalid GeoJSON structure');
+        }
+        
+        console.log(`✓ Loaded ${estuaryData.features.length} estuaries`);
         
         // Initialize all filters as active
         const types = getEstuaryTypes();
@@ -62,10 +74,40 @@ async function loadEstuaryData() {
         // Setup filter event listeners
         setupFilters();
         
-        console.log(`Loaded ${estuaryData.features.length} estuaries`);
     } catch (error) {
         console.error('Error loading estuary data:', error);
-        alert('Error loading estuary data. Please check the console for details.');
+        const mapElement = document.getElementById('map');
+        mapElement.innerHTML = `
+            <div style="
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                text-align: center;
+                max-width: 400px;
+            ">
+                <h3 style="color: #dc143c; margin-bottom: 1rem;">⚠️ Data Loading Error</h3>
+                <p style="color: #495057; margin-bottom: 1rem;">
+                    Unable to load estuary data. Please refresh the page or check your connection.
+                </p>
+                <p style="color: #6c757d; font-size: 0.85rem;">
+                    Error: ${error.message}
+                </p>
+                <button onclick="location.reload()" style="
+                    margin-top: 1rem;
+                    padding: 0.5rem 1.5rem;
+                    background: #1e3c72;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                ">Refresh Page</button>
+            </div>
+        `;
     }
 }
 
