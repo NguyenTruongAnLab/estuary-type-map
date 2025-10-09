@@ -22,6 +22,7 @@ data/GCC-Panagiotis-Athanasiou_2024/GCC_*.csv
 
 # Keep the generated output
 !data/estuaries.geojson
+!data/coastline.geojson
 
 # IDE
 .vscode/
