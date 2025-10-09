@@ -1,5 +1,5 @@
 // Global Estuary Type Map - Main JavaScript
-// Data source: Laruelle et al. (2024, Estuaries and Coasts)
+// Data sources: Dürr et al. (2011), Baum et al. (2024)
 
 // Color scheme for different estuary types
 const ESTUARY_COLORS = {
