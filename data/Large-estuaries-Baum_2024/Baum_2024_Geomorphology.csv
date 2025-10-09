@@ -1,0 +1,272 @@
+﻿Embayment,Lm,Lb,Lat,Long,C,Tectonic Coast Classification,Geomorphotype,Cluster Weight (ω)
+Agiou Orous Bay,21459,19222,40.210,23.981,1.12,collision,Rocky Bay,0.97
+Akaroa Harbour,1832,5377,-43.787,172.930,0.34,collision,LSE,0.98
+Albay Gulf,9314,19277,13.172,123.816,0.48,collision,LSE,0.71
+All Saints Bay,14080,15919,31.785,-116.676,0.88,collision,Sandy Bay,0.72
+Amur Bay,15730,20190,43.091,131.736,0.78,marginal,Rocky Bay,0.96
+Ao Ban Don ,25700,30600,9.293,99.268,0.84,marginal,Sandy Bay,0.61
+Ao Chumphon ,8901,10730,10.329,99.188,0.83,marginal,Sandy Bay,0.68
+Ao Pak Phanang ,7150,11210,8.464,100.122,0.64,marginal,Barrier Estuary,0.67
+Aotea Harbour,704,6804,-37.980,174.848,0.10,collision,Barrier Estuary,0.93
+Arcachon Bay,2930,16050,44.703,-1.138,0.18,trailing,Barrier Estuary,0.96
+Arnhem Bay,14181,45471,-12.279,136.155,0.31,marginal,Barrier Estuary,0.85
+Asan-man Bay,16000,13800,37.083,126.645,1.16,marginal,Rocky Bay,0.96
+Awarua Bay,666,5575,-46.569,168.338,0.12,collision,Barrier Estuary,0.93
+Bahia de Muertos,1281,10471,8.269,-82.259,0.12,collision,LSE,0.99
+Banderas Bay,29266,27785,20.615,-105.415,1.05,trailing,Rocky Bay,0.98
+Batemans Bay,6166,6325,-35.739,150.236,0.97,collision,Rocky Bay,0.98
+Bay of Amatique,23507,45100,15.970,-88.706,0.52,collision,Barrier Estuary,0.80
+Bay of Brest,1810,10260,48.341,-4.496,0.18,trailing,LSE,1.00
+Bay of Ilha Grande,22762,23850,-23.158,-44.566,0.95,trailing,Rocky Bay,0.99
+Bay of Kotor,1390,7550,42.426,18.665,0.18,collision,LSE,1.00
+Bay of Malaga,2788,8050,4.026,-77.278,0.35,collision,Barrier Estuary,0.91
+Bay of Marajó,59760,29500,-0.666,-48.320,2.03,trailing,Funnelled,0.95
+Bay of Paranaguá,4991,24699,-25.462,-48.410,0.20,trailing,Barrier Estuary,0.95
+Beibu Gulf,44030,37690,21.371,109.624,1.17,marginal,Sandy Bay,0.87
+Beppu Bay,11227,14385,33.313,131.597,0.78,collision,Rocky Bay,0.95
+Bima Bay,962,5355,-8.428,118.697,0.18,collision,LSE,1.00
+Blavet Estuary,730,2200,47.719,-3.358,0.33,trailing,LSE,0.98
+Blue Mud Bay,45938,89765,-13.420,136.094,0.51,marginal,Barrier Estuary,0.76
+Botany Bay,1115,7948,-33.991,151.203,0.14,collision,Barrier Estuary,0.93
+Broad Sound,28104,10771,-22.364,149.861,2.61,marginal,Funnelled,1.00
+Broken Bay,3760,14516,-33.567,151.321,0.26,collision,LSE,0.98
+Brunei Bay,40282,61720,5.100,115.227,0.65,collision,Barrier Estuary,0.54
+Bruni Bay,42969,42745,5.002,115.384,1.01,collision,Sandy Bay,0.83
+Butan Bay,34210,33123,9.085,125.393,1.03,collision,Rocky Bay,0.98
+Cam Ranh Bay,1590,19480,11.868,109.148,0.08,marginal,Barrier Estuary,0.94
+Cambridge Gulf,18212,21209,-14.868,128.244,0.86,marginal,Sandy Bay,0.67
+Cariaco Gulf,5634,14027,10.514,-64.013,0.40,collision,LSE,0.67
+Chabahar Bay,13750,21160,25.363,60.506,0.65,collision,Barrier Estuary,0.59
+Chhak Kampong Som,23760,48580,10.889,103.538,0.49,marginal,Barrier Estuary,0.67
+Chinhae-man,5800,35360,35.013,128.558,0.16,marginal,LSE,1.00
+Chiriqui Lagoon,17635,58136,9.057,-82.073,0.30,collision,LSE,0.97
+Cleveland Bay,24983,21382,-19.226,146.883,1.17,marginal,Sandy Bay,0.88
+Cobscook Bay,3330,14559,44.898,-67.089,0.23,trailing,LSE,1.00
+Collingwood Bay,61831,63228,-9.403,149.325,0.98,collision,Sandy Bay,0.83
+Columbia River Estuary,5263,12263,46.216,-123.844,0.43,collision,Barrier Estuary,0.71
+Conception Bay,3860,9676,26.685,-111.820,0.40,trailing,LSE,0.93
+Conducia Bay,5560,4020,-14.906,40.719,1.38,trailing,Sandy Bay,0.82
+Congo River Estuary,9950,11330,-6.068,12.396,0.88,trailing,Sandy Bay,0.74
+Cork Harbour,950,9670,51.822,-8.276,0.10,trailing,LSE,1.00
+Corner Inlet,2122,25119,-38.773,146.338,0.08,collision,Barrier Estuary,0.96
+Couesnon Estuary,5040,2440,48.663,-1.497,2.07,trailing,Funnelled,0.99
+Cross River Delta,18300,24040,4.645,8.403,0.76,trailing,Barrier Estuary,0.50
+Dakhla Bay,8910,14280,23.782,-15.811,0.62,trailing,Rocky Bay,0.91
+Dartmouth,2070,950,50.338,-3.560,2.18,trailing,Funnelled,1.00
+Darvel Bay,25253,41302,4.838,118.479,0.61,collision,Sandy Bay,0.49
+Daya Bay,14360,35800,22.693,114.667,0.40,marginal,LSE,0.93
+Dee Estuary,8870,7030,53.321,-3.196,1.26,trailing,Rocky Bay,0.59
+Delaware Bay,18734,47147,39.062,-75.184,0.40,trailing,Barrier Estuary,0.88
+Disaster Bay,7072,6226,-37.276,149.981,1.14,collision,Rocky Bay,0.95
+Dongshan Bay,4900,20270,23.840,117.533,0.24,marginal,LSE,1.00
+Doubtless Bay,10825,17717,-34.925,173.447,0.61,collision,Sandy Bay,0.43
+Duddon Estuary,2420,2150,54.217,-3.219,1.13,trailing,Rocky Bay,0.97
+Dumankilas Bay,7092,16140,7.630,123.098,0.44,collision,LSE,0.86
+Dyfi in Gwynedd Estuary,1250,2710,52.540,-4.011,0.46,trailing,LSE,0.80
+Dyke Ackland Bay,75991,65560,-9.031,148.687,1.16,collision,Sandy Bay,0.89
+East Boyd Bay,5092,6679,-37.083,149.931,0.76,collision,Rocky Bay,0.98
+Elefsinas Gulf,3060,19970,38.020,23.532,0.15,collision,LSE,1.00
+Elpaputih Bay,11782,14409,-3.245,128.919,0.82,collision,Rocky Bay,0.99
+Estero Bay,18248,15595,35.378,-120.887,1.17,collision,Rocky Bay,0.91
+Exmouth Gulf,47413,38438,-22.163,114.287,1.23,trailing,Sandy Bay,0.88
+False Bay,29030,40240,-34.190,18.648,0.72,trailing,Rocky Bay,0.97
+Fernao Veloso Bay,7670,23980,-14.392,40.715,0.32,trailing,Barrier Estuary,0.79
+Fethiye Harbour,11700,21100,36.651,28.979,0.55,collision,Rocky Bay,0.66
+Firth of Fourth,13570,26440,56.127,-2.866,0.51,trailing,LSE,0.55
+Firth of Tay,1550,5270,56.456,-2.824,0.29,trailing,LSE,0.99
+Funding Ocean,4490,40910,26.652,119.773,0.11,marginal,LSE,1.00
+Funka Bay,27309,53486,42.360,140.537,0.51,collision,Barrier Estuary,0.57
+Galveston Bay,8371,38319,29.585,-94.868,0.22,marginal,Barrier Estuary,0.95
+Galway Bay,9960,13570,53.186,-9.288,0.73,trailing,Rocky Bay,0.99
+Gambia Estuary,19120,12800,13.526,-16.592,1.49,trailing,Sandy Bay,0.70
+Geras Gulf,300,5330,39.079,26.492,0.06,collision,LSE,1.00
+Ghubbat Hashish Bay,14230,17660,20.536,58.173,0.81,trailing,Sandy Bay,0.67
+Gingoog Bay,18003,16668,8.926,125.103,1.08,collision,Rocky Bay,0.98
+Golden Bay ,34481,34214,-40.716,172.835,1.01,collision,Rocky Bay,0.93
+Goodenough Bay,36036,37696,-9.916,149.899,0.96,collision,Rocky Bay,0.65
+Grays Harbour,3380,20147,46.936,-124.053,0.17,collision,Barrier Estuary,0.96
+Guanabara Bay,1690,26707,-22.793,-43.140,0.06,trailing,LSE,0.97
+Gulf of Arauco,38122,40801,-37.133,-73.318,0.93,collision,Rocky Bay,0.73
+Gulf of Boughrara,7440,22320,33.623,10.865,0.33,trailing,Barrier Estuary,0.91
+Gulf of Dulce,14581,27877,8.565,-83.233,0.52,collision,Rocky Bay,0.50
+Gulf of Fonseca,32011,71729,13.145,-87.650,0.45,collision,Barrier Estuary,0.63
+Gulf of Guayaquil,31957,26263,-3.017,-80.021,1.22,collision,Rocky Bay,0.92
+Gulf of Iskenderun,31650,37790,36.695,35.932,0.84,collision,Sandy Bay,0.68
+Gulf of Khambhat,25210,31540,21.652,72.422,0.80,trailing,Sandy Bay,0.60
+Gulf of Kutch,43020,42540,22.612,69.657,1.01,trailing,Sandy Bay,0.83
+Gulf of Martaban,36600,23360,16.934,96.992,1.57,marginal,Sandy Bay,0.55
+Gulf of Morbihan,860,7860,47.575,-2.828,0.11,trailing,LSE,1.00
+Gulf of Nicoya,30602,18906,9.888,-84.823,1.62,collision,Funnelled,0.78
+Gulf of Tumaco,19813,24194,1.875,-78.639,0.82,collision,Sandy Bay,0.58
+Gwadar West Bay,17600,26940,25.164,62.165,0.65,collision,Barrier Estuary,0.64
+Haeju-man Bay,21660,19170,37.879,125.765,1.13,marginal,Rocky Bay,0.96
+Hakata Bay,5908,14248,33.631,130.312,0.41,collision,Barrier Estuary,0.77
+Halifax Bay,75243,52692,-18.945,146.479,1.43,marginal,Sandy Bay,0.79
+Halmahera Sea,9389,34092,1.221,128.014,0.28,collision,LSE,0.99
+Hangzhou Bay,97660,33240,30.507,121.386,2.94,marginal,Funnelled,1.00
+Hawke Bay,78312,97958,-39.311,177.325,0.80,collision,Sandy Bay,0.70
+Hiechechin Bay,24440,28500,22.763,115.673,0.86,marginal,Rocky Bay,0.95
+Humboldt Bay,7890,11770,-2.579,140.748,0.67,collision,Rocky Bay,0.97
+Hurdiyo Bay,6150,18610,10.488,51.153,0.33,trailing,Barrier Estuary,0.90
+Imari Bay,1286,3217,33.338,129.818,0.40,collision,Barrier Estuary,0.79
+Inhambane Bay,7750,18870,-23.796,35.399,0.41,trailing,Barrier Estuary,0.87
+Inland Sea,510,14000,24.619,51.307,0.04,trailing,LSE,1.00
+Ise Sea,20820,72752,34.650,136.886,0.29,collision,Barrier Estuary,0.83
+Jervis Bay,3551,16171,-35.075,150.748,0.22,collision,Barrier Estuary,0.68
+Jiaozhou Wan Bay,3350,25000,36.144,120.227,0.13,marginal,LSE,1.00
+Jinzhou Wan,33570,39540,39.234,121.376,0.85,marginal,Rocky Bay,0.99
+Jiuzhen Harbour,2970,7970,23.985,117.728,0.37,marginal,LSE,0.96
+Jiwani Bay,26220,28650,25.100,61.611,0.92,collision,Sandy Bay,0.75
+Kaboei Bay,2827,16945,-0.409,130.676,0.17,collision,LSE,1.00
+Kaipara Harbour,7196,58071,-36.387,174.208,0.12,collision,Barrier Estuary,0.96
+Kallonis Gulf,910,10520,39.175,26.198,0.09,collision,LSE,1.00
+Kamchatskiy zaliv,125650,137540,55.606,162.205,0.91,collision,Rocky Bay,0.99
+Karatu Bay,7305,9188,33.470,129.998,0.80,collision,Rocky Bay,0.97
+Karorim-man Bay,2440,14550,36.936,126.331,0.17,marginal,LSE,1.00
+Kawhia Harbour,986,12339,-38.096,174.832,0.08,collision,LSE,0.82
+Kayeli Bay,7690,15941,-3.317,127.094,0.48,collision,LSE,0.59
+Kerikeri Inlet,1261,2605,-35.202,174.009,0.48,collision,LSE,0.70
+King Sound,38397,56835,-16.840,123.512,0.68,trailing,Barrier Estuary,0.51
+Kirkcudbright Bay,1610,2640,54.793,-4.076,0.61,trailing,Rocky Bay,0.88
+Kronotskiy zaliv,125910,132860,54.083,160.520,0.95,collision,Rocky Bay,0.99
+Kumai Bay,31853,24020,-3.022,111.718,1.33,collision,Sandy Bay,0.85
+Kumya-man,12040,27380,39.245,127.456,0.44,marginal,LSE,0.86
+Kupang Gulf,10499,13789,-10.080,123.658,0.76,collision,Rocky Bay,0.96
+Kuwait Bay,23110,19540,29.468,47.990,1.18,trailing,Sandy Bay,0.85
+Labuk Bay,34953,39708,6.074,117.763,0.88,collision,Sandy Bay,0.74
+Lagoon of Caratasca,562,50805,15.356,-83.835,0.01,collision,Barrier Estuary,0.98
+Lake Illawarra ,414,8609,-34.523,150.839,0.05,collision,LSE,0.60
+Lake Macquarie,444,14146,-33.093,151.604,0.03,collision,LSE,0.89
+Lake Maracaibo,7043,120752,9.998,-71.612,0.06,collision,Barrier Estuary,0.97
+Lamak Bay,24317,40697,4.828,118.293,0.60,collision,Rocky Bay,0.74
+Lampung Bay,39654,31706,-5.668,105.319,1.25,collision,Rocky Bay,0.87
+Lianga Bay,25551,26203,8.639,126.249,0.98,collision,Rocky Bay,0.99
+Lingayen Gulf,32835,36543,16.367,120.208,0.90,collision,Rocky Bay,0.99
+Loch Ryan,2140.12,4593.04,54.946,-5.033,0.47,trailing,LSE,0.78
+Londonderry,1350,12100,55.150,-7.038,0.11,trailing,LSE,1.00
+Luoyuan Bay,1610,15710,26.410,119.710,0.10,marginal,LSE,1.00
+Lupar Estuary,20975,9337,2.147,100.687,2.25,collision,Funnelled,0.99
+Macajalar Bay,25587,23308,8.603,124.660,1.10,collision,Rocky Bay,0.97
+Majalibit Bay,205,10377,-0.292,130.890,0.02,collision,LSE,1.00
+Majoli Gulf,298,11107,-0.286,130.883,0.03,collision,LSE,1.00
+Mangonui Inlet,1019,3493,-35.168,174.025,0.29,collision,LSE,0.99
+Manila Bay,18000,57540,14.554,120.797,0.00,collision,LSE,0.93
+Manukau Harbour,1923,23754,-37.022,174.689,0.08,collision,Barrier Estuary,0.95
+Maputo Bay,35030,42540,-26.048,32.751,0.82,trailing,Sandy Bay,0.58
+Markham Bay,51685,40578,-6.860,147.085,1.27,collision,Sandy Bay,0.79
+Matarinao Bay,5212,10048,11.233,125.564,0.52,collision,LSE,0.52
+Meizhou Bay,7610,27860,25.123,118.998,0.27,marginal,LSE,0.99
+Mejillones Bay,16346,13495,-23.047,-70.436,1.21,collision,Rocky Bay,0.77
+Melkovodnyy zaliv,3900,16900,61.653,162.769,0.23,marginal,LSE,1.00
+Memba Bay,7780,6450,-14.174,40.615,1.21,trailing,Sandy Bay,0.59
+Messolonghi Lagoon,7810,18150,38.371,21.356,0.43,collision,LSE,0.89
+Miani Hor,6000,11180,25.510,66.419,0.54,collision,Barrier Estuary,0.78
+Milford Haven,2200,3330,51.704,-5.112,0.66,trailing,Rocky Bay,0.96
+Milne Bay,13754,12159,-10.374,150.412,1.13,collision,Rocky Bay,0.87
+Mocambo Bay,2860,8600,-15.155,40.548,0.33,trailing,Barrier Estuary,0.89
+Monterey Bay,35177,42076,36.750,-121.903,0.84,collision,Sandy Bay,0.69
+Montijo Bay,12943,15653,7.669,-81.134,0.83,collision,Rocky Bay,0.99
+Morecambe Bay,16120,25390,54.092,-2.976,0.63,trailing,Rocky Bay,0.93
+Moreno Bay,19614,18783,-23.562,-70.470,1.04,collision,Rocky Bay,0.72
+Mossuril Bay,9050,7480,-15.019,40.706,1.21,trailing,Sandy Bay,0.89
+Mumbai Harbour,9380,13550,18.908,72.876,0.69,trailing,Rocky Bay,0.98
+Mutu Bay,10487,54710,41.081,140.844,0.19,collision,LSE,0.95
+New Gulf,16370,67664,-42.721,-64.527,0.24,trailing,LSE,0.99
+North Bay,12785,24255,8.341,-78.293,0.53,collision,Rocky Bay,0.52
+Ojo de Libre Lagoon,3694,23733,27.752,-114.195,0.16,trailing,Barrier Estuary,0.96
+Osaka Bay,14114,33450,34.412,135.060,0.42,collision,Barrier Estuary,0.67
+Otaru Bay,40699,44472,43.316,141.218,0.92,collision,Sandy Bay,0.81
+Pagasetic Gulf,5610,35280,39.218,22.997,0.16,collision,LSE,1.00
+Pak Nam Palian Estuary,5740,2697,7.289,99.504,2.13,marginal,Funnelled,0.98
+Pakchan Estuary,4870,6340,10.030,98.601,0.77,marginal,Sandy Bay,0.62
+Parengarenga Harbour,858,3159,-34.522,172.942,0.27,collision,Barrier Estuary,0.91
+Passamaquoddy Bay,2781,18911,45.061,-66.984,0.15,trailing,LSE,1.00
+Paterson Inlet,1529,6222,-46.932,168.089,0.25,collision,LSE,1.00
+Pegasus Bay,65163,57563,-43.343,172.868,1.13,collision,Sandy Bay,0.88
+Pemba Bay,2380,16160,-12.946,40.464,0.15,trailing,LSE,1.00
+Pensacola Bay,1613,31981,30.431,-87.117,0.05,marginal,Barrier Estuary,0.98
+Perevolochnyy zaliv,3700,15200,59.535,154.225,0.24,marginal,LSE,1.00
+Phang Nga Bay,34350,33600,8.235,98.576,1.02,marginal,Sandy Bay,0.76
+Piru Bay,8514,9077,-3.127,128.152,0.94,collision,Rocky Bay,0.67
+Plymouth Sound,4820,2750,50.344,-4.149,1.75,trailing,Funnelled,0.97
+Poole Harbour,460,5840,50.693,-1.996,0.08,trailing,LSE,1.00
+Port Phillip Bay,3472,51901,-38.096,144.990,0.07,collision,Barrier Estuary,0.97
+Princess Charlotte Bay,50283,48317,-14.318,143.960,1.04,marginal,Sandy Bay,0.83
+Pujada Bay,6907,11481,6.835,126.244,0.60,collision,Rocky Bay,0.86
+Pungwe Estuary,10530,7180,-19.896,34.814,1.47,trailing,Sandy Bay,0.69
+Puro Bay,1856,10565,-10.481,149.963,0.18,collision,LSE,0.92
+Quanzhou Bay,3940,10370,24.829,118.675,0.38,marginal,LSE,0.96
+Raglan Harbour,612,6946,-37.794,174.909,0.09,collision,LSE,0.98
+Rangaunu Harbour,1541,9410,-34.936,173.293,0.16,collision,Barrier Estuary,0.95
+Rawayah Lagoon,4120,8350,21.188,37.132,0.49,trailing,Barrier Estuary,0.82
+Ria de Arosa,7630,14230,42.551,-8.894,0.54,trailing,Rocky Bay,0.56
+Ria de Betanzos,3540,7010,43.404,-8.249,0.50,trailing,LSE,0.60
+Ria de Muros e Noia,5810,7840,42.734,-9.040,0.74,trailing,Rocky Bay,0.98
+Ria de Pontevedra,4700,8450,42.364,-8.784,0.56,trailing,Rocky Bay,0.66
+River Shannon Estuary,3240,7830,52.599,-9.562,0.41,trailing,LSE,0.92
+River Thames,8150,6760,51.500,0.726,1.21,trailing,Rocky Bay,0.93
+Rokan Delta,15014,9979,2.153,100.692,1.50,collision,Sandy Bay,0.70
+Sado Estuary,2010,13710,38.463,-8.768,0.15,collision,Barrier Estuary,0.95
+Sagami Bay,40789,43883,35.205,139.375,0.93,collision,Sandy Bay,0.79
+Saint Ignacio Lagoon,3848,6794,26.827,-113.207,0.57,trailing,Barrier Estuary,0.75
+Saint Vincent Gulf,58870,56996,-35.043,138.073,1.03,trailing,Sandy Bay,0.84
+Saldhana Bay,2520,11540,-33.049,17.984,0.22,trailing,LSE,0.98
+Sampit Bay,20468,23307,-3.093,113.055,0.88,collision,Sandy Bay,0.65
+San Francisco Bay,1688,83811,37.845,-122.376,0.02,collision,LSE,0.99
+San Jose Bay,12688,65324,18.457,-88.143,0.19,collision,Barrier Estuary,0.91
+San Jose Gulf,7098,48613,-42.315,-64.323,0.15,trailing,LSE,1.00
+San Miguel Bay,20655,30158,13.829,123.185,0.68,collision,Rocky Bay,0.97
+San Pedro Bay,25742,18590,33.708,-118.148,1.38,collision,Sandy Bay,0.81
+Sandakan Harbour,2945,17219,5.815,118.123,0.17,collision,Barrier Estuary,0.93
+Sangarungo Harbour,4370,10710,-9.000,39.501,0.41,trailing,LSE,0.92
+Santa Monica Bay,43216,43232,33.922,-118.573,1.00,collision,Sandy Bay,0.74
+Saragani Bay,10853,17380,5.971,125.203,0.62,collision,Rocky Bay,0.91
+Sasebo Bay,850,7491,33.107,129.717,0.11,collision,Barrier Estuary,0.79
+Sebangan Bay,27590,27218,-3.301,113.508,1.01,collision,Sandy Bay,0.79
+Sechura Bay,51831,48446,-5.625,-81.000,1.07,collision,Sandy Bay,0.76
+Seine Estuary,6490,2867,49.442,0.163,2.26,trailing,Funnelled,1.00
+Semangka Bay,27115,21254,-5.634,104.682,1.28,collision,Rocky Bay,0.77
+Shark Bay,39962,47989,-25.973,114.004,0.83,trailing,Sandy Bay,0.61
+Shibushi Wan,14375,23023,31.402,131.127,0.62,collision,Rocky Bay,0.90
+Shoal Gulf,5060,8560,36.516,126.433,0.59,marginal,Rocky Bay,0.83
+Shoalwater Bay,27876,14032,-22.439,150.447,1.99,marginal,Funnelled,0.95
+Siyu Channel,19460,12570,-2.076,40.990,1.55,trailing,Sandy Bay,0.58
+Sogod Bay,10918,9860,10.178,125.051,1.11,collision,Rocky Bay,0.97
+Spencer Gulf,80096,85736,-34.319,137.018,0.93,trailing,Sandy Bay,0.73
+Staring Bay,10515,13885,-4.098,122.721,0.76,collision,Rocky Bay,0.98
+Strangord Lough,600,6280,54.476,-5.605,0.10,trailing,LSE,1.00
+Strymonian Gulf,21310,21910,40.681,23.845,0.97,collision,Rocky Bay,0.99
+Sukadana Bay,55200,56579,-1.508,109.996,0.98,collision,Sandy Bay,0.78
+Suruga Bay,42183,40036,34.935,138.651,1.05,collision,Rocky Bay,0.63
+Sydney Harbour,1472,9023,-33.828,151.280,0.16,collision,LSE,0.80
+Taedong-gang River Estuary,6400,4000,38.688,125.223,1.60,marginal,Funnelled,0.90
+Takou Bay,8375,8632,-35.091,173.955,0.97,collision,Rocky Bay,0.98
+Tamiahua Lagoon,135,20346,21.580,-97.547,0.01,marginal,Barrier Estuary,0.98
+Tampa Bay,10781,34000,27.777,-82.559,0.32,trailing,Barrier Estuary,0.84
+Tasman Bay,35691,27603,-41.150,173.175,1.29,collision,Sandy Bay,0.74
+Tauranga Harbour,1257,14628,-37.594,176.001,0.09,collision,Barrier Estuary,0.97
+Teluk Klabat,1650,12100,-1.587,105.671,0.14,collision,LSE,0.99
+Teluk Saleh,4870,41920,-8.524,117.893,0.12,collision,LSE,1.00
+Tewaenae Bay,26762,30936,-46.231,167.533,0.87,collision,Sandy Bay,0.68
+The Wash,17850,26450,52.944,0.327,0.67,trailing,Rocky Bay,0.97
+Togunyan Wan,9880,12000,34.623,127.109,0.82,marginal,Rocky Bay,0.99
+Tor Bay,6240,6674,50.424,-3.511,0.93,trailing,Rocky Bay,0.99
+Toroneos Bay,13279,25073,40.030,23.718,0.53,collision,Rocky Bay,0.53
+Toyama Bay,44345,59535,37.011,137.189,0.74,collision,Sandy Bay,0.55
+Términos Lagoon,6660,72785,18.611,-91.588,0.09,collision,Barrier Estuary,0.97
+Ussuri Bay,20830,19000,43.100,132.167,1.10,marginal,Rocky Bay,0.94
+Vinh Van Phong,10220,29290,12.648,109.264,0.35,marginal,Barrier Estuary,0.65
+Waikare Inlet,482,6437,-35.313,174.131,0.07,collision,LSE,1.00
+Wainui Bay,3549,4387,-35.008,173.868,0.81,collision,Rocky Bay,0.99
+Waitamata Harbour,1775,8093,-36.833,174.691,0.22,collision,LSE,1.00
+Wakasa Bay,65492,76800,35.716,135.626,0.85,collision,Rocky Bay,0.94
+Waworada Bay,5792,9119,-8.743,118.923,0.64,collision,Rocky Bay,0.93
+Wellington Harbour,2693,11533,-41.255,174.862,0.23,collision,LSE,0.99
+Western Port Bay,7690,23135,-38.390,145.325,0.33,collision,Barrier Estuary,0.45
+Whanganui Inlet,1129,12255,-40.597,172.562,0.09,collision,LSE,1.00
+Whangaroa Harbour,290,3794,-35.030,173.750,0.08,collision,LSE,1.00
+Willapa Bay,6984,40235,46.569,-123.983,0.17,collision,Barrier Estuary,0.95
+Wouri River Estuary,13050,25940,3.938,9.569,0.50,trailing,Barrier Estuary,0.81
+Xinghua Bay,15600,30010,25.375,119.360,0.52,marginal,LSE,0.51
+Zhao'an Bay,6580,11990,23.679,117.299,0.55,marginal,Rocky Bay,0.63
+Zhujiang River Estuary,28370,30110,22.496,113.688,0.94,marginal,Rocky Bay,0.99
