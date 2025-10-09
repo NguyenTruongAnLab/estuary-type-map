@@ -9,14 +9,18 @@ const ESTUARY_COLORS = {
     'Ria': '#9370db',
     'Coastal Plain': '#ff8c00',
     'Bar-Built': '#20b2aa',
-    'Tectonic': '#dc143c'
+    'Tectonic': '#dc143c',
+    'Unknown': '#808080'
 };
 
 // Global variables
 let map;
 let estuaryData;
+let coastlineData;
 let markersLayer;
+let coastlineLayer;
 let activeFilters = new Set();
+let currentMode = 'points'; // 'points' or 'coastline'
 
 // Initialize the map
 function initMap() {
@@ -35,11 +39,13 @@ function initMap() {
         maxZoom: 19
     }).addTo(map);
 
-    // Create layer for markers
+    // Create layers for different visualization modes
     markersLayer = L.layerGroup().addTo(map);
+    coastlineLayer = L.layerGroup();
 
     // Load estuary data
     loadEstuaryData();
+    loadCoastlineData();
 }
 
 // Load and display estuary data
@@ -76,39 +82,67 @@ async function loadEstuaryData() {
         
     } catch (error) {
         console.error('Error loading estuary data:', error);
-        const mapElement = document.getElementById('map');
-        mapElement.innerHTML = `
-            <div style="
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: white;
-                padding: 2rem;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                text-align: center;
-                max-width: 400px;
-            ">
-                <h3 style="color: #dc143c; margin-bottom: 1rem;">⚠️ Data Loading Error</h3>
-                <p style="color: #495057; margin-bottom: 1rem;">
-                    Unable to load estuary data. Please refresh the page or check your connection.
-                </p>
-                <p style="color: #6c757d; font-size: 0.85rem;">
-                    Error: ${error.message}
-                </p>
-                <button onclick="location.reload()" style="
-                    margin-top: 1rem;
-                    padding: 0.5rem 1.5rem;
-                    background: #1e3c72;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                ">Refresh Page</button>
-            </div>
-        `;
+        showError(error.message);
     }
+}
+
+// Load coastline data for coastal segmentation mode
+async function loadCoastlineData() {
+    try {
+        const response = await fetch('data/coastline.geojson');
+        
+        if (!response.ok) {
+            console.warn('Coastline data not available');
+            return;
+        }
+        
+        coastlineData = await response.json();
+        
+        if (!coastlineData || !coastlineData.features || !Array.isArray(coastlineData.features)) {
+            throw new Error('Invalid coastline GeoJSON structure');
+        }
+        
+        console.log(`✓ Loaded ${coastlineData.features.length} coastline segments`);
+        
+    } catch (error) {
+        console.error('Error loading coastline data:', error);
+    }
+}
+
+// Show error message
+function showError(message) {
+    const mapElement = document.getElementById('map');
+    mapElement.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+        ">
+            <h3 style="color: #dc143c; margin-bottom: 1rem;">⚠️ Data Loading Error</h3>
+            <p style="color: #495057; margin-bottom: 1rem;">
+                Unable to load estuary data. Please refresh the page or check your connection.
+            </p>
+            <p style="color: #6c757d; font-size: 0.85rem;">
+                Error: ${message}
+            </p>
+            <button onclick="location.reload()" style="
+                margin-top: 1rem;
+                padding: 0.5rem 1.5rem;
+                background: #1e3c72;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            ">Refresh Page</button>
+        </div>
+    `;
 }
 
 // Get unique estuary types from data
@@ -185,32 +219,67 @@ function createPopupContent(props) {
     const typeClass = props.type.toLowerCase().replace(/\s+/g, '-');
     
     let content = `
-        <div class="popup-title">${props.name}</div>
+        <div class="popup-title">${props.name || 'Unnamed'}</div>
         <div class="popup-type ${typeClass}">${props.type}</div>
         <div class="popup-info">
-            <strong>Country:</strong> ${props.country}<br>
     `;
     
-    if (props.river) {
-        content += `<strong>River:</strong> ${props.river}<br>`;
+    if (props.type_detailed) {
+        content += `<strong>Type:</strong> ${props.type_detailed}<br>`;
     }
     
-    if (props.area_km2) {
-        content += `<strong>Area:</strong> ${props.area_km2.toLocaleString()} km²<br>`;
+    if (props.basin_area_km2) {
+        content += `<strong>Basin Area:</strong> ${props.basin_area_km2.toLocaleString()} km²<br>`;
     }
     
-    if (props.depth_m) {
-        content += `<strong>Max Depth:</strong> ${props.depth_m} m<br>`;
+    if (props.sea_name) {
+        content += `<strong>Sea:</strong> ${props.sea_name}<br>`;
     }
     
-    if (props.description) {
-        content += `
+    if (props.ocean_name) {
+        content += `<strong>Ocean:</strong> ${props.ocean_name}<br>`;
+    }
+    
+    if (props.baum_embayment_name) {
+        content += `<strong>Baum Data:</strong> ${props.baum_embayment_name}<br>`;
+    }
+    
+    content += `
+        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;">
+            <em>Source: ${props.data_source}</em>
         </div>
-        <div class="popup-description">${props.description}</div>
-        `;
-    } else {
-        content += `</div>`;
+    `;
+    
+    content += `</div>`;
+    
+    return content;
+}
+
+// Create popup content for coastline segment
+function createCoastlinePopupContent(props) {
+    const typeClass = props.type.toLowerCase().replace(/\s+/g, '-');
+    
+    let content = `
+        <div class="popup-title">Coastal Segment</div>
+        <div class="popup-type ${typeClass}">${props.type}</div>
+        <div class="popup-info">
+    `;
+    
+    if (props.type_detailed) {
+        content += `<strong>Type:</strong> ${props.type_detailed}<br>`;
     }
+    
+    if (props.length_km) {
+        content += `<strong>Length:</strong> ${props.length_km.toLocaleString()} km<br>`;
+    }
+    
+    content += `
+        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;">
+            <em>Source: ${props.data_source}</em>
+        </div>
+    `;
+    
+    content += `</div>`;
     
     return content;
 }
@@ -220,6 +289,8 @@ function updateMarkers() {
     // Clear existing markers
     markersLayer.clearLayers();
     
+    if (!estuaryData) return;
+    
     // Add markers for filtered estuaries
     estuaryData.features.forEach(feature => {
         const type = feature.properties.type;
@@ -228,6 +299,84 @@ function updateMarkers() {
             markersLayer.addLayer(marker);
         }
     });
+}
+
+// Update coastline based on active filters
+function updateCoastline() {
+    // Clear existing coastline
+    coastlineLayer.clearLayers();
+    
+    if (!coastlineData) return;
+    
+    // Add coastline segments for filtered types
+    coastlineData.features.forEach(feature => {
+        const type = feature.properties.type;
+        if (activeFilters.has('all') || activeFilters.has(type)) {
+            const line = createCoastline(feature);
+            coastlineLayer.addLayer(line);
+        }
+    });
+}
+
+// Create coastline segment
+function createCoastline(feature) {
+    const coords = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+    const props = feature.properties;
+    
+    // Create polyline with color based on type
+    const line = L.polyline(coords, {
+        color: ESTUARY_COLORS[props.type] || '#808080',
+        weight: 3,
+        opacity: 0.7
+    });
+    
+    // Create popup content
+    const popupContent = createCoastlinePopupContent(props);
+    line.bindPopup(popupContent, {
+        maxWidth: 300,
+        className: 'estuary-popup'
+    });
+    
+    return line;
+}
+
+// Switch visualization mode
+function switchMode(newMode) {
+    currentMode = newMode;
+    
+    if (currentMode === 'points') {
+        // Show points, hide coastline
+        if (!map.hasLayer(markersLayer)) {
+            map.addLayer(markersLayer);
+        }
+        if (map.hasLayer(coastlineLayer)) {
+            map.removeLayer(coastlineLayer);
+        }
+        updateMarkers();
+    } else if (currentMode === 'coastline') {
+        // Show coastline, hide points
+        if (map.hasLayer(markersLayer)) {
+            map.removeLayer(markersLayer);
+        }
+        if (!map.hasLayer(coastlineLayer)) {
+            map.addLayer(coastlineLayer);
+        }
+        updateCoastline();
+    }
+    
+    // Update mode toggle buttons
+    const pointsBtn = document.getElementById('mode-points');
+    const coastlineBtn = document.getElementById('mode-coastline');
+    
+    if (pointsBtn && coastlineBtn) {
+        if (currentMode === 'points') {
+            pointsBtn.classList.add('active');
+            coastlineBtn.classList.remove('active');
+        } else {
+            pointsBtn.classList.remove('active');
+            coastlineBtn.classList.add('active');
+        }
+    }
 }
 
 // Setup filter checkbox event listeners
@@ -281,9 +430,29 @@ function setupFilters() {
             }
             
             // Update map
-            updateMarkers();
+            if (currentMode === 'points') {
+                updateMarkers();
+            } else {
+                updateCoastline();
+            }
         });
     });
+    
+    // Setup mode toggle buttons
+    const pointsBtn = document.getElementById('mode-points');
+    const coastlineBtn = document.getElementById('mode-coastline');
+    
+    if (pointsBtn) {
+        pointsBtn.addEventListener('click', function() {
+            switchMode('points');
+        });
+    }
+    
+    if (coastlineBtn) {
+        coastlineBtn.addEventListener('click', function() {
+            switchMode('coastline');
+        });
+    }
 }
 
 // Initialize map when DOM is ready

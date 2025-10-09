@@ -164,10 +164,51 @@ def create_estuary_features(durr_gdf, baum_df=None):
     
     return features
 
+
+def create_coastline_features(coastline_gdf):
+    """
+    Create GeoJSON features from Dürr coastline data for coastal segmentation view.
+    
+    Args:
+        coastline_gdf: GeoDataFrame from typology_coastline.shp
+    
+    Returns:
+        List of GeoJSON features with LineString geometries
+    """
+    features = []
+    
+    for idx, row in coastline_gdf.iterrows():
+        # Extract properties
+        properties = {
+            "type": SIMPLE_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),
+            "type_detailed": DURR_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),
+            "type_code": int(row['FIN_TYP']),
+            "length_km": round(row['LENGTH'], 2) if pd.notna(row['LENGTH']) else None,
+            "coastline_id": idx,
+            "data_source": "Dürr et al. (2011) - Coastal Typology",
+            "data_source_doi": "10.1007/s12237-011-9381-y"
+        }
+        
+        # Convert geometry to GeoJSON format
+        coords = [[round(x, 4), round(y, 4)] for x, y in row.geometry.coords]
+        
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": coords
+            },
+            "properties": properties
+        }
+        
+        features.append(feature)
+    
+    return features
+
 def main():
     """Main function to process estuary data and generate GeoJSON output."""
     print("=" * 60)
-    print("Processing Real Estuary Data")
+    print("Processing Real Estuary Data - ALL GLOBAL ESTUARIES")
     print("=" * 60)
     
     # Determine base path
@@ -191,20 +232,18 @@ def main():
     else:
         print(f"Warning: Baum CSV not found at {baum_csv}, skipping enrichment")
     
-    # Sample a reasonable number of estuaries for the map
-    # (Too many points would clutter the visualization)
-    print("\nSelecting representative estuaries...")
+    # Process ALL estuaries (no sampling limit)
+    print(f"\nProcessing ALL {len(durr_gdf)} estuaries for full global coverage...")
     
-    # Prioritize larger basins and diverse types
-    durr_sample = durr_gdf.sort_values('BASINAREA', ascending=False).head(100)
+    # Create GeoJSON features for point view (estuary catchments)
+    print("\nCreating GeoJSON features for estuary points...")
+    features = create_estuary_features(durr_gdf, baum_df)
     
-    print(f"Selected {len(durr_sample)} estuaries for visualization")
+    # Create GeoJSON features for point view (estuary catchments)
+    print("\nCreating GeoJSON features for estuary points...")
+    features = create_estuary_features(durr_gdf, baum_df)
     
-    # Create GeoJSON features
-    print("\nCreating GeoJSON features...")
-    features = create_estuary_features(durr_sample, baum_df)
-    
-    # Create GeoJSON structure
+    # Create GeoJSON structure for points
     estuary_data = {
         "type": "FeatureCollection",
         "metadata": {
@@ -221,28 +260,82 @@ def main():
                     "description": "Supplementary morphometry data"
                 }
             ],
-            "note": "Laruelle et al. (2025) used only for validation and statistics, not as raw data source",
+            "note": "Full global dataset - all ~6,200+ estuaries from Dürr et al. (2011)",
             "gcc_note": "GCC (Athanasiou et al. 2024) geophysical data can be added by downloading from https://zenodo.org/records/11072020",
             "generated_date": pd.Timestamp.now().isoformat()
         },
         "features": features
     }
     
-    # Output to data directory
+    # Output estuaries to data directory
     output_path = data_dir / 'estuaries.geojson'
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(estuary_data, f, indent=2, ensure_ascii=False)
     
-    print(f"\n✓ Generated {len(features)} estuaries")
+    print(f"\n✓ Generated {len(features)} estuary points")
     print(f"✓ Output saved to: {output_path}")
     
+    # Process coastline data for coastal segmentation mode
+    print("\n" + "=" * 60)
+    print("Processing Coastal Segmentation Data")
+    print("=" * 60)
+    
+    coastline_shapefile = data_dir / 'Worldwide-typology-Shapefile-Durr_2011' / 'typology_coastline.shp'
+    if coastline_shapefile.exists():
+        print(f"Loading coastline shapefile: {coastline_shapefile}")
+        coastline_gdf = gpd.read_file(str(coastline_shapefile))
+        
+        # Filter to meaningful coastal types (same as catchments)
+        valid_types = [1, 2, 3, 4, 5, 6]
+        coastline_gdf = coastline_gdf[coastline_gdf['FIN_TYP'].isin(valid_types)].copy()
+        
+        print(f"Found {len(coastline_gdf)} valid coastline segments")
+        
+        # Create GeoJSON features for coastline view
+        print("\nCreating GeoJSON features for coastal segments...")
+        coastline_features = create_coastline_features(coastline_gdf)
+        
+        # Create GeoJSON structure for coastline
+        coastline_data = {
+            "type": "FeatureCollection",
+            "metadata": {
+                "data_sources": [
+                    {
+                        "name": "Dürr et al. (2011)",
+                        "title": "Worldwide typology of nearshore coastal systems - Coastline",
+                        "doi": "10.1007/s12237-011-9381-y",
+                        "description": "Global coastal segmentation by estuary type"
+                    }
+                ],
+                "note": "Coastal segments colored by estuary type for global visualization",
+                "generated_date": pd.Timestamp.now().isoformat()
+            },
+            "features": coastline_features
+        }
+        
+        # Output coastline to data directory
+        coastline_output_path = data_dir / 'coastline.geojson'
+        
+        with open(coastline_output_path, 'w', encoding='utf-8') as f:
+            json.dump(coastline_data, f, indent=2, ensure_ascii=False)
+        
+        print(f"\n✓ Generated {len(coastline_features)} coastline segments")
+        print(f"✓ Output saved to: {coastline_output_path}")
+    else:
+        print(f"Warning: Coastline shapefile not found at {coastline_shapefile}, skipping coastal mode")
+    
     # Print summary statistics
+    print("\n" + "=" * 60)
+    print("Summary Statistics")
+    print("=" * 60)
+    
     types = {}
     for feature in features:
         estuary_type = feature['properties']['type']
         types[estuary_type] = types.get(estuary_type, 0) + 1
     
+    print(f"\nTotal estuaries: {len(features)}")
     print("\nEstuary types distribution:")
     for estuary_type, count in sorted(types.items()):
         print(f"  {estuary_type}: {count}")
