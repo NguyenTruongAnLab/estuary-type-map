@@ -8,9 +8,10 @@ The data processing pipeline reads real estuary data from open-access scientific
 
 ### Data Sources
 
-1. **Dürr et al. (2011)** - Worldwide typology shapefiles (~6,200 estuary catchments)
-   - File: `data/Worldwide-typology-Shapefile-Durr_2011/typology_catchments.shp`
-   - Provides: Estuary typology, basin areas, ocean/sea names, geographical boundaries
+1. **Dürr et al. (2011)** - Worldwide typology shapefiles
+   - File: `data/Worldwide-typology-Shapefile-Durr_2011/typology_catchments.shp` (~6,200 catchments)
+   - File: `data/Worldwide-typology-Shapefile-Durr_2011/typology_coastline.shp` (~9,600 coastline segments)
+   - Provides: Estuary typology, basin areas, ocean/sea names, geographical boundaries, coastal segments
 
 2. **Baum et al. (2024)** - Large estuary morphometry CSV (271 embayments)
    - File: `data/Large-estuaries-Baum_2024/Baum_2024_Geomorphology.csv`
@@ -23,13 +24,17 @@ The data processing pipeline reads real estuary data from open-access scientific
 
 ### Process Flow
 
-1. **Data Loading**: Read Dürr et al. (2011) shapefile with GeoPandas
+1. **Data Loading**: Read Dürr et al. (2011) shapefiles with GeoPandas
 2. **Filtering**: Select valid estuaries (exclude endorheic, glaciated, arheic systems)
-3. **Sampling**: Choose representative estuaries for visualization (prioritize larger basins)
+3. **Full Dataset Processing**: Process ALL 6,226+ estuaries (no sampling)
 4. **Enrichment**: Match with Baum et al. (2024) morphometry where available
-5. **Geometry Extraction**: Convert polygons to point centroids for web mapping
+5. **Geometry Extraction**: 
+   - Convert catchment polygons to point centroids for point mode
+   - Extract coastline LineStrings for coastal segmentation mode
 6. **Metadata Addition**: Add provenance fields (data sources, DOIs)
-7. **GeoJSON Generation**: Write to `data/estuaries.geojson`
+7. **GeoJSON Generation**: Write to two files:
+   - `data/estuaries.geojson` (6,226 point features, 3.2MB)
+   - `data/coastline.geojson` (8,439 line features, 4.6MB)
 8. **Validation**: Verify structure and attribute completeness
 
 ### Python Script Details
@@ -44,7 +49,8 @@ pip install geopandas pandas pyproj
 **Functions**:
 - `load_durr_data(shapefile_path)`: Loads and filters Dürr et al. (2011) shapefile
 - `load_baum_data(csv_path)`: Loads Baum et al. (2024) CSV
-- `create_estuary_features(durr_gdf, baum_df)`: Creates GeoJSON features with enrichment
+- `create_estuary_features(durr_gdf, baum_df)`: Creates GeoJSON point features with enrichment
+- `create_coastline_features(coastline_gdf)`: Creates GeoJSON line features for coastal segments
 - `main()`: Orchestrates the complete data processing pipeline
 
 **Type Mapping** (from Dürr FIN_TYP codes):
@@ -126,14 +132,42 @@ pip install geopandas pandas pyproj
 - `setupFilters()`: Initialize filter checkboxes
 
 **Data Management**:
-- `estuaryData`: GeoJSON feature collection
-- `markersLayer`: Leaflet layer group for markers
+- `estuaryData`: GeoJSON feature collection for point features
+- `coastlineData`: GeoJSON feature collection for coastal segments
+- `markersLayer`: Leaflet layer group for estuary point markers
+- `coastlineLayer`: Leaflet layer group for coastal line segments
 - `activeFilters`: Set of currently active type filters
+- `currentMode`: Current visualization mode ('points' or 'coastline')
+
+**Visualization Modes**:
+- `switchMode(newMode)`: Toggle between visualization modes
+- `updateMarkers()`: Refresh displayed point markers (points mode)
+- `updateCoastline()`: Refresh displayed coastal segments (coastline mode)
+- `createMarker(feature)`: Create point marker with custom icon
+- `createCoastline(feature)`: Create colored polyline for coastline segment
 
 **Event Handlers**:
 - Filter checkbox changes
+- Mode toggle button clicks
 - Window resize events
-- Marker click events
+- Marker/segment click events
+
+### Visualization Modes
+
+#### Points Mode (Default)
+- Displays 6,226 individual estuary locations as interactive markers
+- Each marker represents a catchment centroid from Dürr et al. (2011)
+- Color-coded by estuary type
+- Click to see detailed information: name, type, basin area, sea/ocean
+- Optimal for exploring individual estuaries
+
+#### Coastal Segments Mode
+- Displays 8,439 coastal line segments colored by estuary type
+- Shows global coastlines from typology_coastline.shp
+- Each segment is color-coded by the dominant estuary type in that region
+- Provides a "heat map" view of estuary type distribution along coasts
+- Click segments to see type and length information
+- Optimal for understanding regional patterns and coastal typology distribution
 
 ## Estuary Type Definitions
 

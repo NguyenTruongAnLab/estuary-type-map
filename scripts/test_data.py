@@ -48,8 +48,8 @@ def test_features():
     total = len(features)
     print(f"Found {total} estuaries")
     
-    required_properties = ['name', 'type', 'country', 'description']
-    valid_types = ['Delta', 'Fjord', 'Lagoon', 'Ria', 'Coastal Plain', 'Bar-Built', 'Tectonic']
+    required_properties = ['name', 'type', 'type_detailed', 'type_code']
+    valid_types = ['Delta', 'Fjord', 'Lagoon', 'Ria', 'Coastal Plain', 'Bar-Built', 'Tectonic', 'Unknown']
     
     errors = []
     
