@@ -251,6 +251,15 @@ Contributions are welcome! Areas for improvement:
 - **Visualization**: Add charts, statistics, or comparative views
 - **Accessibility**: Improve screen reader support and keyboard navigation
 
+### For Contributors and AI Agents
+
+**📋 Copilot Instructions**: If you're using GitHub Copilot or other AI assistants, please review the comprehensive project guidelines in [`.github/copilot-instructions.md`](.github/copilot-instructions.md). This document covers:
+- Project mandate and scientific principles
+- Data sources and provenance requirements
+- Code standards and documentation guidelines
+- Common tasks and workflows
+- Testing and validation procedures
+
 To contribute:
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/YourFeature`)

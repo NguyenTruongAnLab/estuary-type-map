@@ -2,6 +2,20 @@
 
 Thank you for your interest in contributing to this project! We welcome contributions from the scientific community, developers, and anyone passionate about coastal ecosystems.
 
+## 📋 AI Agent and Copilot Instructions
+
+**For GitHub Copilot users and AI agents**: Please review the comprehensive project guidelines in [`.github/copilot-instructions.md`](.github/copilot-instructions.md) before making contributions. This document provides:
+- Detailed project mandate and scientific principles
+- Data sources and provenance requirements
+- Code standards and best practices
+- Common tasks and workflows
+- Testing and validation procedures
+- Emergency troubleshooting procedures
+
+The instructions ensure all contributions maintain scientific integrity, data transparency, and code quality standards.
+
+---
+
 ## Ways to Contribute
 
 ### 1. Add New Estuaries
