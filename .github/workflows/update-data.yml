@@ -1,0 +1,37 @@
+name: Update Estuary Data
+
+on:
+  workflow_dispatch:  # Allow manual trigger
+  schedule:
+    - cron: '0 0 1 * *'  # Run monthly on the 1st at midnight UTC
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        
+    - name: Process estuary data
+      run: |
+        python3 scripts/process_estuary_data.py
+        
+    - name: Check for changes
+      id: git-check
+      run: |
+        git diff --exit-code data/estuaries.geojson || echo "changed=true" >> $GITHUB_OUTPUT
+        
+    - name: Commit and push if changed
+      if: steps.git-check.outputs.changed == 'true'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add data/estuaries.geojson
+        git commit -m "Update estuary data [automated]"
+        git push

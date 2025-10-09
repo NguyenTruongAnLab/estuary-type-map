@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Estuary Type Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+</head>
+<body>
+    <div id="header">
+        <h1>🌊 Global Estuary Classification Map</h1>
+        <p class="subtitle">Interactive visualization of world estuaries by geomorphological type</p>
+    </div>
+    
+    <div id="sidebar">
+        <div class="sidebar-content">
+            <h2>Estuary Types</h2>
+            <p class="info-text">Filter by geomorphological classification:</p>
+            
+            <div class="filter-section">
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="all" checked>
+                    <span class="filter-label all">All Types</span>
+                    <span class="count" id="count-all">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="Delta" checked>
+                    <span class="filter-label delta">Delta</span>
+                    <span class="count" id="count-Delta">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="Fjord" checked>
+                    <span class="filter-label fjord">Fjord</span>
+                    <span class="count" id="count-Fjord">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="Lagoon" checked>
+                    <span class="filter-label lagoon">Lagoon</span>
+                    <span class="count" id="count-Lagoon">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="Ria" checked>
+                    <span class="filter-label ria">Ria</span>
+                    <span class="count" id="count-Ria">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="Coastal Plain" checked>
+                    <span class="filter-label coastal-plain">Coastal Plain</span>
+                    <span class="count" id="count-Coastal-Plain">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="Bar-Built" checked>
+                    <span class="filter-label bar-built">Bar-Built</span>
+                    <span class="count" id="count-Bar-Built">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" value="Tectonic" checked>
+                    <span class="filter-label tectonic">Tectonic</span>
+                    <span class="count" id="count-Tectonic">0</span>
+                </label>
+            </div>
+            
+            <div class="definitions-section">
+                <h3>Scientific Definitions</h3>
+                
+                <div class="definition-item">
+                    <h4 class="delta">Delta</h4>
+                    <p>River-dominated estuaries with extensive sediment deposition forming distributary networks at the river mouth. Characterized by high sediment load and active land-building processes.</p>
+                </div>
+                
+                <div class="definition-item">
+                    <h4 class="fjord">Fjord</h4>
+                    <p>Deep, narrow inlets carved by glacial erosion, typically with steep sides and significant depth. Common in high-latitude regions with historical glaciation (Norway, Chile, New Zealand).</p>
+                </div>
+                
+                <div class="definition-item">
+                    <h4 class="lagoon">Lagoon</h4>
+                    <p>Shallow coastal water bodies separated from the ocean by barrier islands, sandbars, or coral reefs. Generally characterized by restricted circulation and variable salinity.</p>
+                </div>
+                
+                <div class="definition-item">
+                    <h4 class="ria">Ria</h4>
+                    <p>Drowned river valleys formed by sea-level rise, typically V-shaped in cross-section. Deeper than typical coastal plain estuaries, with branching patterns following original river tributaries.</p>
+                </div>
+                
+                <div class="definition-item">
+                    <h4 class="coastal-plain">Coastal Plain</h4>
+                    <p>Wide, shallow estuaries formed in low-relief coastal areas. Often funnel-shaped with gradually sloping bottoms, common on passive continental margins.</p>
+                </div>
+                
+                <div class="definition-item">
+                    <h4 class="bar-built">Bar-Built</h4>
+                    <p>Estuaries formed behind barrier islands, spits, or offshore bars created by wave action and longshore sediment transport. Protected from direct ocean wave energy.</p>
+                </div>
+                
+                <div class="definition-item">
+                    <h4 class="tectonic">Tectonic</h4>
+                    <p>Estuaries formed by geological faulting, subsidence, or other tectonic processes. Structure controlled by underlying geological features rather than erosion or deposition.</p>
+                </div>
+                
+                <div class="reference-section">
+                    <h4>References</h4>
+                    <p class="reference">
+                        <strong>Primary Source:</strong><br>
+                        Laruelle, G.G., Cai, W.-J., Hu, X., Gruber, N., Mackenzie, F.T., & Regnier, P. (2024). 
+                        A global classification of estuaries based on their geomorphological characteristics. 
+                        <em>Estuaries and Coasts</em>.
+                    </p>
+                    <p class="reference">
+                        Dürr, H.H., Laruelle, G.G., van Kempen, C.M., Slomp, C.P., Meybeck, M., & Middelkoop, H. (2011). 
+                        Worldwide typology of nearshore coastal systems: defining the estuarine filter of river inputs to the oceans. 
+                        <em>Estuaries and Coasts</em>, 34(3), 441-458.
+                    </p>
+                    <p class="reference">
+                        Pritchard, D.W. (1967). What is an estuary: physical viewpoint. 
+                        In G.H. Lauff (Ed.), <em>Estuaries</em> (pp. 3-5). AAAS Publication 83.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="map"></div>
+    
+    <div id="footer">
+        <p>Data source: Laruelle et al. (2024, Estuaries and Coasts) | 
+           Visualization: Leaflet.js | 
+           <a href="https://github.com/NguyenTruongAnLab/estuary-type-map" target="_blank">View on GitHub</a>
+        </p>
+    </div>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/map.js"></script>
+</body>
+</html>
