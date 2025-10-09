@@ -44,6 +44,18 @@ DURR_TYPE_MAP = {
     7: "Arheic (Type VII)"
 }
 
+# Simplified type mapping for web display (matches frontend filters)
+SIMPLE_TYPE_MAP = {
+    1: "Delta",
+    2: "Coastal Plain",  # Tidal systems are often coastal plain
+    3: "Lagoon",
+    4: "Fjord",
+    5: "Delta",  # Large rivers with deltas
+    51: "Delta",  # Large rivers with tidal deltas
+    6: "Coastal Plain",  # Karst systems
+    7: "Coastal Plain"
+}
+
 
 def load_durr_data(shapefile_path):
     """
@@ -111,7 +123,8 @@ def create_estuary_features(durr_gdf, baum_df=None):
         # Extract properties
         properties = {
             "name": row['RECORDNAME'],
-            "type": DURR_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),
+            "type": SIMPLE_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),  # Simple type for frontend
+            "type_detailed": DURR_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),  # Detailed type
             "type_code": int(row['FIN_TYP']),
             "basin_area_km2": round(row['BASINAREA'], 2) if pd.notna(row['BASINAREA']) else None,
             "sea_name": row['SEANAME'] if pd.notna(row['SEANAME']) else None,

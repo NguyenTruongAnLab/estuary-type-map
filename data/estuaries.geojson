@@ -16,7 +16,7 @@
     ],
     "note": "Laruelle et al. (2025) used only for validation and statistics, not as raw data source",
     "gcc_note": "GCC (Athanasiou et al. 2024) geophysical data can be added by downloading from https://zenodo.org/records/11072020",
-    "generated_date": "2025-10-09T20:44:23.005803"
+    "generated_date": "2025-10-09T20:53:01.676560"
   },
   "features": [
     {
@@ -30,7 +30,8 @@
       },
       "properties": {
         "name": "Amazon",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 5853804.0,
         "sea_name": "Atlantic Ocean",
@@ -50,7 +51,8 @@
       },
       "properties": {
         "name": "Nile",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 3826122.0,
         "sea_name": "Mediterranean Sea",
@@ -70,7 +72,8 @@
       },
       "properties": {
         "name": "Zaire",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 3698802.8,
         "sea_name": "Atlantic Ocean",
@@ -90,7 +93,8 @@
       },
       "properties": {
         "name": "Zaire",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 3698802.8,
         "sea_name": "Atlantic Ocean",
@@ -110,7 +114,8 @@
       },
       "properties": {
         "name": "Mississippi",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 3202958.8,
         "sea_name": "Atlantic Ocean",
@@ -130,7 +135,8 @@
       },
       "properties": {
         "name": "Mississippi",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 3202958.8,
         "sea_name": "Atlantic Ocean",
@@ -150,7 +156,8 @@
       },
       "properties": {
         "name": "Mississippi",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 3202958.8,
         "sea_name": "Atlantic Ocean",
@@ -170,7 +177,8 @@
       },
       "properties": {
         "name": "Ob",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 3025923.3,
         "sea_name": "Kara Sea",
@@ -195,7 +203,8 @@
       },
       "properties": {
         "name": "Parana",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 2664048.3,
         "sea_name": "Atlantic Ocean",
@@ -220,7 +229,8 @@
       },
       "properties": {
         "name": "Yenisei",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 2578730.3,
         "sea_name": "Kara Sea",
@@ -240,7 +250,8 @@
       },
       "properties": {
         "name": "Yenisei",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 2578730.3,
         "sea_name": "Kara Sea",
@@ -260,7 +271,8 @@
       },
       "properties": {
         "name": "Lena",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 2441815.8,
         "sea_name": "Laptev Sea",
@@ -280,7 +292,8 @@
       },
       "properties": {
         "name": "Lena",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 2441815.8,
         "sea_name": "Laptev Sea",
@@ -300,7 +313,8 @@
       },
       "properties": {
         "name": "Lena",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 2441815.8,
         "sea_name": "Laptev Sea",
@@ -320,7 +334,8 @@
       },
       "properties": {
         "name": "Niger",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 2240018.8,
         "sea_name": "Atlantic Ocean",
@@ -340,7 +355,8 @@
       },
       "properties": {
         "name": "Tamanrasett",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 1818799.4,
         "sea_name": "Atlantic Ocean",
@@ -360,7 +376,8 @@
       },
       "properties": {
         "name": "Tamanrasett",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 1818799.4,
         "sea_name": "Atlantic Ocean",
@@ -380,7 +397,8 @@
       },
       "properties": {
         "name": "Chang Jiang",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 1794242.5,
         "sea_name": "Pacific Ocean",
@@ -400,7 +418,8 @@
       },
       "properties": {
         "name": "Chang Jiang",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 1794242.5,
         "sea_name": "Pacific Ocean",
@@ -420,7 +439,8 @@
       },
       "properties": {
         "name": "Amur",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 1754681.0,
         "sea_name": "Pacific Ocean",
@@ -445,7 +465,8 @@
       },
       "properties": {
         "name": "Amur",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 1754681.0,
         "sea_name": "Pacific Ocean",
@@ -470,7 +491,8 @@
       },
       "properties": {
         "name": "Amur",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 1754681.0,
         "sea_name": "Pacific Ocean",
@@ -495,7 +517,8 @@
       },
       "properties": {
         "name": "Amur",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 1754681.0,
         "sea_name": "Pacific Ocean",
@@ -520,7 +543,8 @@
       },
       "properties": {
         "name": "Mackenzie",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 1694919.8,
         "sea_name": "Beaufort Sea",
@@ -540,7 +564,8 @@
       },
       "properties": {
         "name": "Mackenzie",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 1694919.8,
         "sea_name": "Beaufort Sea",
@@ -560,7 +585,8 @@
       },
       "properties": {
         "name": "Mackenzie",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 1694919.8,
         "sea_name": "Beaufort Sea",
@@ -580,7 +606,8 @@
       },
       "properties": {
         "name": "Ganges",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 1628404.5,
         "sea_name": "Indian Ocean",
@@ -600,7 +627,8 @@
       },
       "properties": {
         "name": "Zambezi",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 1363582.3,
         "sea_name": "Indian Ocean",
@@ -620,7 +648,8 @@
       },
       "properties": {
         "name": "Zambezi",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 1363582.3,
         "sea_name": "Indian Ocean",
@@ -640,7 +669,8 @@
       },
       "properties": {
         "name": "Indus",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 1143101.1,
         "sea_name": "Indian Ocean",
@@ -660,7 +690,8 @@
       },
       "properties": {
         "name": "Indus",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 1143101.1,
         "sea_name": "Indian Ocean",
@@ -680,7 +711,8 @@
       },
       "properties": {
         "name": "Nelson",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 1139778.3,
         "sea_name": "Hudson Bay",
@@ -700,7 +732,8 @@
       },
       "properties": {
         "name": "St. Lawrence",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 1053719.9,
         "sea_name": "Atlantic Ocean",
@@ -720,7 +753,8 @@
       },
       "properties": {
         "name": "Orinoco",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 1039361.8,
         "sea_name": "Atlantic Ocean",
@@ -740,7 +774,8 @@
       },
       "properties": {
         "name": "Orinoco",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 1039361.8,
         "sea_name": "Atlantic Ocean",
@@ -760,7 +795,8 @@
       },
       "properties": {
         "name": "Murray",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 1031512.1,
         "sea_name": "Indian Ocean",
@@ -780,7 +816,8 @@
       },
       "properties": {
         "name": "Murray",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 1031512.1,
         "sea_name": "Indian Ocean",
@@ -800,7 +837,8 @@
       },
       "properties": {
         "name": "Shatt el Arab",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 990120.8,
         "sea_name": "Indian Ocean",
@@ -820,7 +858,8 @@
       },
       "properties": {
         "name": "Orange",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 943577.2,
         "sea_name": "Land",
@@ -840,7 +879,8 @@
       },
       "properties": {
         "name": "Huang He",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 893627.3,
         "sea_name": "Pacific Ocean",
@@ -860,7 +900,8 @@
       },
       "properties": {
         "name": "Huang He",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 893627.3,
         "sea_name": "Pacific Ocean",
@@ -880,7 +921,8 @@
       },
       "properties": {
         "name": "Yukon",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 855714.5,
         "sea_name": "Bering Strait",
@@ -900,7 +942,8 @@
       },
       "properties": {
         "name": "Senegal",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 847273.4,
         "sea_name": "Atlantic Ocean",
@@ -920,7 +963,8 @@
       },
       "properties": {
         "name": "Jubba",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 816054.2,
         "sea_name": "Indian Ocean",
@@ -940,7 +984,8 @@
       },
       "properties": {
         "name": "Colorado (Arizona)",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 807573.1,
         "sea_name": "Pacific Ocean",
@@ -960,7 +1005,8 @@
       },
       "properties": {
         "name": "Rio Grande (US)",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 804791.7,
         "sea_name": "Atlantic Ocean",
@@ -980,7 +1026,8 @@
       },
       "properties": {
         "name": "Danube",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 788002.2,
         "sea_name": "Black Sea",
@@ -1000,7 +1047,8 @@
       },
       "properties": {
         "name": "Tocantins",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 768616.5,
         "sea_name": "Atlantic Ocean",
@@ -1020,7 +1068,8 @@
       },
       "properties": {
         "name": "Tocantins",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 768616.5,
         "sea_name": "Atlantic Ocean",
@@ -1040,7 +1089,8 @@
       },
       "properties": {
         "name": "Mekong",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 758559.9,
         "sea_name": "Pacific Ocean",
@@ -1060,7 +1110,8 @@
       },
       "properties": {
         "name": "Mekong",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 758559.9,
         "sea_name": "Pacific Ocean",
@@ -1080,7 +1131,8 @@
       },
       "properties": {
         "name": "Mekong",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 758559.9,
         "sea_name": "Pacific Ocean",
@@ -1100,7 +1152,8 @@
       },
       "properties": {
         "name": "Columbia",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 731973.2,
         "sea_name": "Pacific Ocean",
@@ -1125,7 +1178,8 @@
       },
       "properties": {
         "name": "Columbia",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 731973.2,
         "sea_name": "Pacific Ocean",
@@ -1150,7 +1204,8 @@
       },
       "properties": {
         "name": "Kolyma",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 665648.1,
         "sea_name": "East Siberian Sea",
@@ -1170,7 +1225,8 @@
       },
       "properties": {
         "name": "Sao Francisco",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 615147.8,
         "sea_name": "Atlantic Ocean",
@@ -1190,7 +1246,8 @@
       },
       "properties": {
         "name": "Dnepr",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 508839.2,
         "sea_name": "Black Sea",
@@ -1210,7 +1267,8 @@
       },
       "properties": {
         "name": "Dnepr",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 508839.2,
         "sea_name": "Black Sea",
@@ -1230,7 +1288,8 @@
       },
       "properties": {
         "name": "Dnepr",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 508839.2,
         "sea_name": "Black Sea",
@@ -1250,7 +1309,8 @@
       },
       "properties": {
         "name": "Dnepr",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 508839.2,
         "sea_name": "Black Sea",
@@ -1270,7 +1330,8 @@
       },
       "properties": {
         "name": "Don",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 423038.4,
         "sea_name": "Black Sea",
@@ -1295,7 +1356,8 @@
       },
       "properties": {
         "name": "Colorado (Argentina)",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 421797.6,
         "sea_name": "Atlantic Ocean",
@@ -1315,7 +1377,8 @@
       },
       "properties": {
         "name": "Limpopo",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 420337.4,
         "sea_name": "Indian Ocean",
@@ -1335,7 +1398,8 @@
       },
       "properties": {
         "name": "Zhujiang",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 408527.9,
         "sea_name": "Pacific Ocean",
@@ -1360,7 +1424,8 @@
       },
       "properties": {
         "name": "Irrawaddy",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 405962.8,
         "sea_name": "Indian Ocean",
@@ -1380,7 +1445,8 @@
       },
       "properties": {
         "name": "Volta",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 398071.0,
         "sea_name": "Atlantic Ocean",
@@ -1400,7 +1466,8 @@
       },
       "properties": {
         "name": "Khatanga",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 370352.9,
         "sea_name": "Laptev Sea",
@@ -1420,7 +1487,8 @@
       },
       "properties": {
         "name": "Dvina",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 360944.0,
         "sea_name": "Barents Sea",
@@ -1440,7 +1508,8 @@
       },
       "properties": {
         "name": "Urugay",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 355505.2,
         "sea_name": "Atlantic Ocean",
@@ -1460,7 +1529,8 @@
       },
       "properties": {
         "name": "Indigirka",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 334126.4,
         "sea_name": "East Siberian Sea",
@@ -1480,7 +1550,8 @@
       },
       "properties": {
         "name": "Indigirka",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 334126.4,
         "sea_name": "East Siberian Sea",
@@ -1500,7 +1571,8 @@
       },
       "properties": {
         "name": "Parnaiba",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 330976.6,
         "sea_name": "Atlantic Ocean",
@@ -1520,7 +1592,8 @@
       },
       "properties": {
         "name": "Pechora",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 314291.8,
         "sea_name": "Barents Sea",
@@ -1540,7 +1613,8 @@
       },
       "properties": {
         "name": "Godavari",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 311574.9,
         "sea_name": "Indian Ocean",
@@ -1560,7 +1634,8 @@
       },
       "properties": {
         "name": "Churchill (Hudson Bay)",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 303497.8,
         "sea_name": "Hudson Bay",
@@ -1580,7 +1655,8 @@
       },
       "properties": {
         "name": "Baker",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 303477.9,
         "sea_name": "Hudson Bay",
@@ -1600,7 +1676,8 @@
       },
       "properties": {
         "name": "NE1",
-        "type": "Fjord/Fjaerd (Type IV)",
+        "type": "Fjord",
+        "type_detailed": "Fjord/Fjaerd (Type IV)",
         "type_code": 4,
         "basin_area_km2": 289096.2,
         "sea_name": "Greenland Sea",
@@ -1620,7 +1697,8 @@
       },
       "properties": {
         "name": "NE1",
-        "type": "Fjord/Fjaerd (Type IV)",
+        "type": "Fjord",
+        "type_detailed": "Fjord/Fjaerd (Type IV)",
         "type_code": 4,
         "basin_area_km2": 289096.2,
         "sea_name": "Greenland Sea",
@@ -1640,7 +1718,8 @@
       },
       "properties": {
         "name": "Neva",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 284505.6,
         "sea_name": "Baltic Sea",
@@ -1660,7 +1739,8 @@
       },
       "properties": {
         "name": "Liao",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 274053.1,
         "sea_name": "Pacific Ocean",
@@ -1680,7 +1760,8 @@
       },
       "properties": {
         "name": "Salween",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 273362.0,
         "sea_name": "Indian Ocean",
@@ -1700,7 +1781,8 @@
       },
       "properties": {
         "name": "Salween",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 273362.0,
         "sea_name": "Indian Ocean",
@@ -1720,7 +1802,8 @@
       },
       "properties": {
         "name": "Salween",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 273362.0,
         "sea_name": "Indian Ocean",
@@ -1740,7 +1823,8 @@
       },
       "properties": {
         "name": "Salween",
-        "type": "Large River with Tidal Delta (Type Vb)",
+        "type": "Delta",
+        "type_detailed": "Large River with Tidal Delta (Type Vb)",
         "type_code": 51,
         "basin_area_km2": 273362.0,
         "sea_name": "Indian Ocean",
@@ -1760,7 +1844,8 @@
       },
       "properties": {
         "name": "Magdalena",
-        "type": "Large River (Type Va)",
+        "type": "Delta",
+        "type_detailed": "Large River (Type Va)",
         "type_code": 5,
         "basin_area_km2": 251742.9,
         "sea_name": "Atlantic Ocean",
@@ -1780,7 +1865,8 @@
       },
       "properties": {
         "name": "Krishna",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 251683.7,
         "sea_name": "Indian Ocean",
@@ -1800,7 +1886,8 @@
       },
       "properties": {
         "name": "Krishna",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 251683.7,
         "sea_name": "Indian Ocean",
@@ -1820,7 +1907,8 @@
       },
       "properties": {
         "name": "Salado",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 251459.9,
         "sea_name": "Atlantic Ocean",
@@ -1840,7 +1928,8 @@
       },
       "properties": {
         "name": "Hai Ho",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 245410.1,
         "sea_name": "Pacific Ocean",
@@ -1860,7 +1949,8 @@
       },
       "properties": {
         "name": "Huai",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 244292.9,
         "sea_name": "Pacific Ocean",
@@ -1880,7 +1970,8 @@
       },
       "properties": {
         "name": "Fraser",
-        "type": "Fjord/Fjaerd (Type IV)",
+        "type": "Fjord",
+        "type_detailed": "Fjord/Fjaerd (Type IV)",
         "type_code": 4,
         "basin_area_km2": 237504.2,
         "sea_name": "Pacific Ocean",
@@ -1900,7 +1991,8 @@
       },
       "properties": {
         "name": "Fraser",
-        "type": "Fjord/Fjaerd (Type IV)",
+        "type": "Fjord",
+        "type_detailed": "Fjord/Fjaerd (Type IV)",
         "type_code": 4,
         "basin_area_km2": 237504.2,
         "sea_name": "Pacific Ocean",
@@ -1920,7 +2012,8 @@
       },
       "properties": {
         "name": "Fraser",
-        "type": "Fjord/Fjaerd (Type IV)",
+        "type": "Fjord",
+        "type_detailed": "Fjord/Fjaerd (Type IV)",
         "type_code": 4,
         "basin_area_km2": 237504.2,
         "sea_name": "Pacific Ocean",
@@ -1940,7 +2033,8 @@
       },
       "properties": {
         "name": "Fraser",
-        "type": "Fjord/Fjaerd (Type IV)",
+        "type": "Fjord",
+        "type_detailed": "Fjord/Fjaerd (Type IV)",
         "type_code": 4,
         "basin_area_km2": 237504.2,
         "sea_name": "Pacific Ocean",
@@ -1960,7 +2054,8 @@
       },
       "properties": {
         "name": "Fraser",
-        "type": "Fjord/Fjaerd (Type IV)",
+        "type": "Fjord",
+        "type_detailed": "Fjord/Fjaerd (Type IV)",
         "type_code": 4,
         "basin_area_km2": 237504.2,
         "sea_name": "Pacific Ocean",
@@ -1980,7 +2075,8 @@
       },
       "properties": {
         "name": "Anadyr",
-        "type": "Lagoon (Type III)",
+        "type": "Lagoon",
+        "type_detailed": "Lagoon (Type III)",
         "type_code": 3,
         "basin_area_km2": 225847.9,
         "sea_name": "Bering Strait",
@@ -2000,7 +2096,8 @@
       },
       "properties": {
         "name": "Yana",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 224992.7,
         "sea_name": "Laptev Sea",
@@ -2020,7 +2117,8 @@
       },
       "properties": {
         "name": "Olenek",
-        "type": "Small Delta (Type I)",
+        "type": "Delta",
+        "type_detailed": "Small Delta (Type I)",
         "type_code": 1,
         "basin_area_km2": 223189.3,
         "sea_name": "Laptev Sea",
@@ -2040,7 +2138,8 @@
       },
       "properties": {
         "name": "Ogooue",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 210155.3,
         "sea_name": "Atlantic Ocean",
@@ -2060,7 +2159,8 @@
       },
       "properties": {
         "name": "Ogooue",
-        "type": "Tidal System (Type II)",
+        "type": "Coastal Plain",
+        "type_detailed": "Tidal System (Type II)",
         "type_code": 2,
         "basin_area_km2": 210155.3,
         "sea_name": "Atlantic Ocean",
