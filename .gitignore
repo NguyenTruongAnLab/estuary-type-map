@@ -14,10 +14,14 @@ build/
 
 # Data processing artifacts
 data/raw/
-data/*.csv
-data/*.txt
-!data/estuaries.geojson
 *.tmp
+
+# Large data files (download separately from Zenodo)
+data/GCC-Panagiotis-Athanasiou_2024/GCC_geophysical.csv
+data/GCC-Panagiotis-Athanasiou_2024/GCC_*.csv
+
+# Keep the generated output
+!data/estuaries.geojson
 
 # IDE
 .vscode/

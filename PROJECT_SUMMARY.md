@@ -1,60 +1,64 @@
 # Project Summary: Global Estuary Type Map
 
 ## Overview
-A static web mapping framework for GitHub Pages that visualizes world estuaries classified by geomorphological shape types, based on Laruelle et al. (2024, Estuaries and Coasts).
+A static web mapping framework for GitHub Pages that visualizes world estuaries classified by geomorphological shape types. Uses real open-access datasets from Dürr et al. (2011), Baum et al. (2024), and optionally Athanasiou et al. (2024).
 
 ## Project Statistics
 
 ### Code Base
-- **Total Lines of Code**: 1,438
+- **Total Lines of Code**: ~1,600+
   - HTML: 154 lines
   - CSS: 364 lines
   - JavaScript: 299 lines
-  - Python: 621 lines (data processing + tests)
+  - Python: 800+ lines (data processing + tests)
 
 ### Documentation
-- **Total Documentation**: 1,175+ lines
-  - README.md: 274 lines
-  - TECHNICAL.md: 382 lines
+- **Total Documentation**: 1,200+ lines
+  - README.md: Updated with real data sources
+  - TECHNICAL.md: Updated with processing pipeline
   - DEPLOYMENT.md: 333 lines
   - CONTRIBUTING.md: 186 lines
   - QUICKSTART.md: 154 lines
   - LICENSE: 40 lines
 
 ### Data
-- **Estuaries**: 31 locations worldwide
-- **Data File**: 13 KB GeoJSON
-- **Geographic Coverage**: All inhabited continents
-- **Classification Types**: 7 geomorphological categories
+- **Source Estuaries**: ~6,200 catchments (Dürr et al. 2011)
+- **Displayed Estuaries**: 100 representative locations
+- **Data File**: estuaries.geojson with full provenance
+- **Geographic Coverage**: Global
+- **Classification Types**: 7 geomorphological categories from Dürr typology
 
 ## Features Implemented
 
 ### Core Functionality
 ✅ Interactive Leaflet.js map with global view
-✅ 31 world estuaries with complete metadata
-✅ 7 geomorphological types: Delta, Fjord, Lagoon, Ria, Coastal Plain, Bar-Built, Tectonic
+✅ 100 representative estuaries from real scientific datasets
+✅ Geomorphological types from Dürr et al. (2011) typology
 ✅ Click markers for detailed popups
 ✅ Filter by estuary type with checkboxes
 ✅ Color-coded markers by classification
 ✅ Responsive design for all devices
 
 ### Scientific Content
+✅ Real data from open-access sources with full attribution
 ✅ Comprehensive sidebar with type definitions
 ✅ Formation processes and characteristics
-✅ Primary source citation: Laruelle et al. (2024)
-✅ Supporting references: Dürr et al. (2011), Pritchard (1967)
-✅ Each estuary includes: name, location, area, depth, river, description
+✅ Primary source: Dürr et al. (2011) - DOI: 10.1007/s12237-011-9381-y
+✅ Enrichment: Baum et al. (2024) morphometry data
+✅ Supporting references: Pritchard (1967), Dalrymple et al. (1992), Perillo (1995)
+✅ Each estuary includes: name, location, basin area, sea/ocean, data source DOI
 
-### Automation & Quality
-✅ Python data processing script
-✅ Automated validation tests
+### Data Processing Pipeline
+✅ Python script processes real shapefiles and CSV data
+✅ GeoPandas-based spatial data handling
+✅ Automated filtering and sampling
+✅ Data enrichment from multiple sources
+✅ Full provenance tracking in output GeoJSON
 ✅ GitHub Actions workflow for updates
-✅ Error handling and user feedback
-✅ Data structure validation
 
 ### Documentation
-✅ Comprehensive README with all citations
-✅ Technical documentation (architecture, API)
+✅ Comprehensive README with corrected citations
+✅ Technical documentation with processing details
 ✅ Deployment guide (GitHub Pages, Netlify, Vercel)
 ✅ Contributing guidelines
 ✅ Quick start guide
@@ -89,26 +93,25 @@ estuary-type-map/
 
 ## Dataset Breakdown
 
-### By Estuary Type
-- **Delta**: 8 (26%)
-  - Ganges-Brahmaputra, Nile, Mississippi, Mekong, Danube, Pearl River, Yangtze, Rhine-Meuse-Scheldt
-- **Coastal Plain**: 7 (23%)
-  - Chesapeake Bay, Thames, Severn, Rio de la Plata, Tokyo Bay, Dublin Bay, Table Bay
-- **Ria**: 6 (19%)
-  - Ria de Vigo, Ria de Arousa, Plymouth Sound, Sydney Harbour, Guanabara Bay, Port Phillip Bay
-- **Fjord**: 4 (13%)
-  - Sognefjord, Geirangerfjord, Baker Channel, Milford Sound
-- **Lagoon**: 3 (10%)
-  - Venetian Lagoon, Pamlico Sound, Laguna Madre
-- **Bar-Built**: 2 (6%)
-  - Singapore Strait, Murray Mouth
-- **Tectonic**: 1 (3%)
-  - San Francisco Bay
+### By Estuary Type (100 representative estuaries from Dürr et al. 2011)
+- **Large River with Tidal Delta (Type Vb)**: 24 (24%)
+  - Amazon, Mississippi, Yangtze, etc.
+- **Tidal System (Type II)**: 25 (25%)
+  - Various tidal estuaries globally
+- **Large River (Type Va)**: 23 (23%)
+  - Nile, Zaire (Congo), etc.
+- **Small Delta (Type I)**: 13 (13%)
+  - Smaller deltaic systems
+- **Lagoon (Type III)**: 8 (8%)
+  - Coastal lagoon systems
+- **Fjord/Fjaerd (Type IV)**: 7 (7%)
+  - Glacially carved systems in Norway, Chile, New Zealand
 
 ### Geographic Distribution
-- **Americas**: 8 estuaries (26%)
-- **Europe/Africa**: 13 estuaries (42%)
-- **Asia/Oceania**: 10 estuaries (32%)
+- **Global coverage**: All continents with coastlines
+- **Prioritization**: Larger basins (by area) for visualization
+- **Source data**: 6,226 valid estuaries from Dürr et al. (2011)
+- **Displayed**: 100 representative locations
 
 ## Technologies Used
 
@@ -120,8 +123,10 @@ estuary-type-map/
 
 ### Backend/Data
 - Python 3.x (data processing)
-- GeoJSON (data format)
-- GitHub Actions (automation)
+- GeoPandas (spatial data handling)
+- Pandas (CSV processing)
+- GeoJSON (standardized output format)
+- GitHub Actions (CI/CD automation)
 
 ### Hosting
 - GitHub Pages (static site hosting)
@@ -129,16 +134,18 @@ estuary-type-map/
 
 ## Scientific References
 
-### Primary Source
-Laruelle, G.G., Cai, W.-J., Hu, X., Gruber, N., Mackenzie, F.T., & Regnier, P. (2024).
-A global classification of estuaries based on their geomorphological characteristics.
-*Estuaries and Coasts*.
+### Primary Data Sources
+1. **Dürr, H.H., et al. (2011)**: Worldwide typology of nearshore coastal systems. *Estuaries and Coasts*, 34(3), 441-458. DOI: 10.1007/s12237-011-9381-y
+2. **Baum, M.J., et al. (2024)**: Large structural estuaries: Their global distribution and morphology. *Geomorphology*, supplementary data.
+3. **Athanasiou, P., et al. (2024)**: Global Coastal Characteristics (GCC) database. DOI: 10.5281/zenodo.8200199 (optional enrichment)
 
-### Supporting References
-1. Dürr, H.H., et al. (2011). Worldwide typology of nearshore coastal systems. *Estuaries and Coasts*, 34(3), 441-458.
-2. Pritchard, D.W. (1967). What is an estuary: physical viewpoint. *Estuaries* (pp. 3-5).
-3. Dalrymple, R.W., et al. (1992). Estuarine facies models. *Journal of Sedimentary Research*, 62(6).
-4. Perillo, G.M.E. (1995). Definitions and geomorphologic classifications of estuaries.
+### Validation Context
+- **Laruelle, G.G., et al. (2025)**: Used only for validation and global statistics, not as raw data source.
+
+### Supporting Scientific References
+1. Pritchard, D.W. (1967). What is an estuary: physical viewpoint. *Estuaries* (pp. 3-5).
+2. Dalrymple, R.W., et al. (1992). Estuarine facies models. *Journal of Sedimentary Research*, 62(6).
+3. Perillo, G.M.E. (1995). Definitions and geomorphologic classifications of estuaries.
 
 ## Quality Assurance
 

@@ -76,45 +76,41 @@ Install "Live Server" extension and right-click `index.html`
 
 ### Add New Estuaries
 
-1. **Edit the data script**:
+The data is now sourced from real scientific datasets. To contribute:
+
+1. **Option A: Add to source data**
+   - Add to `data/Worldwide-typology-Shapefile-Durr_2011/` (shapefile format)
+   - Or contribute to Baum et al. (2024) dataset for large estuaries
+
+2. **Option B: Modify filtering/sampling**
    ```bash
    nano scripts/process_estuary_data.py
    ```
+   
+   Adjust the filtering criteria in `load_durr_data()` or sampling logic in `main()` to include more/different estuaries.
 
-2. **Add your estuary** to the features array:
-   ```python
-   {
-       "type": "Feature",
-       "geometry": {"type": "Point", "coordinates": [lng, lat]},
-       "properties": {
-           "name": "Estuary Name",
-           "type": "Delta",  # Choose appropriate type
-           "country": "Country",
-           "description": "Scientific description",
-           "area_km2": 1000,
-           "depth_m": 50,
-           "river": "River Name"
-       }
-   }
+3. **Install dependencies**:
+   ```bash
+   pip install geopandas pandas pyproj
    ```
 
-3. **Run the script**:
+4. **Run the processing script**:
    ```bash
    python3 scripts/process_estuary_data.py
    ```
 
-4. **Test the data**:
+5. **Test the data**:
    ```bash
    python3 scripts/test_data.py
    ```
 
-5. **View your changes**:
+6. **View your changes**:
    Start local server and check the map
 
-6. **Submit your contribution**:
+7. **Submit your contribution**:
    ```bash
    git add data/estuaries.geojson scripts/process_estuary_data.py
-   git commit -m "Add [Estuary Name]"
+   git commit -m "Update estuary data filtering"
    git push
    ```
 

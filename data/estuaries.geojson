@@ -1,22 +1,42 @@
 {
   "type": "FeatureCollection",
+  "metadata": {
+    "data_sources": [
+      {
+        "name": "Dürr et al. (2011)",
+        "title": "Worldwide typology of nearshore coastal systems",
+        "doi": "10.1007/s12237-011-9381-y",
+        "description": "Primary typology and geometry source"
+      },
+      {
+        "name": "Baum et al. (2024)",
+        "title": "Large structural estuaries",
+        "description": "Supplementary morphometry data"
+      }
+    ],
+    "note": "Laruelle et al. (2025) used only for validation and statistics, not as raw data source",
+    "gcc_note": "GCC (Athanasiou et al. 2024) geophysical data can be added by downloading from https://zenodo.org/records/11072020",
+    "generated_date": "2025-10-09T20:44:23.005803"
+  },
   "features": [
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          90.3563,
-          22.5726
+          -64.5003,
+          -6.8395
         ]
       },
       "properties": {
-        "name": "Ganges-Brahmaputra Delta",
-        "type": "Delta",
-        "country": "Bangladesh/India",
-        "description": "World's largest river delta, highly sediment-laden",
-        "area_km2": 105000,
-        "river": "Ganges, Brahmaputra"
+        "name": "Amazon",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 5853804.0,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -24,17 +44,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          29.7167,
-          45.2167
+          30.8821,
+          13.0703
         ]
       },
       "properties": {
-        "name": "Danube Delta",
-        "type": "Delta",
-        "country": "Romania/Ukraine",
-        "description": "Major European delta with extensive wetlands",
-        "area_km2": 5800,
-        "river": "Danube"
+        "name": "Nile",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 3826122.0,
+        "sea_name": "Mediterranean Sea",
+        "ocean_name": "Mediterranean+Black Sea",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -42,17 +64,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31.1656,
-          30.4167
+          32.25,
+          -2.75
         ]
       },
       "properties": {
-        "name": "Nile Delta",
-        "type": "Delta",
-        "country": "Egypt",
-        "description": "Historic delta, one of the world's most productive agricultural regions",
-        "area_km2": 24000,
-        "river": "Nile"
+        "name": "Zaire",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 3698802.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -60,17 +84,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -91.1767,
-          29.155
+          22.7845,
+          -2.6518
         ]
       },
       "properties": {
-        "name": "Mississippi Delta",
-        "type": "Delta",
-        "country": "USA",
-        "description": "Bird's-foot delta, heavily engineered system",
-        "area_km2": 12000,
-        "river": "Mississippi"
+        "name": "Zaire",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 3698802.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -78,17 +104,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          106.7,
-          10.5
+          -78.25,
+          41.75
         ]
       },
       "properties": {
-        "name": "Mekong Delta",
-        "type": "Delta",
-        "country": "Vietnam",
-        "description": "Rice bowl of Vietnam, extensive distributary network",
-        "area_km2": 40000,
-        "river": "Mekong"
+        "name": "Mississippi",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 3202958.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -96,17 +124,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.0667,
-          60.8667
+          -96.8081,
+          40.712
         ]
       },
       "properties": {
-        "name": "Sognefjord",
-        "type": "Fjord",
-        "country": "Norway",
-        "description": "Longest and deepest fjord in Norway, glacially carved",
-        "area_km2": 350,
-        "depth_m": 1308
+        "name": "Mississippi",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 3202958.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -114,17 +144,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.5,
-          61.6
+          -113.75,
+          44.75
         ]
       },
       "properties": {
-        "name": "Geirangerfjord",
-        "type": "Fjord",
-        "country": "Norway",
-        "description": "UNESCO World Heritage Site, steep mountains and waterfalls",
-        "area_km2": 15,
-        "depth_m": 260
+        "name": "Mississippi",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 3202958.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -132,17 +164,24 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -72.9167,
-          -45.45
+          74.6971,
+          56.6358
         ]
       },
       "properties": {
-        "name": "Baker Channel",
-        "type": "Fjord",
-        "country": "Chile",
-        "description": "Part of Chilean fjord system, pristine glacial estuary",
-        "area_km2": 280,
-        "depth_m": 450
+        "name": "Ob",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 3025923.3,
+        "sea_name": "Kara Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Cobscook Bay",
+        "baum_mouth_width_m": 3330.0,
+        "baum_length_m": 14559.0,
+        "baum_geomorphotype": "LSE",
+        "baum_data_source": "Baum et al. (2024)"
       }
     },
     {
@@ -150,17 +189,24 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          166.55,
-          -45.3833
+          -56.7724,
+          -23.0104
         ]
       },
       "properties": {
-        "name": "Milford Sound",
-        "type": "Fjord",
-        "country": "New Zealand",
-        "description": "Fiordland fjord, surrounded by peaks and rainforest",
-        "area_km2": 16,
-        "depth_m": 290
+        "name": "Parana",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 2664048.3,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Bay of Paranaguá",
+        "baum_mouth_width_m": 4991.0,
+        "baum_length_m": 24699.0,
+        "baum_geomorphotype": "Barrier Estuary",
+        "baum_data_source": "Baum et al. (2024)"
       }
     },
     {
@@ -168,17 +214,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12.35,
-          45.4333
+          97.397,
+          58.9508
         ]
       },
       "properties": {
-        "name": "Venetian Lagoon",
-        "type": "Lagoon",
-        "country": "Italy",
-        "description": "Large shallow lagoon, separated from Adriatic by barrier islands",
-        "area_km2": 550,
-        "depth_m": 2
+        "name": "Yenisei",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 2578730.3,
+        "sea_name": "Kara Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -186,17 +234,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -80.85,
-          35.2333
+          113.75,
+          56.75
         ]
       },
       "properties": {
-        "name": "Pamlico Sound",
-        "type": "Lagoon",
-        "country": "USA",
-        "description": "Largest lagoon along US Atlantic coast, protected by Outer Banks",
-        "area_km2": 5180,
-        "depth_m": 6
+        "name": "Yenisei",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 2578730.3,
+        "sea_name": "Kara Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -204,17 +254,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -97.3,
-          27.8
+          117.25,
+          53.75
         ]
       },
       "properties": {
-        "name": "Laguna Madre",
-        "type": "Lagoon",
-        "country": "USA/Mexico",
-        "description": "Hypersaline lagoon system, important seagrass habitat",
-        "area_km2": 2000,
-        "depth_m": 1
+        "name": "Lena",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 2441815.8,
+        "sea_name": "Laptev Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -222,17 +274,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -8.7833,
-          42.5833
+          122.0177,
+          61.3297
         ]
       },
       "properties": {
-        "name": "Ria de Vigo",
-        "type": "Ria",
-        "country": "Spain",
-        "description": "Drowned river valley, major fishing and aquaculture area",
-        "area_km2": 176,
-        "depth_m": 60
+        "name": "Lena",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 2441815.8,
+        "sea_name": "Laptev Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -240,17 +294,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -9.0,
-          42.3333
+          127.25,
+          73.25
         ]
       },
       "properties": {
-        "name": "Ria de Arousa",
-        "type": "Ria",
-        "country": "Spain",
-        "description": "Largest of the Galician rias, extensive mussel farming",
-        "area_km2": 230,
-        "depth_m": 67
+        "name": "Lena",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 2441815.8,
+        "sea_name": "Laptev Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -258,17 +314,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -4.1667,
-          50.25
+          3.0517,
+          14.0811
         ]
       },
       "properties": {
-        "name": "Plymouth Sound",
-        "type": "Ria",
-        "country": "UK",
-        "description": "Natural harbor formed by drowned river valleys",
-        "area_km2": 9,
-        "depth_m": 15
+        "name": "Niger",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 2240018.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -276,17 +334,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -76.5,
-          37.0
+          -2.4934,
+          25.2018
         ]
       },
       "properties": {
-        "name": "Chesapeake Bay",
-        "type": "Coastal Plain",
-        "country": "USA",
-        "description": "Largest estuary in USA, drowned river valley in coastal plain",
-        "area_km2": 11600,
-        "depth_m": 21
+        "name": "Tamanrasett",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 1818799.4,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -294,17 +354,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          0.8833,
-          51.4833
+          -15.375,
+          20.6875
         ]
       },
       "properties": {
-        "name": "Thames Estuary",
-        "type": "Coastal Plain",
-        "country": "UK",
-        "description": "Major shipping route, wide funnel-shaped estuary",
-        "area_km2": 285,
-        "depth_m": 10
+        "name": "Tamanrasett",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 1818799.4,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -312,17 +374,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          151.25,
-          -33.85
+          94.25,
+          32.75
         ]
       },
       "properties": {
-        "name": "Sydney Harbour",
-        "type": "Ria",
-        "country": "Australia",
-        "description": "Drowned river valley, deep water harbor",
-        "area_km2": 55,
-        "depth_m": 45
+        "name": "Chang Jiang",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 1794242.5,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -330,17 +394,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -122.4167,
-          37.8
+          106.9281,
+          30.1591
         ]
       },
       "properties": {
-        "name": "San Francisco Bay",
-        "type": "Tectonic",
-        "country": "USA",
-        "description": "Tectonic estuary formed by faulting, highly productive",
-        "area_km2": 4160,
-        "depth_m": 12
+        "name": "Chang Jiang",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 1794242.5,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -348,17 +414,24 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.0,
-          51.3667
+          108.75,
+          48.75
         ]
       },
       "properties": {
-        "name": "Severn Estuary",
-        "type": "Coastal Plain",
-        "country": "UK",
-        "description": "Funnel-shaped estuary with second highest tidal range in world",
-        "area_km2": 557,
-        "depth_m": 15
+        "name": "Amur",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 1754681.0,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Amur Bay",
+        "baum_mouth_width_m": 15730.0,
+        "baum_length_m": 20190.0,
+        "baum_geomorphotype": "Rocky Bay",
+        "baum_data_source": "Baum et al. (2024)"
       }
     },
     {
@@ -366,17 +439,24 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          114.1833,
-          22.2833
+          117.25,
+          54.25
         ]
       },
       "properties": {
-        "name": "Pearl River Estuary",
-        "type": "Delta",
-        "country": "China",
-        "description": "Highly urbanized delta system, major shipping hub",
-        "area_km2": 2700,
-        "river": "Pearl River"
+        "name": "Amur",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 1754681.0,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Amur Bay",
+        "baum_mouth_width_m": 15730.0,
+        "baum_length_m": 20190.0,
+        "baum_geomorphotype": "Rocky Bay",
+        "baum_data_source": "Baum et al. (2024)"
       }
     },
     {
@@ -384,17 +464,24 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          121.8667,
-          31.2333
+          127.1213,
+          49.8064
         ]
       },
       "properties": {
-        "name": "Yangtze Estuary",
-        "type": "Delta",
-        "country": "China",
-        "description": "One of world's largest river estuaries by discharge",
-        "area_km2": 6600,
-        "river": "Yangtze"
+        "name": "Amur",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 1754681.0,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Amur Bay",
+        "baum_mouth_width_m": 15730.0,
+        "baum_length_m": 20190.0,
+        "baum_geomorphotype": "Rocky Bay",
+        "baum_data_source": "Baum et al. (2024)"
       }
     },
     {
@@ -402,17 +489,24 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          103.8333,
-          1.2667
+          124.25,
+          56.25
         ]
       },
       "properties": {
-        "name": "Singapore Strait",
-        "type": "Bar-Built",
-        "country": "Singapore/Malaysia/Indonesia",
-        "description": "Major shipping route, bar-built estuary system",
-        "area_km2": 1030,
-        "depth_m": 23
+        "name": "Amur",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 1754681.0,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Amur Bay",
+        "baum_mouth_width_m": 15730.0,
+        "baum_length_m": 20190.0,
+        "baum_geomorphotype": "Rocky Bay",
+        "baum_data_source": "Baum et al. (2024)"
       }
     },
     {
@@ -420,17 +514,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          138.5833,
-          -34.9167
+          -119.2576,
+          60.8153
         ]
       },
       "properties": {
-        "name": "Murray Mouth",
-        "type": "Bar-Built",
-        "country": "Australia",
-        "description": "Bar-built estuary, mouth of Murray-Darling system",
-        "area_km2": 200,
-        "river": "Murray"
+        "name": "Mackenzie",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 1694919.8,
+        "sea_name": "Beaufort Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -438,17 +534,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          18.4333,
-          -33.9167
+          -134.75,
+          69.25
         ]
       },
       "properties": {
-        "name": "Table Bay",
-        "type": "Coastal Plain",
-        "country": "South Africa",
-        "description": "Natural harbor, open coastal embayment",
-        "area_km2": 88,
-        "depth_m": 20
+        "name": "Mackenzie",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 1694919.8,
+        "sea_name": "Beaufort Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -456,17 +554,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -43.1833,
-          -22.9167
+          -131.25,
+          61.25
         ]
       },
       "properties": {
-        "name": "Guanabara Bay",
-        "type": "Ria",
-        "country": "Brazil",
-        "description": "Drowned river valley, major urban harbor",
-        "area_km2": 412,
-        "depth_m": 30
+        "name": "Mackenzie",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 1694919.8,
+        "sea_name": "Beaufort Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -474,17 +574,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -57.95,
-          -34.8667
+          85.3539,
+          27.0735
         ]
       },
       "properties": {
-        "name": "Rio de la Plata",
-        "type": "Coastal Plain",
-        "country": "Argentina/Uruguay",
-        "description": "Widest estuary in the world, funnel-shaped",
-        "area_km2": 35000,
-        "depth_m": 5
+        "name": "Ganges",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 1628404.5,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -492,17 +594,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          139.75,
-          35.6833
+          27.83,
+          -14.9814
         ]
       },
       "properties": {
-        "name": "Tokyo Bay",
-        "type": "Coastal Plain",
-        "country": "Japan",
-        "description": "Highly urbanized bay estuary, major port system",
-        "area_km2": 922,
-        "depth_m": 40
+        "name": "Zambezi",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 1363582.3,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -510,17 +614,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4.4167,
-          51.9167
+          36.25,
+          -18.75
         ]
       },
       "properties": {
-        "name": "Rhine-Meuse-Scheldt Delta",
-        "type": "Delta",
-        "country": "Netherlands",
-        "description": "Complex delta system, highly engineered",
-        "area_km2": 4000,
-        "river": "Rhine, Meuse, Scheldt"
+        "name": "Zambezi",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 1363582.3,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -528,17 +634,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -6.2,
-          53.35
+          73.1622,
+          31.4659
         ]
       },
       "properties": {
-        "name": "Dublin Bay",
-        "type": "Coastal Plain",
-        "country": "Ireland",
-        "description": "Shallow coastal embayment with extensive intertidal areas",
-        "area_km2": 125,
-        "depth_m": 10
+        "name": "Indus",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 1143101.1,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     },
     {
@@ -546,17 +654,1419 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          144.95,
-          -37.8333
+          67.75,
+          24.25
         ]
       },
       "properties": {
-        "name": "Port Phillip Bay",
-        "type": "Ria",
-        "country": "Australia",
-        "description": "Large bay with narrow entrance, drowned valley",
-        "area_km2": 1930,
-        "depth_m": 24
+        "name": "Indus",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 1143101.1,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -102.2635,
+          51.4426
+        ]
+      },
+      "properties": {
+        "name": "Nelson",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 1139778.3,
+        "sea_name": "Hudson Bay",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.0005,
+          45.5395
+        ]
+      },
+      "properties": {
+        "name": "St. Lawrence",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 1053719.9,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.8093,
+          5.4251
+        ]
+      },
+      "properties": {
+        "name": "Orinoco",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 1039361.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.75,
+          7.75
+        ]
+      },
+      "properties": {
+        "name": "Orinoco",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 1039361.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          147.75,
+          -24.75
+        ]
+      },
+      "properties": {
+        "name": "Murray",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 1031512.1,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.9082,
+          -31.7666
+        ]
+      },
+      "properties": {
+        "name": "Murray",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 1031512.1,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.5376,
+          33.8031
+        ]
+      },
+      "properties": {
+        "name": "Shatt el Arab",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 990120.8,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          22.436,
+          -27.3735
+        ]
+      },
+      "properties": {
+        "name": "Orange",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 943577.2,
+        "sea_name": "Land",
+        "ocean_name": "Land",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9347,
+          36.7444
+        ]
+      },
+      "properties": {
+        "name": "Huang He",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 893627.3,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.25,
+          37.75
+        ]
+      },
+      "properties": {
+        "name": "Huang He",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 893627.3,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -144.8828,
+          64.5217
+        ]
+      },
+      "properties": {
+        "name": "Yukon",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 855714.5,
+        "sea_name": "Bering Strait",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.8371,
+          17.0549
+        ]
+      },
+      "properties": {
+        "name": "Senegal",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 847273.4,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.3557,
+          4.3594
+        ]
+      },
+      "properties": {
+        "name": "Jubba",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 816054.2,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.8146,
+          36.4162
+        ]
+      },
+      "properties": {
+        "name": "Colorado (Arizona)",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 807573.1,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -104.2965,
+          29.961
+        ]
+      },
+      "properties": {
+        "name": "Rio Grande (US)",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 804791.7,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.2324,
+          46.427
+        ]
+      },
+      "properties": {
+        "name": "Danube",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 788002.2,
+        "sea_name": "Black Sea",
+        "ocean_name": "Mediterranean+Black Sea",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.25,
+          -2.25
+        ]
+      },
+      "properties": {
+        "name": "Tocantins",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 768616.5,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.4674,
+          -11.2816
+        ]
+      },
+      "properties": {
+        "name": "Tocantins",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 768616.5,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.3155,
+          17.2522
+        ]
+      },
+      "properties": {
+        "name": "Mekong",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 758559.9,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.3333,
+          29.5833
+        ]
+      },
+      "properties": {
+        "name": "Mekong",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 758559.9,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.9038,
+          32.4038
+        ]
+      },
+      "properties": {
+        "name": "Mekong",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 758559.9,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.3588,
+          45.9456
+        ]
+      },
+      "properties": {
+        "name": "Columbia",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 731973.2,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Columbia River Estuary",
+        "baum_mouth_width_m": 5263.0,
+        "baum_length_m": 12263.0,
+        "baum_geomorphotype": "Barrier Estuary",
+        "baum_data_source": "Baum et al. (2024)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.25,
+          52.75
+        ]
+      },
+      "properties": {
+        "name": "Columbia",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 731973.2,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Columbia River Estuary",
+        "baum_mouth_width_m": 5263.0,
+        "baum_length_m": 12263.0,
+        "baum_geomorphotype": "Barrier Estuary",
+        "baum_data_source": "Baum et al. (2024)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          156.1902,
+          65.4189
+        ]
+      },
+      "properties": {
+        "name": "Kolyma",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 665648.1,
+        "sea_name": "East Siberian Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.1915,
+          -13.4378
+        ]
+      },
+      "properties": {
+        "name": "Sao Francisco",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 615147.8,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.25,
+          46.25
+        ]
+      },
+      "properties": {
+        "name": "Dnepr",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 508839.2,
+        "sea_name": "Black Sea",
+        "ocean_name": "Mediterranean+Black Sea",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          27.75,
+          55.25
+        ]
+      },
+      "properties": {
+        "name": "Dnepr",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 508839.2,
+        "sea_name": "Black Sea",
+        "ocean_name": "Mediterranean+Black Sea",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.2346,
+          51.4058
+        ]
+      },
+      "properties": {
+        "name": "Dnepr",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 508839.2,
+        "sea_name": "Black Sea",
+        "ocean_name": "Mediterranean+Black Sea",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.0,
+          51.25
+        ]
+      },
+      "properties": {
+        "name": "Dnepr",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 508839.2,
+        "sea_name": "Black Sea",
+        "ocean_name": "Mediterranean+Black Sea",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          40.7759,
+          49.7594
+        ]
+      },
+      "properties": {
+        "name": "Don",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 423038.4,
+        "sea_name": "Black Sea",
+        "ocean_name": "Mediterranean+Black Sea",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Ao Ban Don ",
+        "baum_mouth_width_m": 25700.0,
+        "baum_length_m": 30600.0,
+        "baum_geomorphotype": "Sandy Bay",
+        "baum_data_source": "Baum et al. (2024)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.6024,
+          -34.5904
+        ]
+      },
+      "properties": {
+        "name": "Colorado (Argentina)",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 421797.6,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.4493,
+          -23.2128
+        ]
+      },
+      "properties": {
+        "name": "Limpopo",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 420337.4,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          108.4086,
+          24.2741
+        ]
+      },
+      "properties": {
+        "name": "Zhujiang",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 408527.9,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y",
+        "baum_embayment_name": "Zhujiang River Estuary",
+        "baum_mouth_width_m": 28370.0,
+        "baum_length_m": 30110.0,
+        "baum_geomorphotype": "Rocky Bay",
+        "baum_data_source": "Baum et al. (2024)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.9808,
+          23.1591
+        ]
+      },
+      "properties": {
+        "name": "Irrawaddy",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 405962.8,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.5324,
+          10.4103
+        ]
+      },
+      "properties": {
+        "name": "Volta",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 398071.0,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.2584,
+          70.323
+        ]
+      },
+      "properties": {
+        "name": "Khatanga",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 370352.9,
+        "sea_name": "Laptev Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          46.4012,
+          61.9032
+        ]
+      },
+      "properties": {
+        "name": "Dvina",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 360944.0,
+        "sea_name": "Barents Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.2838,
+          -30.0883
+        ]
+      },
+      "properties": {
+        "name": "Urugay",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 355505.2,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.5137,
+          66.728
+        ]
+      },
+      "properties": {
+        "name": "Indigirka",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 334126.4,
+        "sea_name": "East Siberian Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          149.75,
+          71.25
+        ]
+      },
+      "properties": {
+        "name": "Indigirka",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 334126.4,
+        "sea_name": "East Siberian Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.3009,
+          -7.3009
+        ]
+      },
+      "properties": {
+        "name": "Parnaiba",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 330976.6,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.4242,
+          65.3627
+        ]
+      },
+      "properties": {
+        "name": "Pechora",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 314291.8,
+        "sea_name": "Barents Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          78.6659,
+          19.5771
+        ]
+      },
+      "properties": {
+        "name": "Godavari",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 311574.9,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.8517,
+          56.3008
+        ]
+      },
+      "properties": {
+        "name": "Churchill (Hudson Bay)",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 303497.8,
+        "sea_name": "Hudson Bay",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -99.7751,
+          63.3573
+        ]
+      },
+      "properties": {
+        "name": "Baker",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 303477.9,
+        "sea_name": "Hudson Bay",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -23.75,
+          82.5
+        ]
+      },
+      "properties": {
+        "name": "NE1",
+        "type": "Fjord/Fjaerd (Type IV)",
+        "type_code": 4,
+        "basin_area_km2": 289096.2,
+        "sea_name": "Greenland Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -35.7981,
+          77.6676
+        ]
+      },
+      "properties": {
+        "name": "NE1",
+        "type": "Fjord/Fjaerd (Type IV)",
+        "type_code": 4,
+        "basin_area_km2": 289096.2,
+        "sea_name": "Greenland Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.0701,
+          60.8399
+        ]
+      },
+      "properties": {
+        "name": "Neva",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 284505.6,
+        "sea_name": "Baltic Sea",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.2623,
+          43.377
+        ]
+      },
+      "properties": {
+        "name": "Liao",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 274053.1,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.25,
+          20.7611
+        ]
+      },
+      "properties": {
+        "name": "Salween",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 273362.0,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          93.2965,
+          31.564
+        ]
+      },
+      "properties": {
+        "name": "Salween",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 273362.0,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.6389,
+          27.1389
+        ]
+      },
+      "properties": {
+        "name": "Salween",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 273362.0,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          97.75,
+          29.5
+        ]
+      },
+      "properties": {
+        "name": "Salween",
+        "type": "Large River with Tidal Delta (Type Vb)",
+        "type_code": 51,
+        "basin_area_km2": 273362.0,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.7012,
+          6.311
+        ]
+      },
+      "properties": {
+        "name": "Magdalena",
+        "type": "Large River (Type Va)",
+        "type_code": 5,
+        "basin_area_km2": 251742.9,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.9048,
+          16.6905
+        ]
+      },
+      "properties": {
+        "name": "Krishna",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 251683.7,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.25,
+          13.25
+        ]
+      },
+      "properties": {
+        "name": "Krishna",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 251683.7,
+        "sea_name": "Indian Ocean",
+        "ocean_name": "Indian Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.005,
+          -35.55
+        ]
+      },
+      "properties": {
+        "name": "Salado",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 251459.9,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.7892,
+          38.8676
+        ]
+      },
+      "properties": {
+        "name": "Hai Ho",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 245410.1,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.5132,
+          33.6921
+        ]
+      },
+      "properties": {
+        "name": "Huai",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 244292.9,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -125.75,
+          55.25
+        ]
+      },
+      "properties": {
+        "name": "Fraser",
+        "type": "Fjord/Fjaerd (Type IV)",
+        "type_code": 4,
+        "basin_area_km2": 237504.2,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.5,
+          54.75
+        ]
+      },
+      "properties": {
+        "name": "Fraser",
+        "type": "Fjord/Fjaerd (Type IV)",
+        "type_code": 4,
+        "basin_area_km2": 237504.2,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.75,
+          52.75
+        ]
+      },
+      "properties": {
+        "name": "Fraser",
+        "type": "Fjord/Fjaerd (Type IV)",
+        "type_code": 4,
+        "basin_area_km2": 237504.2,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -126.25,
+          55.75
+        ]
+      },
+      "properties": {
+        "name": "Fraser",
+        "type": "Fjord/Fjaerd (Type IV)",
+        "type_code": 4,
+        "basin_area_km2": 237504.2,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4442,
+          52.3202
+        ]
+      },
+      "properties": {
+        "name": "Fraser",
+        "type": "Fjord/Fjaerd (Type IV)",
+        "type_code": 4,
+        "basin_area_km2": 237504.2,
+        "sea_name": "Pacific Ocean",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          172.85,
+          65.3186
+        ]
+      },
+      "properties": {
+        "name": "Anadyr",
+        "type": "Lagoon (Type III)",
+        "type_code": 3,
+        "basin_area_km2": 225847.9,
+        "sea_name": "Bering Strait",
+        "ocean_name": "Pacific Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          134.2821,
+          67.0869
+        ]
+      },
+      "properties": {
+        "name": "Yana",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 224992.7,
+        "sea_name": "Laptev Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.348,
+          69.2623
+        ]
+      },
+      "properties": {
+        "name": "Olenek",
+        "type": "Small Delta (Type I)",
+        "type_code": 1,
+        "basin_area_km2": 223189.3,
+        "sea_name": "Laptev Sea",
+        "ocean_name": "Arctic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.3396,
+          -0.25
+        ]
+      },
+      "properties": {
+        "name": "Ogooue",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 210155.3,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.25,
+          -1.25
+        ]
+      },
+      "properties": {
+        "name": "Ogooue",
+        "type": "Tidal System (Type II)",
+        "type_code": 2,
+        "basin_area_km2": 210155.3,
+        "sea_name": "Atlantic Ocean",
+        "ocean_name": "Atlantic Ocean",
+        "data_source": "Dürr et al. (2011)",
+        "data_source_doi": "10.1007/s12237-011-9381-y"
       }
     }
   ]

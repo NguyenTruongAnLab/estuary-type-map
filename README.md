@@ -1,6 +1,6 @@
 # 🌊 Global Estuary Type Map
 
-An interactive web mapping framework for visualizing world estuaries classified by geomorphological shape types. This project uses the global datasets from Laruelle et al. (2024, Estuaries and Coasts) as the primary scientific source.
+An interactive web mapping framework for visualizing world estuaries classified by geomorphological shape types. This project uses open-access scientific datasets from Dürr et al. (2011), Baum et al. (2024), and optionally Athanasiou et al. (2024) for coastal characteristics.
 
 ## 🗺️ Live Demo
 
@@ -44,23 +44,43 @@ This project uses a geomorphological classification system based on the physical
 - **Hydrodynamic behavior**: Mixing patterns, circulation, tidal influence
 - **Ecological implications**: Habitat types, productivity patterns
 
-## 📚 Data Sources & Citations
+## 📚 Data Sources & Scientific Attribution
 
-### Primary Source
-
-**Laruelle, G.G., Cai, W.-J., Hu, X., Gruber, N., Mackenzie, F.T., & Regnier, P. (2024)**  
-*A global classification of estuaries based on their geomorphological characteristics.*  
-**Estuaries and Coasts**  
-DOI: [To be added when available]
-
-This comprehensive study provides a global framework for classifying estuaries based on their geomorphological characteristics, building upon decades of estuarine research.
-
-### Supporting References
+### Main Estuary Typology and Geometry
 
 **Dürr, H.H., Laruelle, G.G., van Kempen, C.M., Slomp, C.P., Meybeck, M., & Middelkoop, H. (2011)**  
 *Worldwide typology of nearshore coastal systems: defining the estuarine filter of river inputs to the oceans.*  
 **Estuaries and Coasts**, 34(3), 441-458.  
 DOI: [10.1007/s12237-011-9381-y](https://doi.org/10.1007/s12237-011-9381-y)
+
+This comprehensive study provides the global framework for classifying estuaries based on their geomorphological characteristics. The dataset includes ~6,200 coastal cells with estuary typology linked to river basins.
+
+### Coastal Attributes (Land Use, Slope, Elevation) — Optional Enrichment
+
+**Athanasiou, P., van Dongeren, A., Giardino, A., Vousdoukas, M., Ranasinghe, R., & Kwadijk, J. (2024)**  
+*Global Coastal Characteristics (GCC) Database.*  
+DOI: [10.5281/zenodo.8200199](https://doi.org/10.5281/zenodo.8200199)
+
+Because the GCC_geophysical.csv file is >200MB, it is **not included** in this repository.  
+To use GCC data enrichment:
+1. Download the latest GCC geophysical CSV from [Zenodo GCC Download](https://zenodo.org/records/11072020/files/GCC_geophysical.csv?download=1)
+2. Place it in `data/GCC-Panagiotis-Athanasiou_2024/`
+3. The processing pipeline can be extended to extract and join coastal attributes for estuary polygons
+
+### Large Structural Estuaries (Validation/Enrichment)
+
+**Baum, M.J., Schüttrumpf, H., & Siemes, R.W. (2024)**  
+*Large structural estuaries: Their global distribution and morphology.*  
+**Geomorphology**, supplementary data.
+
+This dataset provides morphometric data (width, length, geomorphotype) for 271 large embayments globally, used to enrich the primary Dürr dataset.
+
+### Validation and Context
+
+_Note: Laruelle et al. (2025) "A global classification of estuaries based on their geomorphological characteristics" (Estuaries and Coasts) is used solely for validation and global area statistics. No shape, polygon, or direct attribute data is sourced from this study._
+
+### Supporting Scientific References
+
 
 **Pritchard, D.W. (1967)**  
 *What is an estuary: physical viewpoint.*  
@@ -73,12 +93,6 @@ In G.H. Lauff (Ed.), **Estuaries** (pp. 3-5). AAAS Publication 83.
 **Perillo, G.M.E. (1995)**  
 *Definitions and geomorphologic classifications of estuaries.*  
 In G.M.E. Perillo (Ed.), **Geomorphology and Sedimentology of Estuaries** (pp. 17-47). Elsevier.
-
-### Additional Data Sources
-
-- Global Estuarine Database (GED): Coordinates and characteristics of major estuaries
-- LOICZ (Land-Ocean Interactions in the Coastal Zone) database
-- National/regional estuary inventories from various countries
 
 ## 🛠️ Technical Implementation
 
@@ -101,7 +115,14 @@ estuary-type-map/
 ├── js/
 │   └── map.js             # Map functionality and interactivity
 ├── data/
-│   └── estuaries.geojson  # GeoJSON data file with estuary locations
+│   ├── estuaries.geojson  # GeoJSON data file with estuary locations
+│   ├── Worldwide-typology-Shapefile-Durr_2011/
+│   │   ├── typology_catchments.shp  # Primary source data
+│   │   └── typology_coastline.shp
+│   ├── Large-estuaries-Baum_2024/
+│   │   └── Baum_2024_Geomorphology.csv
+│   └── GCC-Panagiotis-Athanasiou_2024/
+│       └── GCC_geophysical.csv  # Optional, not included (>200MB)
 ├── scripts/
 │   └── process_estuary_data.py  # Python script for data processing
 ├── docs/                  # Additional documentation
@@ -110,17 +131,24 @@ estuary-type-map/
 
 ### Data Processing
 
-The Python script `scripts/process_estuary_data.py` automates the processing of estuary data:
+The Python script `scripts/process_estuary_data.py` processes real estuary data from open-access sources:
 
 ```bash
+# Install dependencies
+pip install geopandas pandas pyproj
+
+# Process data
 python3 scripts/process_estuary_data.py
 ```
 
 This script:
-1. Processes raw estuary data from scientific sources
-2. Classifies estuaries by geomorphological type
-3. Generates a GeoJSON file for web mapping
+1. Reads Dürr et al. (2011) shapefile with ~6,200 estuary catchments
+2. Filters and selects representative estuaries for visualization
+3. Enriches with Baum et al. (2024) morphometry data where available
+3. Generates a GeoJSON file for web mapping with complete provenance metadata
 4. Validates data structure and completeness
+
+All data sources are properly attributed with DOIs and citations in the output GeoJSON.
 
 ### Map Features Implementation
 
@@ -232,11 +260,17 @@ To contribute:
 
 ## 📄 License
 
-This project is open source and available for educational and research purposes. Please cite the original data sources (Laruelle et al., 2024) when using this tool in academic work.
+This project is open source and available for educational and research purposes. Please cite the original data sources when using this tool in academic work:
+
+- **Primary data**: Dürr et al. (2011) - DOI: 10.1007/s12237-011-9381-y
+- **Supplementary data**: Baum et al. (2024)
+- **Optional enrichment**: Athanasiou et al. (2024) - DOI: 10.5281/zenodo.8200199
 
 ## 🙏 Acknowledgments
 
-- **Dr. Goulven G. Laruelle** and colleagues for their comprehensive global estuary classification research
+- **Dr. Hans H. Dürr**, **Dr. Goulven G. Laruelle**, and colleagues for the comprehensive worldwide typology of nearshore coastal systems
+- **Dr. Moritz J. Baum** and colleagues for large structural estuaries morphometry data
+- **Dr. Panagiotis Athanasiou** and colleagues for the Global Coastal Characteristics database
 - **OpenStreetMap contributors** for base map tiles
 - **Leaflet.js team** for the excellent mapping library
 - **GitHub Pages** for free hosting of this educational resource
@@ -249,14 +283,21 @@ For questions, suggestions, or collaboration opportunities:
 
 ## 🔄 Updates
 
-**Current Version**: 1.0.0 (Initial Release)
+**Current Version**: 2.0.0 (Real Data Implementation)
+
+**Changes in v2.0.0:**
+- ✅ Replaced sample/fake data with real open-access datasets
+- ✅ Primary data from Dürr et al. (2011) worldwide typology (~6,200 estuaries)
+- ✅ Enriched with Baum et al. (2024) large estuary morphometry
+- ✅ Full provenance tracking in GeoJSON output
+- ✅ Proper scientific attribution with DOIs
 
 Future updates will include:
-- Additional estuaries from peer-reviewed sources
-- More detailed classification attributes
+- Integration of GCC (Athanasiou et al. 2024) coastal attributes
+- Regional extrapolation pipeline (similar to Laruelle et al. methodology)
+- Advanced filtering by basin area, ocean, region
 - Time-series data on estuary changes
-- Integration with other coastal databases
-- Advanced filtering and search capabilities
+- Enhanced morphometric analysis
 
 ---
 
@@ -266,9 +307,10 @@ NguyenTruongAnLab. (2024). Global Estuary Type Map: Interactive visualization of
 by geomorphological classification. GitHub. https://github.com/NguyenTruongAnLab/estuary-type-map
 ```
 
-And the primary data source:
+And the primary data sources:
 ```
-Laruelle, G.G., et al. (2024). A global classification of estuaries based on their 
-geomorphological characteristics. Estuaries and Coasts.
+Dürr, H.H., et al. (2011). Worldwide typology of nearshore coastal systems: defining the 
+estuarine filter of river inputs to the oceans. Estuaries and Coasts, 34(3), 441-458. 
+DOI: 10.1007/s12237-011-9381-y
 ```
 
