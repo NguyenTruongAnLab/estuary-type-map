@@ -9,23 +9,24 @@ Visit the interactive map: [https://nguyentruonganlab.github.io/estuary-type-map
 ## 📊 Features
 
 - **Interactive Global Map**: Explore estuaries worldwide using Leaflet.js mapping library
+- **Full Global Coverage**: All ~6,200+ estuaries from Dürr et al. (2011) dataset
+- **Multiple Visualization Modes**:
+  - **📍 Estuary Points Mode**: View individual estuary locations as interactive markers
+  - **🌐 Coastal Segments Mode**: View global coastlines colored by estuary type (8,400+ segments)
+  
 - **Geomorphological Classification**: Filter estuaries by shape type:
-  - **Delta**: River-dominated, sediment-rich formations
-  - **Fjord**: Glacially carved, deep narrow inlets
-  - **Lagoon**: Coastal water bodies separated by barrier islands
-  - **Ria**: Drowned river valleys
-  - **Coastal Plain**: Wide, shallow estuaries on flat coastal areas
-  - **Bar-Built**: Formed behind barrier islands or spits
-  - **Tectonic**: Formed by geological faulting or subsidence
+  - **Delta**: River-dominated, sediment-rich formations (1,768 estuaries)
+  - **Fjord**: Glacially carved, deep narrow inlets (2,303 estuaries)
+  - **Lagoon**: Coastal water bodies separated by barrier islands (510 estuaries)
+  - **Coastal Plain**: Wide, shallow estuaries on flat coastal areas (1,645 estuaries)
 
 - **Sidebar Legend**: Scientific definitions for each estuary type with academic references
-- **Interactive Popups**: Click any estuary marker to view detailed information including:
+- **Interactive Popups**: Click any estuary marker or coastal segment to view detailed information including:
   - Name and location
-  - Geomorphological classification
-  - Area (km²)
-  - Depth (m)
-  - Associated rivers
-  - Scientific description
+  - Geomorphological classification (detailed typology)
+  - Basin area (km²)
+  - Sea/Ocean name
+  - Data source with DOI
 
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 
@@ -115,10 +116,11 @@ estuary-type-map/
 ├── js/
 │   └── map.js             # Map functionality and interactivity
 ├── data/
-│   ├── estuaries.geojson  # GeoJSON data file with estuary locations
+│   ├── estuaries.geojson   # GeoJSON with 6,226 estuary points (3.2MB)
+│   ├── coastline.geojson   # GeoJSON with 8,439 coastal segments (4.6MB)
 │   ├── Worldwide-typology-Shapefile-Durr_2011/
 │   │   ├── typology_catchments.shp  # Primary source data
-│   │   └── typology_coastline.shp
+│   │   └── typology_coastline.shp   # Coastal segmentation data
 │   ├── Large-estuaries-Baum_2024/
 │   │   └── Baum_2024_Geomorphology.csv
 │   └── GCC-Panagiotis-Athanasiou_2024/
@@ -143,14 +145,21 @@ python3 scripts/process_estuary_data.py
 
 This script:
 1. Reads Dürr et al. (2011) shapefile with ~6,200 estuary catchments
-2. Filters and selects representative estuaries for visualization
-3. Enriches with Baum et al. (2024) morphometry data where available
-3. Generates a GeoJSON file for web mapping with complete provenance metadata
-4. Validates data structure and completeness
+2. Processes ALL estuaries (no sampling) for complete global coverage
+3. Generates estuary point GeoJSON (estuaries.geojson) with 6,226 features
+4. Processes coastal typology shapefile (typology_coastline.shp)
+5. Generates coastal segment GeoJSON (coastline.geojson) with 8,439 features
+6. Enriches with Baum et al. (2024) morphometry data where available
+7. Adds complete provenance metadata with DOIs and citations
 
 All data sources are properly attributed with DOIs and citations in the output GeoJSON.
 
 ### Map Features Implementation
+
+**Visualization Modes**:
+- **Points Mode**: Shows individual estuary locations as interactive markers (6,226 estuaries)
+- **Coastal Segments Mode**: Shows global coastlines colored by estuary type (8,439 segments)
+- Toggle between modes with one click
 
 **Filtering System**:
 - Dynamic checkboxes for each estuary type

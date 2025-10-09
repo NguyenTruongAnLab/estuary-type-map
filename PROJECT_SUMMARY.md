@@ -23,20 +23,27 @@ A static web mapping framework for GitHub Pages that visualizes world estuaries 
 
 ### Data
 - **Source Estuaries**: ~6,200 catchments (Dürr et al. 2011)
-- **Displayed Estuaries**: 100 representative locations
-- **Data File**: estuaries.geojson with full provenance
+- **Displayed Estuaries**: 6,226 estuaries (full global coverage)
+- **Coastal Segments**: 8,439 segments (typology_coastline.shp)
+- **Data Files**: 
+  - estuaries.geojson (3.2MB) - Point features
+  - coastline.geojson (4.6MB) - LineString features
 - **Geographic Coverage**: Global
-- **Classification Types**: 7 geomorphological categories from Dürr typology
+- **Classification Types**: 4 main geomorphological categories (Delta, Fjord, Lagoon, Coastal Plain)
 
 ## Features Implemented
 
 ### Core Functionality
 ✅ Interactive Leaflet.js map with global view
-✅ 100 representative estuaries from real scientific datasets
+✅ 6,226 estuaries from real scientific datasets (full global coverage)
+✅ Multiple visualization modes:
+  - Points Mode: Individual estuary markers
+  - Coastal Segments Mode: Colored coastline by estuary type (8,439 segments)
 ✅ Geomorphological types from Dürr et al. (2011) typology
-✅ Click markers for detailed popups
+✅ Click markers/segments for detailed popups
 ✅ Filter by estuary type with checkboxes
-✅ Color-coded markers by classification
+✅ Color-coded markers and segments by classification
+✅ Mode toggle buttons for switching visualization
 ✅ Responsive design for all devices
 
 ### Scientific Content
@@ -93,25 +100,29 @@ estuary-type-map/
 
 ## Dataset Breakdown
 
-### By Estuary Type (100 representative estuaries from Dürr et al. 2011)
-- **Large River with Tidal Delta (Type Vb)**: 24 (24%)
-  - Amazon, Mississippi, Yangtze, etc.
-- **Tidal System (Type II)**: 25 (25%)
-  - Various tidal estuaries globally
-- **Large River (Type Va)**: 23 (23%)
-  - Nile, Zaire (Congo), etc.
-- **Small Delta (Type I)**: 13 (13%)
-  - Smaller deltaic systems
-- **Lagoon (Type III)**: 8 (8%)
-  - Coastal lagoon systems
-- **Fjord/Fjaerd (Type IV)**: 7 (7%)
-  - Glacially carved systems in Norway, Chile, New Zealand
+### By Estuary Type (6,226 estuaries from Dürr et al. 2011 - Full Global Dataset)
+- **Fjord (Type IV)**: 2,303 (37%)
+  - Glacially carved systems in Norway, Chile, New Zealand, Alaska
+- **Delta**: 1,768 (28%)
+  - Type I (Small Delta): ~1,713
+  - Type V (Large River/Tidal Delta): ~55
+  - Includes Amazon, Mississippi, Yangtze, Nile, etc.
+- **Coastal Plain (Tidal Systems)**: 1,645 (26%)
+  - Type II (Tidal System), Type VI (Karst), Type VII (Arheic)
+- **Lagoon (Type III)**: 510 (8%)
+  - Coastal lagoon systems globally
+
+### Coastal Segments (8,439 features from Dürr et al. 2011)
+- **Source**: typology_coastline.shp
+- **Coverage**: Global coastlines classified by estuary type
+- **Used for**: Coastal Segmentation visualization mode
+- **File size**: 4.6MB (coastline.geojson)
 
 ### Geographic Distribution
 - **Global coverage**: All continents with coastlines
-- **Prioritization**: Larger basins (by area) for visualization
-- **Source data**: 6,226 valid estuaries from Dürr et al. (2011)
-- **Displayed**: 100 representative locations
+- **Full dataset**: All 6,226 valid estuaries included
+- **Source data**: Dürr et al. (2011) worldwide typology
+- **Displayed**: 6,226 estuaries (complete global dataset)
 
 ## Technologies Used
 
