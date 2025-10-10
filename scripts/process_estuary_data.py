@@ -165,6 +165,77 @@ def create_estuary_features(durr_gdf, baum_df=None):
     return features
 
 
+def create_basin_polygon_features(durr_gdf, baum_df=None):
+    """
+    Create GeoJSON features with basin polygons from Dürr data.
+    
+    Args:
+        durr_gdf: GeoDataFrame from Dürr et al. (2011) with Polygon geometries
+        baum_df: Optional DataFrame from Baum et al. (2024)
+    
+    Returns:
+        List of GeoJSON features with Polygon/MultiPolygon geometries
+    """
+    features = []
+    
+    for idx, row in durr_gdf.iterrows():
+        # Extract properties (same as point features)
+        properties = {
+            "name": row['RECORDNAME'],
+            "type": SIMPLE_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),
+            "type_detailed": DURR_TYPE_MAP.get(row['FIN_TYP'], "Unknown"),
+            "type_code": int(row['FIN_TYP']),
+            "basin_area_km2": round(row['BASINAREA'], 2) if pd.notna(row['BASINAREA']) else None,
+            "sea_name": row['SEANAME'] if pd.notna(row['SEANAME']) else None,
+            "ocean_name": row['OCEANNAME'] if pd.notna(row['OCEANNAME']) else None,
+            "data_source": "Dürr et al. (2011)",
+            "data_source_doi": "10.1007/s12237-011-9381-y"
+        }
+        
+        # Try to match with Baum data if available
+        if baum_df is not None:
+            baum_match = baum_df[
+                baum_df['Embayment'].str.lower().str.contains(
+                    row['RECORDNAME'].lower(), na=False
+                )
+            ]
+            if len(baum_match) > 0:
+                baum_row = baum_match.iloc[0]
+                properties.update({
+                    "baum_embayment_name": baum_row['Embayment'],
+                    "baum_mouth_width_m": baum_row['Lm'],
+                    "baum_length_m": baum_row['Lb'],
+                    "baum_geomorphotype": baum_row['Geomorphotype'],
+                    "baum_data_source": "Baum et al. (2024)"
+                })
+        
+        # Use the actual basin polygon geometry
+        # Convert to GeoJSON format (preserves Polygon or MultiPolygon)
+        geometry = row.geometry.__geo_interface__
+        
+        # Round coordinates to 4 decimal places for file size optimization
+        def round_coords(coords):
+            if isinstance(coords[0], (list, tuple)):
+                return [round_coords(c) for c in coords]
+            else:
+                return [round(coords[0], 4), round(coords[1], 4)]
+        
+        if geometry['type'] == 'Polygon':
+            geometry['coordinates'] = [round_coords(ring) for ring in geometry['coordinates']]
+        elif geometry['type'] == 'MultiPolygon':
+            geometry['coordinates'] = [[round_coords(ring) for ring in polygon] for polygon in geometry['coordinates']]
+        
+        feature = {
+            "type": "Feature",
+            "geometry": geometry,
+            "properties": properties
+        }
+        
+        features.append(feature)
+    
+    return features
+
+
 def create_coastline_features(coastline_gdf):
     """
     Create GeoJSON features from Dürr coastline data for coastal segmentation view.
@@ -239,10 +310,6 @@ def main():
     print("\nCreating GeoJSON features for estuary points...")
     features = create_estuary_features(durr_gdf, baum_df)
     
-    # Create GeoJSON features for point view (estuary catchments)
-    print("\nCreating GeoJSON features for estuary points...")
-    features = create_estuary_features(durr_gdf, baum_df)
-    
     # Create GeoJSON structure for points
     estuary_data = {
         "type": "FeatureCollection",
@@ -275,6 +342,103 @@ def main():
     
     print(f"\n✓ Generated {len(features)} estuary points")
     print(f"✓ Output saved to: {output_path}")
+    
+    # Create basin polygon features
+    print("\n" + "=" * 60)
+    print("Processing Basin Polygon Data")
+    print("=" * 60)
+    print("\nCreating GeoJSON features for basin polygons...")
+    
+    basin_features = create_basin_polygon_features(durr_gdf, baum_df)
+    
+    # Create GeoJSON structure for basins
+    basin_data = {
+        "type": "FeatureCollection",
+        "metadata": {
+            "data_sources": [
+                {
+                    "name": "Dürr et al. (2011)",
+                    "title": "Worldwide typology of nearshore coastal systems",
+                    "doi": "10.1007/s12237-011-9381-y",
+                    "description": "Primary typology and basin geometry source"
+                },
+                {
+                    "name": "Baum et al. (2024)",
+                    "title": "Large structural estuaries",
+                    "description": "Supplementary morphometry data"
+                }
+            ],
+            "note": "Full global dataset - all ~6,200+ estuary basin polygons from Dürr et al. (2011)",
+            "visualization_note": "Basin polygons show complete drainage basins for each estuary",
+            "generated_date": pd.Timestamp.now().isoformat()
+        },
+        "features": basin_features
+    }
+    
+    # Output basin polygons to data directory
+    basin_output_path = data_dir / 'basins.geojson'
+    
+    with open(basin_output_path, 'w', encoding='utf-8') as f:
+        json.dump(basin_data, f, indent=2, ensure_ascii=False)
+    
+    print(f"\n✓ Generated {len(basin_features)} basin polygons")
+    print(f"✓ Output saved to: {basin_output_path}")
+    
+    # Also save as GeoPackage for efficient storage
+    print("\nSaving basin polygons as GeoPackage...")
+    durr_gdf_with_properties = durr_gdf.copy()
+    
+    # Remove duplicate columns before saving
+    durr_gdf_with_properties = durr_gdf_with_properties.loc[:, ~durr_gdf_with_properties.columns.duplicated()]
+    
+    durr_gdf_with_properties['type'] = durr_gdf_with_properties['FIN_TYP'].map(SIMPLE_TYPE_MAP).fillna('Unknown')
+    durr_gdf_with_properties['type_detailed'] = durr_gdf_with_properties['FIN_TYP'].map(DURR_TYPE_MAP).fillna('Unknown')
+    
+    gpkg_output_path = data_dir / 'basins.gpkg'
+    durr_gdf_with_properties.to_file(str(gpkg_output_path), driver='GPKG', layer='estuary_basins')
+    
+    print(f"✓ GeoPackage saved to: {gpkg_output_path}")
+    
+    # Create simplified version for web display
+    print("\nCreating simplified basin polygons for web display...")
+    durr_gdf_simplified = durr_gdf.copy()
+    durr_gdf_simplified['geometry'] = durr_gdf_simplified.geometry.simplify(tolerance=0.05, preserve_topology=True)
+    
+    basin_features_simplified = create_basin_polygon_features(durr_gdf_simplified, baum_df)
+    
+    # Create GeoJSON structure for simplified basins
+    basin_data_simplified = {
+        "type": "FeatureCollection",
+        "metadata": {
+            "data_sources": [
+                {
+                    "name": "Dürr et al. (2011)",
+                    "title": "Worldwide typology of nearshore coastal systems",
+                    "doi": "10.1007/s12237-011-9381-y",
+                    "description": "Primary typology and basin geometry source"
+                },
+                {
+                    "name": "Baum et al. (2024)",
+                    "title": "Large structural estuaries",
+                    "description": "Supplementary morphometry data"
+                }
+            ],
+            "note": "Simplified basin polygons (tolerance=0.05) optimized for web display",
+            "full_resolution_note": "Full resolution data available in basins.geojson and basins.gpkg",
+            "visualization_note": "Basin polygons show complete drainage basins for each estuary",
+            "generated_date": pd.Timestamp.now().isoformat()
+        },
+        "features": basin_features_simplified
+    }
+    
+    # Output simplified basin polygons (no indent for smaller file size)
+    basin_simplified_output_path = data_dir / 'basins_simplified.geojson'
+    
+    with open(basin_simplified_output_path, 'w', encoding='utf-8') as f:
+        json.dump(basin_data_simplified, f, ensure_ascii=False)
+    
+    print(f"✓ Generated {len(basin_features_simplified)} simplified basin polygons")
+    print(f"✓ Output saved to: {basin_simplified_output_path}")
     
     # Process coastline data for coastal segmentation mode
     print("\n" + "=" * 60)
