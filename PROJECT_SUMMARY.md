@@ -69,6 +69,7 @@ A static web mapping framework for GitHub Pages that visualizes world estuaries 
 ✅ Deployment guide (GitHub Pages, Netlify, Vercel)
 ✅ Contributing guidelines
 ✅ Quick start guide
+✅ Copilot AI agent instructions for automated assistance
 ✅ MIT License with scientific attribution
 
 ## File Structure
@@ -76,6 +77,7 @@ A static web mapping framework for GitHub Pages that visualizes world estuaries 
 ```
 estuary-type-map/
 ├── .github/
+│   ├── copilot-instructions.md   # AI agent guidelines, 549 lines
 │   └── workflows/
 │       └── update-data.yml      # Automated data updates
 ├── css/
