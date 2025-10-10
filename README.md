@@ -12,16 +12,23 @@ Visit the interactive map: [https://nguyentruonganlab.github.io/estuary-type-map
 - **Full Global Coverage**: All ~6,200+ estuaries from Dürr et al. (2011) dataset
 - **Multiple Visualization Modes**:
   - **📍 Estuary Points Mode**: View individual estuary locations as interactive markers
+  - **🗺️ Basin Polygons Mode**: Display complete drainage basins as colored polygons (NEW!)
   - **🌐 Coastal Segments Mode**: View global coastlines colored by estuary type (8,400+ segments)
   
-- **Geomorphological Classification**: Filter estuaries by shape type:
-  - **Delta**: River-dominated, sediment-rich formations (1,768 estuaries)
-  - **Fjord**: Glacially carved, deep narrow inlets (2,303 estuaries)
-  - **Lagoon**: Coastal water bodies separated by barrier islands (510 estuaries)
-  - **Coastal Plain**: Wide, shallow estuaries on flat coastal areas (1,645 estuaries)
+- **Geomorphological Classification**: Filter estuaries by shape type with updated color scheme:
+  - **Delta**: River-dominated, sediment-rich formations - Purple (1,768 estuaries)
+  - **Fjord**: Glacially carved, deep narrow inlets - Orange (2,303 estuaries)
+  - **Lagoon**: Coastal water bodies separated by barrier islands - Brown (510 estuaries)
+  - **Coastal Plain**: Wide, shallow estuaries on flat coastal areas - Blue (1,645 estuaries)
+
+- **Basin Polygon Visualization**: 
+  - View complete watershed/drainage basins for each estuary
+  - Interactive hover effects with highlighting
+  - Same filtering and popup functionality as point mode
+  - Optimized simplified geometries for web performance (2.8MB dataset)
 
 - **Sidebar Legend**: Scientific definitions for each estuary type with academic references
-- **Interactive Popups**: Click any estuary marker or coastal segment to view detailed information including:
+- **Interactive Popups**: Click any estuary marker, basin polygon, or coastal segment to view detailed information including:
   - Name and location
   - Geomorphological classification (detailed typology)
   - Basin area (km²)
@@ -116,8 +123,9 @@ estuary-type-map/
 ├── js/
 │   └── map.js             # Map functionality and interactivity
 ├── data/
-│   ├── estuaries.geojson   # GeoJSON with 6,226 estuary points (3.2MB)
-│   ├── coastline.geojson   # GeoJSON with 8,439 coastal segments (4.6MB)
+│   ├── estuaries.geojson        # GeoJSON with 6,226 estuary points (3.2MB)
+│   ├── basins_simplified.geojson # GeoJSON with 6,226 basin polygons (2.8MB) - NEW!
+│   ├── coastline.geojson        # GeoJSON with 8,439 coastal segments (4.6MB)
 │   ├── Worldwide-typology-Shapefile-Durr_2011/
 │   │   ├── typology_catchments.shp  # Primary source data
 │   │   └── typology_coastline.shp   # Coastal segmentation data
@@ -126,7 +134,8 @@ estuary-type-map/
 │   └── GCC-Panagiotis-Athanasiou_2024/
 │       └── GCC_geophysical.csv  # Optional, not included (>200MB)
 ├── scripts/
-│   └── process_estuary_data.py  # Python script for data processing
+│   ├── process_estuary_data.py  # Python script for data processing
+│   └── test_data.py            # Validation tests for generated data
 ├── docs/                  # Additional documentation
 └── README.md              # This file
 ```
@@ -147,10 +156,12 @@ This script:
 1. Reads Dürr et al. (2011) shapefile with ~6,200 estuary catchments
 2. Processes ALL estuaries (no sampling) for complete global coverage
 3. Generates estuary point GeoJSON (estuaries.geojson) with 6,226 features
-4. Processes coastal typology shapefile (typology_coastline.shp)
-5. Generates coastal segment GeoJSON (coastline.geojson) with 8,439 features
-6. Enriches with Baum et al. (2024) morphometry data where available
-7. Adds complete provenance metadata with DOIs and citations
+4. Generates basin polygon GeoJSON (basins_simplified.geojson) with simplified geometries - NEW!
+5. Exports full-resolution basin data as GeoPackage (basins.gpkg) for GIS use
+6. Processes coastal typology shapefile (typology_coastline.shp)
+7. Generates coastal segment GeoJSON (coastline.geojson) with 8,439 features
+8. Enriches with Baum et al. (2024) morphometry data where available
+9. Adds complete provenance metadata with DOIs and citations
 
 All data sources are properly attributed with DOIs and citations in the output GeoJSON.
 
@@ -158,22 +169,29 @@ All data sources are properly attributed with DOIs and citations in the output G
 
 **Visualization Modes**:
 - **Points Mode**: Shows individual estuary locations as interactive markers (6,226 estuaries)
+- **Basin Polygons Mode**: Displays complete drainage basin polygons for all estuaries (NEW!)
+  - Simplified geometries (tolerance=0.05°) optimized for web performance
+  - Interactive hover effects with highlighting
+  - Click for detailed basin information
 - **Coastal Segments Mode**: Shows global coastlines colored by estuary type (8,439 segments)
 - Toggle between modes with one click
 
 **Filtering System**:
 - Dynamic checkboxes for each estuary type
 - "All Types" master filter
-- Real-time marker updates without page reload
+- Real-time updates across all visualization modes without page reload
 
 **Visual Design**:
-- Color-coded markers by estuary type
+- Updated color scheme matching scientific visualization standards:
+  - Delta: Purple, Fjord: Orange, Lagoon: Brown, Ria: Pink
+  - Coastal Plain: Blue, Bar-Built: Green, Tectonic: Red
 - Custom popup styling with detailed information
 - Responsive sidebar with scientific definitions
 - Professional gradient header and footer
 
 **Interactive Elements**:
-- Click markers for detailed popup information
+- Click markers/polygons for detailed popup information
+- Hover over basin polygons for highlighting effect
 - Pan and zoom to explore specific regions
 - Sidebar scrolling for definitions and references
 

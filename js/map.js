@@ -1,26 +1,28 @@
 // Global Estuary Type Map - Main JavaScript
 // Data sources: Dürr et al. (2011), Baum et al. (2024)
 
-// Color scheme for different estuary types
+// Color scheme for different estuary types (updated to match task specification)
 const ESTUARY_COLORS = {
-    'Delta': '#8b4513',
-    'Fjord': '#4a90e2',
-    'Lagoon': '#50c878',
-    'Ria': '#9370db',
-    'Coastal Plain': '#ff8c00',
-    'Bar-Built': '#20b2aa',
-    'Tectonic': '#dc143c',
-    'Unknown': '#808080'
+    'Delta': '#9467bd',        // Purple
+    'Fjord': '#ff7f0e',        // Orange
+    'Lagoon': '#8c564b',       // Brown
+    'Ria': '#e377c2',          // Pink
+    'Coastal Plain': '#1f77b4', // Blue (Tidal River)
+    'Bar-Built': '#2ca02c',    // Green
+    'Tectonic': '#d62728',     // Red
+    'Unknown': '#808080'       // Gray
 };
 
 // Global variables
 let map;
 let estuaryData;
 let coastlineData;
+let basinData;
 let markersLayer;
 let coastlineLayer;
+let basinLayer;
 let activeFilters = new Set();
-let currentMode = 'points'; // 'points' or 'coastline'
+let currentMode = 'points'; // 'points', 'coastline', or 'basins'
 
 // Initialize the map
 function initMap() {
@@ -42,10 +44,12 @@ function initMap() {
     // Create layers for different visualization modes
     markersLayer = L.layerGroup().addTo(map);
     coastlineLayer = L.layerGroup();
+    basinLayer = L.layerGroup();
 
     // Load estuary data
     loadEstuaryData();
     loadCoastlineData();
+    loadBasinData();
 }
 
 // Load and display estuary data
@@ -106,6 +110,29 @@ async function loadCoastlineData() {
         
     } catch (error) {
         console.error('Error loading coastline data:', error);
+    }
+}
+
+// Load basin polygon data for basin visualization mode
+async function loadBasinData() {
+    try {
+        const response = await fetch('data/basins_simplified.geojson');
+        
+        if (!response.ok) {
+            console.warn('Basin data not available');
+            return;
+        }
+        
+        basinData = await response.json();
+        
+        if (!basinData || !basinData.features || !Array.isArray(basinData.features)) {
+            throw new Error('Invalid basin GeoJSON structure');
+        }
+        
+        console.log(`✓ Loaded ${basinData.features.length} basin polygons`);
+        
+    } catch (error) {
+        console.error('Error loading basin data:', error);
     }
 }
 
@@ -340,42 +367,130 @@ function createCoastline(feature) {
     return line;
 }
 
+// Update basin polygons based on active filters
+function updateBasins() {
+    // Clear existing basins
+    basinLayer.clearLayers();
+    
+    if (!basinData) return;
+    
+    // Add basin polygons for filtered types
+    basinData.features.forEach(feature => {
+        const type = feature.properties.type;
+        if (activeFilters.has('all') || activeFilters.has(type)) {
+            const basin = createBasin(feature);
+            basinLayer.addLayer(basin);
+        }
+    });
+}
+
+// Create basin polygon
+function createBasin(feature) {
+    const props = feature.properties;
+    
+    // Convert GeoJSON coordinates to Leaflet format
+    let coords;
+    if (feature.geometry.type === 'Polygon') {
+        coords = feature.geometry.coordinates.map(ring => 
+            ring.map(coord => [coord[1], coord[0]])
+        );
+    } else if (feature.geometry.type === 'MultiPolygon') {
+        coords = feature.geometry.coordinates.map(polygon =>
+            polygon.map(ring => ring.map(coord => [coord[1], coord[0]]))
+        );
+    }
+    
+    // Create polygon with color based on type
+    const polygon = L.polygon(coords, {
+        fillColor: ESTUARY_COLORS[props.type] || '#808080',
+        fillOpacity: 0.6,
+        color: 'white',
+        weight: 1,
+        opacity: 1
+    });
+    
+    // Add hover effects
+    polygon.on('mouseover', function(e) {
+        e.target.setStyle({
+            fillOpacity: 0.9,
+            weight: 3
+        });
+    });
+    
+    polygon.on('mouseout', function(e) {
+        e.target.setStyle({
+            fillOpacity: 0.6,
+            weight: 1
+        });
+    });
+    
+    // Create popup content
+    const popupContent = createPopupContent(props);
+    polygon.bindPopup(popupContent, {
+        maxWidth: 300,
+        className: 'estuary-popup'
+    });
+    
+    return polygon;
+}
+
 // Switch visualization mode
 function switchMode(newMode) {
     currentMode = newMode;
     
     if (currentMode === 'points') {
-        // Show points, hide coastline
+        // Show points, hide others
         if (!map.hasLayer(markersLayer)) {
             map.addLayer(markersLayer);
         }
         if (map.hasLayer(coastlineLayer)) {
             map.removeLayer(coastlineLayer);
         }
+        if (map.hasLayer(basinLayer)) {
+            map.removeLayer(basinLayer);
+        }
         updateMarkers();
     } else if (currentMode === 'coastline') {
-        // Show coastline, hide points
+        // Show coastline, hide others
         if (map.hasLayer(markersLayer)) {
             map.removeLayer(markersLayer);
         }
         if (!map.hasLayer(coastlineLayer)) {
             map.addLayer(coastlineLayer);
         }
+        if (map.hasLayer(basinLayer)) {
+            map.removeLayer(basinLayer);
+        }
         updateCoastline();
+    } else if (currentMode === 'basins') {
+        // Show basins, hide others
+        if (map.hasLayer(markersLayer)) {
+            map.removeLayer(markersLayer);
+        }
+        if (map.hasLayer(coastlineLayer)) {
+            map.removeLayer(coastlineLayer);
+        }
+        if (!map.hasLayer(basinLayer)) {
+            map.addLayer(basinLayer);
+        }
+        updateBasins();
     }
     
     // Update mode toggle buttons
     const pointsBtn = document.getElementById('mode-points');
     const coastlineBtn = document.getElementById('mode-coastline');
+    const basinsBtn = document.getElementById('mode-basins');
     
-    if (pointsBtn && coastlineBtn) {
-        if (currentMode === 'points') {
-            pointsBtn.classList.add('active');
-            coastlineBtn.classList.remove('active');
-        } else {
-            pointsBtn.classList.remove('active');
-            coastlineBtn.classList.add('active');
-        }
+    if (pointsBtn) pointsBtn.classList.remove('active');
+    if (coastlineBtn) coastlineBtn.classList.remove('active');
+    if (basinsBtn) basinsBtn.classList.remove('active');
+    
+    if (currentMode === 'points' && pointsBtn) {
+        pointsBtn.classList.add('active');
+    } else if (currentMode === 'coastline' && coastlineBtn) {
+        coastlineBtn.classList.add('active');
+    } else if (currentMode === 'basins' && basinsBtn) {
+        basinsBtn.classList.add('active');
     }
 }
 
@@ -432,8 +547,10 @@ function setupFilters() {
             // Update map
             if (currentMode === 'points') {
                 updateMarkers();
-            } else {
+            } else if (currentMode === 'coastline') {
                 updateCoastline();
+            } else if (currentMode === 'basins') {
+                updateBasins();
             }
         });
     });
@@ -441,6 +558,7 @@ function setupFilters() {
     // Setup mode toggle buttons
     const pointsBtn = document.getElementById('mode-points');
     const coastlineBtn = document.getElementById('mode-coastline');
+    const basinsBtn = document.getElementById('mode-basins');
     
     if (pointsBtn) {
         pointsBtn.addEventListener('click', function() {
@@ -451,6 +569,12 @@ function setupFilters() {
     if (coastlineBtn) {
         coastlineBtn.addEventListener('click', function() {
             switchMode('coastline');
+        });
+    }
+    
+    if (basinsBtn) {
+        basinsBtn.addEventListener('click', function() {
+            switchMode('basins');
         });
     }
 }
