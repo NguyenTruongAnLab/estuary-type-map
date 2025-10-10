@@ -76,13 +76,13 @@ body {
 
 /* Mode Toggle Section */
 .mode-toggle {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
     margin-bottom: 1.5rem;
 }
 
 .mode-btn {
-    flex: 1;
     padding: 0.8rem 1rem;
     border: 2px solid #dee2e6;
     background: white;
@@ -92,6 +92,10 @@ body {
     font-size: 0.9rem;
     font-weight: 600;
     transition: all 0.2s ease;
+}
+
+.mode-btn:nth-child(3) {
+    grid-column: 1 / -1;
 }
 
 .mode-btn:hover {
@@ -151,37 +155,37 @@ body {
     text-align: center;
 }
 
-/* Type-specific colors */
+/* Type-specific colors - Updated to match task specification */
 .filter-label.all {
     color: #495057;
 }
 
-.filter-label.delta, .definition-item h4.delta {
-    color: #8b4513;
+.filter-label.delta, .definition-item h4.delta, .popup-type.delta {
+    color: #9467bd;  /* Purple */
 }
 
-.filter-label.fjord, .definition-item h4.fjord {
-    color: #4a90e2;
+.filter-label.fjord, .definition-item h4.fjord, .popup-type.fjord {
+    color: #ff7f0e;  /* Orange */
 }
 
-.filter-label.lagoon, .definition-item h4.lagoon {
-    color: #50c878;
+.filter-label.lagoon, .definition-item h4.lagoon, .popup-type.lagoon {
+    color: #8c564b;  /* Brown */
 }
 
-.filter-label.ria, .definition-item h4.ria {
-    color: #9370db;
+.filter-label.ria, .definition-item h4.ria, .popup-type.ria {
+    color: #e377c2;  /* Pink */
 }
 
-.filter-label.coastal-plain, .definition-item h4.coastal-plain {
-    color: #ff8c00;
+.filter-label.coastal-plain, .definition-item h4.coastal-plain, .popup-type.coastal-plain {
+    color: #1f77b4;  /* Blue */
 }
 
-.filter-label.bar-built, .definition-item h4.bar-built {
-    color: #20b2aa;
+.filter-label.bar-built, .definition-item h4.bar-built, .popup-type.bar-built {
+    color: #2ca02c;  /* Green */
 }
 
-.filter-label.tectonic, .definition-item h4.tectonic {
-    color: #dc143c;
+.filter-label.tectonic, .definition-item h4.tectonic, .popup-type.tectonic {
+    color: #d62728;  /* Red */
 }
 
 /* Definitions Section */
