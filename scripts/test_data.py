@@ -35,6 +35,34 @@ def test_geojson_structure():
     print("✓ Valid GeoJSON FeatureCollection structure")
     return True
 
+def test_basin_geojson_structure():
+    """Test that basin polygon GeoJSON file has valid structure."""
+    print("\nTesting Basin Polygon GeoJSON structure...")
+    
+    data_file = Path(__file__).parent.parent / 'data' / 'basins_simplified.geojson'
+    
+    try:
+        with open(data_file, 'r') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print("❌ FAIL: basins_simplified.geojson not found")
+        return False
+    except json.JSONDecodeError as e:
+        print(f"❌ FAIL: Invalid JSON - {e}")
+        return False
+    
+    # Check top-level structure
+    if data.get('type') != 'FeatureCollection':
+        print("❌ FAIL: Top-level type must be 'FeatureCollection'")
+        return False
+    
+    if 'features' not in data:
+        print("❌ FAIL: Missing 'features' array")
+        return False
+    
+    print("✓ Valid Basin Polygon GeoJSON FeatureCollection structure")
+    return True
+
 def test_features():
     """Test that all features have required properties."""
     print("\nTesting features...")
@@ -147,6 +175,65 @@ def test_statistics():
     
     return True
 
+def test_basin_features():
+    """Test that all basin polygon features have required properties."""
+    print("\nTesting basin polygon features...")
+    
+    data_file = Path(__file__).parent.parent / 'data' / 'basins_simplified.geojson'
+    
+    with open(data_file, 'r') as f:
+        data = json.load(f)
+    
+    features = data['features']
+    total = len(features)
+    print(f"Found {total} basin polygons")
+    
+    required_properties = ['name', 'type', 'type_detailed', 'type_code']
+    valid_types = ['Delta', 'Fjord', 'Lagoon', 'Ria', 'Coastal Plain', 'Bar-Built', 'Tectonic', 'Unknown']
+    valid_geometry_types = ['Polygon', 'MultiPolygon']
+    
+    errors = []
+    
+    for i, feature in enumerate(features, 1):
+        # Check feature structure
+        if feature.get('type') != 'Feature':
+            errors.append(f"Basin {i}: Invalid type '{feature.get('type')}'")
+        
+        if 'geometry' not in feature:
+            errors.append(f"Basin {i}: Missing geometry")
+            continue
+        
+        geometry = feature['geometry']
+        if geometry.get('type') not in valid_geometry_types:
+            errors.append(f"Basin {i}: Geometry must be 'Polygon' or 'MultiPolygon', got '{geometry.get('type')}'")
+        
+        # Check properties
+        if 'properties' not in feature:
+            errors.append(f"Basin {i}: Missing properties")
+            continue
+        
+        props = feature['properties']
+        
+        # Check required properties
+        for prop in required_properties:
+            if prop not in props:
+                errors.append(f"Basin {i} ({props.get('name', 'Unknown')}): Missing '{prop}'")
+        
+        # Validate estuary type
+        if 'type' in props and props['type'] not in valid_types:
+            errors.append(f"Basin {i} ({props.get('name', 'Unknown')}): Invalid type '{props['type']}'")
+    
+    if errors:
+        print("\n❌ FAILURES:")
+        for error in errors[:10]:  # Show first 10 errors
+            print(f"  - {error}")
+        if len(errors) > 10:
+            print(f"  ... and {len(errors) - 10} more errors")
+        return False
+    
+    print(f"✓ All {total} basin polygon features are valid")
+    return True
+
 def main():
     """Run all tests."""
     print("=" * 60)
@@ -159,6 +246,8 @@ def main():
     all_passed &= test_geojson_structure()
     all_passed &= test_features()
     all_passed &= test_statistics()
+    all_passed &= test_basin_geojson_structure()
+    all_passed &= test_basin_features()
     
     print("\n" + "=" * 60)
     if all_passed:
