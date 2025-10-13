@@ -21,7 +21,8 @@ const DURR_COLORS = {
     'Coastal Plain': '#ff8c00',
     'Lagoon': '#50c878',
     'Fjord': '#4a90e2',
-    'Karst': '#9370db'
+    'Karst': '#9370db',
+    'Unclassified': '#808080'
 };
 
 const SALINITY_COLORS = {
@@ -251,17 +252,20 @@ async function loadTidalZones() {
 // ============================================================================
 
 function updateDurrBasins() {
-    layerGroups.durrBasins.clearLayers();
-    if (!datasets.durrBasins) return;
+    layerGroups.coastalBasins.clearLayers();
+    if (!datasets.coastalBasins) return;
     
-    const filteredFeatures = datasets.durrBasins.features.filter(feature => {
-        const type = feature.properties.type;
+    console.log('📊 Updating Dürr basins...');
+    console.log('Total features:', datasets.coastalBasins.features.length);
+    
+    const filteredFeatures = datasets.coastalBasins.features.filter(feature => {
+        const type = feature.properties.estuary_type;
         return activeFilters.durr.has('all') || activeFilters.durr.has(type);
     });
     
     filteredFeatures.forEach(feature => {
         const props = feature.properties;
-        const color = DURR_COLORS[props.type] || '#808080';
+        const color = DURR_COLORS[props.estuary_type] || '#808080';
         
         const polygon = L.geoJSON(feature, {
             style: {
@@ -273,21 +277,62 @@ function updateDurrBasins() {
             }
         }).bindPopup(`
             <div class="popup-content">
-                <h3 class="popup-title">${props.name}</h3>
-                <div class="popup-type" style="background: ${color};">${props.type}</div>
+                <h3 class="popup-title">${props.estuary_name || 'Unnamed'}</h3>
+                <div class="popup-type" style="background: ${color};">${props.estuary_type}</div>
                 <div class="popup-info">
-                    <strong>Basin Area:</strong> ${(props.basin_area_km2 || 0).toLocaleString()} km²
+                    <strong>Basin ID:</strong> ${props.HYBAS_ID}<br>
+                    <strong>Sub Area:</strong> ${(props.SUB_AREA || 0).toLocaleString()} km²<br>
+                    <strong>Upstream Area:</strong> ${(props.UP_AREA || 0).toLocaleString()} km²
                 </div>
                 <div class="popup-source">
-                    <strong>Source:</strong> Dürr et al. (2011)
+                    <strong>Source:</strong> HydroSHEDS + Dürr et al. (2011)
                 </div>
             </div>
         `);
         
-        layerGroups.durrBasins.addLayer(polygon);
+        layerGroups.coastalBasins.addLayer(polygon);
     });
     
-    console.log(`📍 Displayed ${filteredFeatures.length} Dürr basins`);
+    console.log(`📍 Displayed ${filteredFeatures.length} coastal basins with Dürr classification`);
+}
+
+function updateDurrReference() {
+    layerGroups.durrReference.clearLayers();
+    if (!datasets.durrReference) return;
+    
+    console.log('📂 Updating Dürr reference catchments...');
+    
+    datasets.durrReference.features.forEach(feature => {
+        const props = feature.properties;
+        const type = props.estuary_type || 'Unclassified';
+        const color = DURR_COLORS[type] || '#808080';
+        
+        const polygon = L.geoJSON(feature, {
+            style: {
+                fillColor: color,
+                fillOpacity: 0.3,
+                color: '#666',
+                weight: 1,
+                opacity: 0.5,
+                dashArray: '3, 3'
+            }
+        }).bindPopup(`
+            <div class="popup-content">
+                <h3 class="popup-title">${props.estuary_name || 'Unnamed Catchment'}</h3>
+                <div class="popup-type" style="background: ${color};">${type}</div>
+                <div class="popup-info">
+                    <strong>Type:</strong> ${props.type_detailed || 'N/A'}
+                </div>
+                <div class="popup-source">
+                    <strong>Source:</strong> Dürr et al. (2011) - Full Catchments
+                </div>
+            </div>
+        `);
+        
+        layerGroups.durrReference.addLayer(polygon);
+    });
+    
+    console.log(`📍 Displayed ${datasets.durrReference.features.length} Dürr reference catchments`);
 }
 
 function updateBaumLayer() {
@@ -500,7 +545,7 @@ function switchViewMode(mode) {
 
 function setupLayerControls() {
     const layerToggles = {
-        'layer-coastal-basins': { group: layerGroups.coastalBasins, update: updateCoastalBasins },
+        'layer-coastal-basins': { group: layerGroups.coastalBasins, update: updateDurrBasins },
         'layer-durr-reference': { group: layerGroups.durrReference, update: updateDurrReference },
         'layer-baum': { group: layerGroups.baum, update: updateBaumLayer },
         'layer-salinity': { group: layerGroups.salinityZones, update: updateSalinityLayer },
