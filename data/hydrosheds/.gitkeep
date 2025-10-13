@@ -1,0 +1,4 @@
+# Keep this directory structure in git
+# Raw data folders are excluded in root .gitignore
+
+# This file ensures the directory structure is preserved
