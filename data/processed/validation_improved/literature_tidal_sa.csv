@@ -1,0 +1,5 @@
+distance_bin,min_dist,max_dist,total_segments,estuarine_count,estuarine_pct,expected_range
+0-50 km (Short tidal systems),0,50,17335,7379,42.56706085953274,70-90% (within most tidal zones)
+50-150 km (Medium tidal systems),50,150,27791,1055,3.7961930121262277,30-60% (medium tidal systems)
+150-300 km (Long tidal systems),150,300,37042,194,0.5237298202040926,5-20% (long tidal systems)
+300+ km (Very long tidal systems),300,999999,155721,200,0.12843482895691655,<5% (beyond most tidal limits)
