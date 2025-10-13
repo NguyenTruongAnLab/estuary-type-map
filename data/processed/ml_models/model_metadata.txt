@@ -1,0 +1,5 @@
+model_type: RandomForestClassifier
+n_features: 56
+classes: ['Freshwater', 'Mesohaline', 'Oligohaline']
+trained_date: 2025-10-13 13:46:02
+sklearn_version: 1.3+

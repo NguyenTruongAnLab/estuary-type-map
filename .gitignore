@@ -29,6 +29,7 @@ data/processed/raw/*.nc
 # Exclude ALL .gpkg and .nc files (processed data files)
 *.gpkg
 *.nc
+*.parquet
 
 # But keep specific web-ready GeoJSON files
 !data/web/*.geojson
