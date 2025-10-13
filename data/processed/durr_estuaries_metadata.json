@@ -1,0 +1,34 @@
+{
+  "dataset": "D\u00fcrr et al. (2011) Estuary Classification",
+  "data_source_doi": "10.1007/s12237-011-9381-y",
+  "processed_date": "2025-10-10T14:21:02.964332",
+  "n_features": 6226,
+  "geometry_type": "Polygon",
+  "crs": "EPSG:4326",
+  "simplification_tolerance_degrees": 0.01,
+  "type_classification": {
+    "system": "7-class geomorphological typology",
+    "classes": {
+      "1": "Small Delta",
+      "2": "Tidal System",
+      "3": "Lagoon",
+      "4": "Fjord/Fjaerd",
+      "5": "Large River",
+      "51": "Large River with Tidal Delta",
+      "6": "Karst",
+      "7": "Arheic"
+    }
+  },
+  "attributes": {
+    "name": "Estuary/basin name",
+    "type": "Simplified type (5 classes)",
+    "type_detailed": "Detailed D\u00fcrr type (7 classes)",
+    "type_code": "Original FIN_TYP code",
+    "basin_area_km2": "Watershed area (km\u00b2)",
+    "sea_name": "Adjacent sea",
+    "ocean_name": "Ocean basin",
+    "lon": "Centroid longitude",
+    "lat": "Centroid latitude"
+  },
+  "citation": "D\u00fcrr, H.H., Laruelle, G.G., van Kempen, C.M., Slomp, C.P., Meybeck, M., & Middelkoop, H. (2011). Worldwide Typology of Nearshore Coastal Systems: Defining the Estuarine Filter of River Inputs to the Oceans. Estuaries and Coasts, 34(3), 441-458."
+}

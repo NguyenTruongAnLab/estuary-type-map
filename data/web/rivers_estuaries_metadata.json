@@ -1,0 +1,32 @@
+{
+  "source_file": "rivers_estuaries_global.gpkg",
+  "total_features": 73410,
+  "strategy": "multi-resolution",
+  "zoom_levels": {
+    "low": {
+      "file": "rivers_estuaries_z2-4.geojson",
+      "zoom": "2-4",
+      "size_mb": 17.178150177001953,
+      "features": 73410
+    },
+    "med": {
+      "file": "rivers_estuaries_z5-8.geojson",
+      "zoom": "5-8",
+      "size_mb": 17.540924072265625,
+      "features": 73410
+    },
+    "high": {
+      "file": "rivers_estuaries_z9plus.geojson",
+      "zoom": "9+",
+      "size_mb": 24.912778854370117,
+      "features": 73410
+    }
+  },
+  "description": "73,410 river reaches - multi-resolution for zoom-based loading",
+  "usage": "Load appropriate resolution based on map zoom level",
+  "loader_example": {
+    "zoom_2_4": "rivers_estuaries_z2-4.geojson",
+    "zoom_5_8": "rivers_estuaries_z5-8.geojson",
+    "zoom_9plus": "rivers_estuaries_z9plus.geojson"
+  }
+}

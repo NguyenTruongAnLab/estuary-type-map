@@ -1,0 +1,43 @@
+{
+  "dataset_name": "GRIT River Segments - Asia (Classified)",
+  "version": "1.0",
+  "generated_date": "2025-10-11T22:57:20.669229",
+  "processing_script": "process_grit_segments.py",
+  "source_data": {
+    "primary": {
+      "name": "GRIT v0.6",
+      "citation": "Wortmann, M., Slater, L., Hawker, L., Liu, Y., & Neal, J. (2024)",
+      "doi": "10.5281/zenodo.11072020",
+      "resolution": "30m",
+      "dem_source": "FABDEM (TanDEM-X)"
+    },
+    "classification": {
+      "basins": "HydroSHEDS BasinATLAS v10",
+      "salinity": "GlobSalt (1980-2023)",
+      "framework": "O'Connor et al. (2022) TFZ"
+    }
+  },
+  "methodology": {
+    "basin_classification": "Spatial join with HydroSHEDS coastal basins (COAST=1)",
+    "salinity_classification": "TFZ boundary at 0.5 PSU threshold",
+    "geometry_simplification": "0.0001\u00b0 tolerance",
+    "coordinate_system": "EPSG:4326 (WGS84)"
+  },
+  "statistics": {
+    "total_segments": 353786,
+    "total_length_km": 3990886.83501753,
+    "strahler_order_range": "1-1321",
+    "named_segments": 103415,
+    "by_system_type": {
+      "Unclassified": 353786
+    },
+    "by_salinity_zone": {
+      "Unknown": 353786
+    }
+  },
+  "file_info": {
+    "format": "GeoPackage",
+    "file_size_mb": 1032.36,
+    "layer_name": "rivers"
+  }
+}

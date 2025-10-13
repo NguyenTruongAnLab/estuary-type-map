@@ -1,0 +1,48 @@
+{
+  "dataset": "Baum et al. (2024) Large Estuary Morphometry",
+  "data_source": "Baum, M.J., Sch\u00fcttrumpf, H., & Siemes, R.W. (2024)",
+  "publication": "Large structural estuaries: Their global distribution and morphology",
+  "journal": "Geomorphology",
+  "processed_date": "2025-10-10T14:21:06.301405",
+  "n_features": 271,
+  "geometry_type": "Point",
+  "crs": "EPSG:4326",
+  "geomorphotypes": {
+    "LSE": "Large Shallow Estuary",
+    "Rocky Bay": "Rocky embayment",
+    "Barrier Estuary": "Protected by barrier",
+    "Sandy Bay": "Sandy embayment",
+    "Funnelled": "Funnel-shaped"
+  },
+  "tectonic_settings": {
+    "collision": "Active plate collision zones",
+    "trailing": "Passive continental margins",
+    "marginal": "Back-arc and marginal basins"
+  },
+  "attributes": {
+    "name": "Embayment name",
+    "geomorphotype": "Morphological classification (5 types)",
+    "tectonic_setting": "Tectonic coast type",
+    "mouth_length_km": "Width at mouth (km)",
+    "bay_length_km": "Length of embayment (km)",
+    "complexity_index": "Coastline complexity ratio (Lm/Lb)",
+    "size_category": "Size classification",
+    "confidence": "Classification confidence (0-1)",
+    "lat": "Latitude",
+    "lon": "Longitude"
+  },
+  "statistics": {
+    "mouth_width_range_km": [
+      0.14,
+      125.91
+    ],
+    "bay_length_range_km": [
+      0.95,
+      137.54
+    ],
+    "complexity_range": [
+      0.0,
+      2.94
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "data_source": "GlobSalt v2.0",
+  "data_source_doi": "10.5281/zenodo.8200199",
+  "processed_date": "2025-10-10",
+  "n_features": 8104,
+  "salinity_zones": {
+    "freshwater": [
+      0,
+      0.5
+    ],
+    "oligohaline": [
+      0.5,
+      5.0
+    ],
+    "mesohaline": [
+      5.0,
+      18.0
+    ],
+    "polyhaline": [
+      18.0,
+      25.0
+    ],
+    "euhaline": [
+      25.0,
+      35.0
+    ],
+    "hyperhaline": [
+      35.0,
+      999.0
+    ]
+  },
+  "classification": "Venice System (1958) modified for estuaries",
+  "attributes": {
+    "HYBAS_ID": "HydroATLAS basin identifier",
+    "salinity_mean": "Mean salinity (ppt)",
+    "salinity_median": "Median salinity (ppt)",
+    "salinity_zone": "Classified salinity zone",
+    "zone_color": "Hex color for visualization",
+    "n_records": "Number of observations"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "source_file": "basins_coastal_lev08.gpkg",
+  "total_features": 23996,
+  "strategy": "multi-resolution",
+  "zoom_levels": {
+    "low": {
+      "file": "basins_coastal_lev08_z2-6.geojson",
+      "zoom": "2-6",
+      "size_mb": 11.861772537231445,
+      "features": 23996
+    },
+    "med": {
+      "file": "basins_coastal_lev08_z7-10.geojson",
+      "zoom": "7-10",
+      "size_mb": 37.74881649017334,
+      "features": 23996
+    },
+    "high": {
+      "file": "basins_coastal_lev08_z11plus.geojson",
+      "zoom": "11+",
+      "size_mb": 67.13574695587158,
+      "features": 23996
+    }
+  },
+  "description": "23,996 coastal basins (level 8) - multi-resolution for zoom-based loading",
+  "usage": "Load appropriate resolution based on map zoom level",
+  "loader_example": {
+    "zoom_2_4": "basins_coastal_lev08_z2-6.geojson",
+    "zoom_5_8": "basins_coastal_lev08_z7-10.geojson",
+    "zoom_9plus": "basins_coastal_lev08_z11plus.geojson"
+  }
+}

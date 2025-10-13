@@ -1,3 +1,20 @@
 theme: jekyll-theme-minimal
-title: Global Estuary Type Map
-description: Interactive visualization of world estuaries by geomorphological classification
+title: Global Water Body Surface Area Atlas
+description: Polygon-based inventory of global aquatic surface areas for biogeochemical budgeting
+
+# Enable Markdown processing
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: About
+    url: /about
+  - title: Methodology
+    url: /methodology
+  - title: Credits
+    url: /credits

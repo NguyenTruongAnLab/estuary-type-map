@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Estuary Type Map</title>
+    <title>Global Estuary Type Map - High Performance</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -17,146 +17,294 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
+    
+    <style>
+        /* Loading indicator styles */
+        .loading-indicator {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <div id="header">
-        <h1>🌊 Global Estuary Classification Map</h1>
-        <p class="subtitle">Interactive visualization of world estuaries by geomorphological type</p>
-    </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🌊 Global Estuary Type Map</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Map</a></li>
+                <li><a href="about" class="nav-link">About</a></li>
+                <li><a href="methodology" class="nav-link">Methodology</a></li>
+                <li><a href="credits" class="nav-link">Credits</a></li>
+                <li><a href="https://github.com/NguyenTruongAnLab/estuary-type-map" class="nav-link" target="_blank">GitHub ↗</a></li>
+            </ul>
+        </div>
+    </nav>
     
     <div id="sidebar">
         <div class="sidebar-content">
-            <h2>Visualization Mode</h2>
-            <div class="mode-toggle">
-                <button id="mode-points" class="mode-btn active">📍 Estuary Points</button>
-                <button id="mode-basins" class="mode-btn">🗺️ Basin Polygons</button>
-                <button id="mode-coastline" class="mode-btn">🌐 Coastal Segments</button>
+            <!-- VIEW MODE SELECTOR -->
+            <h2>🎛️ View Mode</h2>
+            <p class="info-text">Choose classification system:</p>
+            <div class="view-mode-section" style="margin-bottom: 25px;">
+                <label class="view-mode-item" style="display: block; margin: 8px 0; padding: 10px; background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 6px; cursor: pointer;">
+                    <input type="radio" name="view-mode" value="geomorphology" checked style="margin-right: 8px;">
+                    <span style="font-weight: 500;">🗺️ Estuary Types</span>
+                </label>
+                <label class="view-mode-item" style="display: block; margin: 8px 0; padding: 10px; background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 6px; cursor: pointer;">
+                    <input type="radio" name="view-mode" value="salinity" style="margin-right: 8px;">
+                    <span style="font-weight: 500;">💧 Salinity Zones</span>
+                </label>
+                <label class="view-mode-item" style="display: block; margin: 8px 0; padding: 10px; background: #e8f5e9; border: 2px solid #4caf50; border-radius: 6px; cursor: pointer;">
+                    <input type="radio" name="view-mode" value="tidal" style="margin-right: 8px;">
+                    <span style="font-weight: 500;">🌊 Tidal Zones</span>
+                </label>
             </div>
             
-            <h2>Estuary Types</h2>
-            <p class="info-text">Filter by geomorphological classification:</p>
+            <h2>📊 Data Layers</h2>
+            <p class="info-text">Toggle datasets on/off:</p>
+            
+            <div class="filter-section">
+                <label class="filter-item" title="Fine-resolution coastal basins (NOT entire watersheds!)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-coastal-basins" checked>
+                    <span class="filter-label">🗺️ Coastal Basins (HydroSheds)</span>
+                    <span class="count" id="count-coastal-basins">4536</span>
+                </label>
+                
+                <label class="filter-item" style="opacity: 0.6;" title="Reference: Full watersheds (for context only)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-durr-reference">
+                    <span class="filter-label">📍 Dürr Reference</span>
+                    <span class="count" id="count-durr-ref">6226</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="layer-baum" checked>
+                    <span class="filter-label">💎 Baum Morphometry</span>
+                    <span class="count" id="count-baum-all">271</span>
+                </label>
+                
+                <label class="filter-item" title="Basins colored by salinity levels (POLYGONS - optimized!)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-salinity">
+                    <span class="filter-label">💧 Salinity Zones</span>
+                    <span class="count" id="count-salinity">1714</span>
+                </label>
+                
+                <label class="filter-item" title="🌊 NEW! Tidal zone classification based on Ensign et al. (2012)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-tidal">
+                    <span class="filter-label">🌊 Tidal Zones</span>
+                    <span class="count" id="count-tidal">1714</span>
+                </label>
+            </div>
+            
+            <h2>🗺️ Estuary Types</h2>
+            <p class="info-text">Filter by geomorphological classification (coastal only):</p>
             
             <div class="filter-section">
                 <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="all" checked>
+                    <input type="checkbox" class="filter-checkbox" id="filter-durr-all" checked>
                     <span class="filter-label all">All Types</span>
-                    <span class="count" id="count-all">0</span>
+                    <span class="count" id="count-durr-all">6226</span>
                 </label>
                 
                 <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="Delta" checked>
+                    <input type="checkbox" class="filter-checkbox" id="filter-durr-delta" checked>
                     <span class="filter-label delta">Delta</span>
-                    <span class="count" id="count-Delta">0</span>
+                    <span class="count" id="count-durr-delta">0</span>
                 </label>
                 
                 <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="Fjord" checked>
-                    <span class="filter-label fjord">Fjord</span>
-                    <span class="count" id="count-Fjord">0</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="Lagoon" checked>
-                    <span class="filter-label lagoon">Lagoon</span>
-                    <span class="count" id="count-Lagoon">0</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="Ria" checked>
-                    <span class="filter-label ria">Ria</span>
-                    <span class="count" id="count-Ria">0</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="Coastal Plain" checked>
+                    <input type="checkbox" class="filter-checkbox" id="filter-durr-coastal-plain" checked>
                     <span class="filter-label coastal-plain">Coastal Plain</span>
-                    <span class="count" id="count-Coastal-Plain">0</span>
+                    <span class="count" id="count-durr-coastal-plain">0</span>
                 </label>
                 
                 <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="Bar-Built" checked>
-                    <span class="filter-label bar-built">Bar-Built</span>
-                    <span class="count" id="count-Bar-Built">0</span>
+                    <input type="checkbox" class="filter-checkbox" id="filter-durr-fjord" checked>
+                    <span class="filter-label fjord">Fjord</span>
+                    <span class="count" id="count-durr-fjord">0</span>
                 </label>
                 
                 <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" value="Tectonic" checked>
-                    <span class="filter-label tectonic">Tectonic</span>
-                    <span class="count" id="count-Tectonic">0</span>
+                    <input type="checkbox" class="filter-checkbox" id="filter-durr-lagoon" checked>
+                    <span class="filter-label lagoon">Lagoon</span>
+                    <span class="count" id="count-durr-lagoon">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-durr-karst" checked>
+                    <span class="filter-label karst">Karst</span>
+                    <span class="count" id="count-durr-karst">0</span>
+                </label>
+            </div>
+            
+            <h2 id="salinity-filters-header">💧 Salinity Zones</h2>
+            <p class="info-text">Venice System classification (with ranges):</p>
+            
+            <div class="filter-section" id="salinity-filters-section">
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-all" checked>
+                    <span class="filter-label">All Zones</span>
+                    <span class="count" id="count-salinity-all">1714</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-freshwater" checked>
+                    <span class="filter-label">Freshwater (&lt;0.5 ppt)</span>
+                    <span class="count" id="count-salinity-freshwater">1347</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-oligohaline" checked>
+                    <span class="filter-label">Oligohaline (0.5-5 ppt)</span>
+                    <span class="count" id="count-salinity-oligohaline">285</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-mesohaline" checked>
+                    <span class="filter-label">Mesohaline (5-18 ppt)</span>
+                    <span class="count" id="count-salinity-mesohaline">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-polyhaline" checked>
+                    <span class="filter-label">Polyhaline (18-25 ppt)</span>
+                    <span class="count" id="count-salinity-polyhaline">0</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-euhaline" checked>
+                    <span class="filter-label">Euhaline (25-35 ppt)</span>
+                    <span class="count" id="count-salinity-euhaline">2</span>
+                </label>
+                
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-hyperhaline" checked>
+                    <span class="filter-label">Hyperhaline (&gt;35 ppt)</span>
+                    <span class="count" id="count-salinity-hyperhaline">80</span>
+                </label>
+            </div>
+            
+            <!-- TIDAL ZONE FILTERS -->
+            <h2 id="tidal-filters-header">🌊 Tidal Zones</h2>
+            <p class="info-text">Tidal influence classification (Ensign et al. 2012):</p>
+            
+            <div class="filter-section" id="tidal-filters-section">
+                <label class="filter-item">
+                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-all" checked>
+                    <span class="filter-label">All Zones</span>
+                    <span class="count" id="count-tidal-all">1714</span>
+                </label>
+                
+                <label class="filter-item" style="border-left: 4px solid #2E7D32;">
+                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-tidal_freshwater" checked>
+                    <span class="filter-label">🟢 Tidal Freshwater</span>
+                    <span class="count" id="count-tidal-tidal_freshwater">1442</span>
+                </label>
+                
+                <label class="filter-item" style="border-left: 4px solid #1976D2;">
+                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-tidal_saline" checked>
+                    <span class="filter-label">🔵 Tidal Saline</span>
+                    <span class="count" id="count-tidal-tidal_saline">81</span>
+                </label>
+                
+                <label class="filter-item" style="border-left: 4px solid #757575;">
+                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-non_tidal" checked>
+                    <span class="filter-label">⚫ Non-Tidal</span>
+                    <span class="count" id="count-tidal-non_tidal">191</span>
                 </label>
             </div>
             
             <div class="definitions-section">
-                <h3>Scientific Definitions</h3>
-                
-                <div class="definition-item">
-                    <h4 class="delta">Delta</h4>
-                    <p>River-dominated estuaries with extensive sediment deposition forming distributary networks at the river mouth. Characterized by high sediment load and active land-building processes.</p>
-                </div>
-                
-                <div class="definition-item">
-                    <h4 class="fjord">Fjord</h4>
-                    <p>Deep, narrow inlets carved by glacial erosion, typically with steep sides and significant depth. Common in high-latitude regions with historical glaciation (Norway, Chile, New Zealand).</p>
-                </div>
-                
-                <div class="definition-item">
-                    <h4 class="lagoon">Lagoon</h4>
-                    <p>Shallow coastal water bodies separated from the ocean by barrier islands, sandbars, or coral reefs. Generally characterized by restricted circulation and variable salinity.</p>
-                </div>
-                
-                <div class="definition-item">
-                    <h4 class="ria">Ria</h4>
-                    <p>Drowned river valleys formed by sea-level rise, typically V-shaped in cross-section. Deeper than typical coastal plain estuaries, with branching patterns following original river tributaries.</p>
-                </div>
-                
-                <div class="definition-item">
-                    <h4 class="coastal-plain">Coastal Plain</h4>
-                    <p>Wide, shallow estuaries formed in low-relief coastal areas. Often funnel-shaped with gradually sloping bottoms, common on passive continental margins.</p>
-                </div>
-                
-                <div class="definition-item">
-                    <h4 class="bar-built">Bar-Built</h4>
-                    <p>Estuaries formed behind barrier islands, spits, or offshore bars created by wave action and longshore sediment transport. Protected from direct ocean wave energy.</p>
-                </div>
-                
-                <div class="definition-item">
-                    <h4 class="tectonic">Tectonic</h4>
-                    <p>Estuaries formed by geological faulting, subsidence, or other tectonic processes. Structure controlled by underlying geological features rather than erosion or deposition.</p>
-                </div>
-                
                 <div class="reference-section">
-                    <h4>References</h4>
-                    <p class="reference">
-                        <strong>Primary Data Source:</strong><br>
-                        Dürr, H.H., Laruelle, G.G., van Kempen, C.M., Slomp, C.P., Meybeck, M., & Middelkoop, H. (2011). 
-                        Worldwide typology of nearshore coastal systems: defining the estuarine filter of river inputs to the oceans. 
-                        <em>Estuaries and Coasts</em>, 34(3), 441-458. DOI: 10.1007/s12237-011-9381-y
-                    </p>
-                    <p class="reference">
-                        <strong>Supplementary Data:</strong><br>
-                        Baum, M.J., Schüttrumpf, H., & Siemes, R.W. (2024). 
-                        Large structural estuaries: Their global distribution and morphology. 
-                        <em>Geomorphology</em>, supplementary data.
-                    </p>
-                    <p class="reference">
-                        Pritchard, D.W. (1967). What is an estuary: physical viewpoint. 
-                        In G.H. Lauff (Ed.), <em>Estuaries</em> (pp. 3-5). AAAS Publication 83.
-                    </p>
+                    <h4>📚 Data Sources</h4>
+                    <div class="reference" style="background: #fff3cd; border-left: 4px solid #ff9800;">
+                        <strong>Dürr et al. (2011)</strong><br>
+                        <em>Estuaries and Coasts</em><br>
+                        DOI: 10.1007/s12237-011-9381-y<br>
+                        <span style="color: #e65100; font-weight: bold;">⚠️ Coastal basins only!</span>
+                    </div>
+                    <div class="reference">
+                        <strong>BasinATLAS v1.0</strong><br>
+                        <em>HydroSHEDS Level 7</em><br>
+                        <span style="color: #1976D2; font-weight: bold;">NEW!</span> Fine-resolution basins
+                    </div>
+                    <div class="reference">
+                        <strong>Baum et al. (2024)</strong><br>
+                        <em>Geomorphology</em>
+                    </div>
+                    <div class="reference">
+                        <strong>GlobSalt v2.0</strong><br>
+                        <em>Global river salinity database</em>
+                    </div>
+                    <div class="reference">
+                        <strong>HydroSHEDS v1.0</strong><br>
+                        <em>DOI: 10.5067/9SQ1S6VFQQ20</em>
+                    </div>
+                    <div class="reference" style="background: #e8f5e9; border-left: 4px solid #4caf50;">
+                        <strong>Ensign et al. (2012)</strong><br>
+                        <em>Tidal freshwater zones</em><br>
+                        <span style="color: #2E7D32; font-weight: bold;">NEW!</span>
+                    </div>
+                </div>
+                
+                <div class="info-box" style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 6px; font-size: 0.9em;">
+                    <strong>🌟 World First!</strong><br>
+                    This map shows the first global classification of tidal freshwater zones!
+                    <ul style="margin: 8px 0 0 20px; padding: 0;">
+                        <li>1.57M km² tidal freshwater</li>
+                        <li>Critical GHG hotspots</li>
+                        <li>High biodiversity zones</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
     
-    <div id="map"></div>
-    
-    <div id="footer">
-        <p>Data sources: Dürr et al. (2011), Baum et al. (2024) | 
-           Visualization: Leaflet.js | 
-           <a href="https://github.com/NguyenTruongAnLab/estuary-type-map" target="_blank">View on GitHub</a>
-        </p>
+    <div id="map">
+        <div id="legend" class="legend">
+            <h4 id="legend-title">Map Legend</h4>
+            <div id="legend-content"></div>
+        </div>
     </div>
     
-    <!-- Custom JavaScript -->
+    <!-- Pie Chart Stats Overlay -->
+    <div id="stats-overlay" class="stats-overlay">
+        <div class="stats-header">
+            <h3>📊 Surface Area Distribution</h3>
+            <button id="toggle-stats" class="stats-toggle">▼</button>
+        </div>
+        <div class="stats-content" id="stats-content">
+            <canvas id="pieChart" width="280" height="280"></canvas>
+            <div id="stats-legend" class="stats-legend"></div>
+        </div>
+    </div>
+    
+    <!-- Custom JavaScript - COMPLETE FINAL VERSION WITH TIDAL ZONES -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="js/map.js"></script>
 </body>
 </html>
