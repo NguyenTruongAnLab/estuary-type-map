@@ -22,23 +22,17 @@ data/GCC-Panagiotis-Athanasiou_2024/GCC_*.csv
 
 # HydroSHEDS raw data (download with scripts/download_hydrosheds.py)
 # Exclude ALL raw HydroSHEDS data (shapefiles and geodatabases)
-data/hydrosheds/raw/RiverATLAS_v10_shp/
-data/hydrosheds/raw/RiverATLAS_v10.gdb/
-data/hydrosheds/raw/BasinATLAS_v10_shp/
-data/hydrosheds/raw/BasinATLAS_v10.gdb/
-data/hydrosheds/raw/LakeATLAS_v10_shp/
-data/hydrosheds/raw/LakeATLAS_v10.gdb/
-data/hydrosheds/raw/*.zip
-data/hydrosheds/raw/DOWNLOAD_MANIFEST.txt
+data/processed/raw/*.gpkg
+data/processed/processed/*.gpkg
+data/processed/raw/*.nc
 
-# Keep compressed HydroSHEDS data (processed, <200MB each)
-!data/processed/
-!data/processed/*.gpkg
+# Exclude ALL .gpkg and .nc files (processed data files)
+*.gpkg
+*.nc
 
-# Keep the generated output
-!data/estuaries.geojson
-!data/coastline.geojson
-!data/basins_simplified.geojson
+# But keep specific web-ready GeoJSON files
+!data/web/*.geojson
+!data/optimized/*.geojson
 
 # IDE
 .vscode/
