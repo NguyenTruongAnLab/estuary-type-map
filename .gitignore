@@ -123,3 +123,4 @@ data/raw/GRIT-Michel_2025/GRITv06_sinks_GLOBAL_EPSG4326.gpkg
 data/processed/tidal_basins_river_based_lev07.gpkg
 data/processed/tidal_basins_grit_validated.gpkg
 data/raw/GCC-Panagiotis-Athanasiou_2024/GCC_socioeconomic.csv
+diagnostics_html/tidal_basins_with_rivers.html
