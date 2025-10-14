@@ -23,7 +23,7 @@ import json
 from datetime import datetime
 
 # Configuration
-MAX_FILE_SIZE_MB = 50
+MAX_FILE_SIZE_MB = 30  # Updated to 30MB limit
 MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,7 +43,10 @@ IGNORE_PATTERNS = [
     "data/raw/**/*.gpkg", 
     "data/raw/**/*.nc",
     "**/*_large.*",
-    "**/*_heavy.*"
+    "**/*_heavy.*",
+    # GeoJSON and HTML files over 30MB
+    "**/*.geojson",
+    "**/*.html"
 ]
 
 def get_file_size_mb(file_path):

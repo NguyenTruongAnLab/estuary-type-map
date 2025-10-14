@@ -124,3 +124,11 @@ data/processed/tidal_basins_river_based_lev07.gpkg
 data/processed/tidal_basins_grit_validated.gpkg
 data/raw/GCC-Panagiotis-Athanasiou_2024/GCC_socioeconomic.csv
 diagnostics_html/tidal_basins_with_rivers.html
+data/processed/ml_features/features_as.parquet
+data/processed/ml_features/features_af.parquet
+data/web/basins_coastal_lev08_z7-10.geojson
+data/processed/basins_coastal_lev08.gpkg
+data/processed/ml_features/features_na.parquet
+data/processed/globsalt_salinity_zones.gpkg
+**/*.geojson
+**/*.html

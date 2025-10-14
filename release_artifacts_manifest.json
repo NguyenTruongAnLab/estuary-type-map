@@ -1,8 +1,8 @@
 {
-  "generated": "2025-10-14T15:19:39.269135",
-  "description": "Large files (>50MB) for GitHub release attachment",
-  "total_files": 58,
-  "total_size_mb": 62785.0,
+  "generated": "2025-10-14T15:40:27.182016",
+  "description": "Large files (>30MB) for GitHub release attachment",
+  "total_files": 64,
+  "total_size_mb": 62998.9,
   "files": [
     {
       "path": "data\\raw\\hydrosheds\\RiverATLAS_v10_QGIS.gpkg",
@@ -351,6 +351,42 @@
       "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GCC-Panagiotis-Athanasiou_2024\\GCC_socioeconomic.csv",
       "size_mb": 72.8,
       "size_bytes": 76324149
+    },
+    {
+      "path": "data\\processed\\ml_features\\features_as.parquet",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\ml_features\\features_as.parquet",
+      "size_mb": 38.8,
+      "size_bytes": 40659547
+    },
+    {
+      "path": "data\\processed\\ml_features\\features_af.parquet",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\ml_features\\features_af.parquet",
+      "size_mb": 38.4,
+      "size_bytes": 40219335
+    },
+    {
+      "path": "data\\web\\basins_coastal_lev08_z7-10.geojson",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\web\\basins_coastal_lev08_z7-10.geojson",
+      "size_mb": 37.7,
+      "size_bytes": 39582503
+    },
+    {
+      "path": "data\\processed\\basins_coastal_lev08.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\basins_coastal_lev08.gpkg",
+      "size_mb": 34.3,
+      "size_bytes": 35917824
+    },
+    {
+      "path": "data\\processed\\ml_features\\features_na.parquet",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\ml_features\\features_na.parquet",
+      "size_mb": 33.4,
+      "size_bytes": 35033568
+    },
+    {
+      "path": "data\\processed\\globsalt_salinity_zones.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\globsalt_salinity_zones.gpkg",
+      "size_mb": 31.3,
+      "size_bytes": 32829440
     }
   ]
 }

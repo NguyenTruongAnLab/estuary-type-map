@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent
 RELEASE_TAG = "v1.0.0"
 RELEASE_TITLE = "v1.0.0 - High-Resolution Global Tidal Basin Atlas"
 
-# Large files to attach (generated 2025-10-14 15:19)
+# Large files to attach (generated 2025-10-14 15:40)
 LARGE_FILES = [
     {
         'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\raw\hydrosheds\RiverATLAS_v10_QGIS.gpkg",
@@ -307,6 +307,36 @@ LARGE_FILES = [
         'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\raw\GCC-Panagiotis-Athanasiou_2024\GCC_socioeconomic.csv",
         'name': "GCC_socioeconomic.csv",
         'size_mb': 72.8
+    },
+    {
+        'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\ml_features\features_as.parquet",
+        'name': "features_as.parquet",
+        'size_mb': 38.8
+    },
+    {
+        'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\ml_features\features_af.parquet",
+        'name': "features_af.parquet",
+        'size_mb': 38.4
+    },
+    {
+        'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\web\basins_coastal_lev08_z7-10.geojson",
+        'name': "basins_coastal_lev08_z7-10.geojson",
+        'size_mb': 37.7
+    },
+    {
+        'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\basins_coastal_lev08.gpkg",
+        'name': "basins_coastal_lev08.gpkg",
+        'size_mb': 34.3
+    },
+    {
+        'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\ml_features\features_na.parquet",
+        'name': "features_na.parquet",
+        'size_mb': 33.4
+    },
+    {
+        'path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\globsalt_salinity_zones.gpkg",
+        'name': "globsalt_salinity_zones.gpkg",
+        'size_mb': 31.3
     },
 ]
 
