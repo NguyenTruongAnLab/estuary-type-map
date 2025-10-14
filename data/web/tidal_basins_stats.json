@@ -1,0 +1,51 @@
+{
+  "total_basins": 16189,
+  "total_area_km2": 36564210.099999994,
+  "by_type": {
+    "Arheic": {
+      "count": 1218,
+      "area_km2": 2576910.0999999996,
+      "percentage": 7.5236271542405335
+    },
+    "Fjords and fjaerds": {
+      "count": 3516,
+      "area_km2": 6677945.100000001,
+      "percentage": 21.718450799925876
+    },
+    "Karst": {
+      "count": 153,
+      "area_km2": 433585.30000000005,
+      "percentage": 0.9450861696213478
+    },
+    "Lagoons": {
+      "count": 1577,
+      "area_km2": 3513555.0,
+      "percentage": 9.741182284267095
+    },
+    "Large Rivers": {
+      "count": 375,
+      "area_km2": 1015438.5,
+      "percentage": 2.3163876706405584
+    },
+    "Large Rivers with tidal deltas": {
+      "count": 227,
+      "area_km2": 605466.3,
+      "percentage": 1.4021866699610848
+    },
+    "Small deltas": {
+      "count": 4036,
+      "area_km2": 9915216.100000001,
+      "percentage": 24.930508369880783
+    },
+    "Tidal systems": {
+      "count": 4666,
+      "area_km2": 11100844.600000001,
+      "percentage": 28.822039656556917
+    },
+    "Unclassified": {
+      "count": 421,
+      "area_km2": 725249.1,
+      "percentage": 2.6005312249058004
+    }
+  }
+}

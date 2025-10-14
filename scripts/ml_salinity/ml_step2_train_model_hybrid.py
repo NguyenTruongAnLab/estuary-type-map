@@ -126,13 +126,20 @@ def train_inland_model(global_data):
     for cls, count in inland_data['class'].value_counts().items():
         print(f"   {cls:15s}: {count:>7,} ({count/len(inland_data)*100:>5.1f}%)")
     
-    # Select DynQual-only features (NO GCC!)
+    # Select GRIT + Dürr + Temperature features (NO GCC for inland!)
     feature_cols = [
+        # GRIT network features (EXCELLENT predictors!)
         'dist_to_coast_km', 'log_dist_to_coast', 'strahler_order',
         'length', 'upstream_area', 'sinuosity', 'azimuth', 'is_mainstem',
-        'log_upstream_area', 'length_km', 'in_durr_estuary', 'durr_type_encoded',
-        'abs_latitude', 'dist_x_strahler', 'area_per_length',
-        'dynqual_tds_mgL', 'dynqual_discharge_m3s', 'dynqual_temperature_C', 'dynqual_salinity_psu'
+        'log_upstream_area', 'length_km', 'abs_latitude', 
+        'dist_x_strahler', 'area_per_length',
+        # Dürr estuary features
+        'in_durr_estuary', 'durr_type_encoded',
+        # DynQual temperature ONLY (climate proxy)
+        'dynqual_temperature_C'
+        # REMOVED: dynqual_salinity_psu (circular reasoning!)
+        # REMOVED: dynqual_tds_mgL (poor quality, 10km resolution)
+        # REMOVED: dynqual_discharge_m3s (use upstream_area instead!)
     ]
     
     # Check available features

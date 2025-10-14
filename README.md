@@ -34,11 +34,16 @@ Explore the global water body database:
   - **🗺️ Basin Polygons Mode**: Display complete drainage basins as colored polygons
   - **🌐 Coastal Segments Mode**: View global coastlines colored by estuary type (8,400+ segments)
   
-- **Geomorphological Classification**: Filter estuaries by shape type with updated color scheme:
-  - **Delta**: River-dominated, sediment-rich formations - Purple (1,768 estuaries)
-  - **Fjord**: Glacially carved, deep narrow inlets - Orange (2,303 estuaries)
-  - **Lagoon**: Coastal water bodies separated by barrier islands - Brown (510 estuaries)
-  - **Coastal Plain**: Wide, shallow estuaries on flat coastal areas - Blue (1,645 estuaries)
+- **Geomorphological Classification (Corrected Dürr et al. 2011 Typology)**:
+  - **NEW in v1.0.0**: 16,189 tidal basins using BasinATLAS Level 7 (0-300km from coast)
+  - **Tidal systems (Type II)**: Wave/tide-dominated - Pink (4,666 basins, 28.8%)
+  - **Small deltas (Type I)**: Small-medium river-dominated - Purple (4,036 basins, 24.9%)
+  - **Fjords and fjaerds (Type IV)**: Glacially carved - Blue (3,516 basins, 21.7%)
+  - **Lagoons (Type III)**: Barrier-protected systems - Orange (1,577 basins, 9.7%)
+  - **Arheic (Type VII)**: Arid/arheic coasts - Cyan (1,218 basins, 7.5%)
+  - **Large Rivers (Type Va)**: Major river systems - Light Purple (375 basins, 2.3%)
+  - **Large Rivers + tidal deltas (Type Vb)**: Mekong, etc. - Dark Purple (227 basins, 1.4%)
+  - **Karst (Type VI)**: Limestone karst systems - Yellow (153 basins, 0.9%)
 
 - **Basin Polygon Visualization**: 
   - View complete watershed/drainage basins for each estuary

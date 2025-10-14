@@ -50,8 +50,8 @@ OUTPUT_FILE = WEB_DIR / 'coastal_basins_estuarine_types.geojson'
 
 # Processing parameters
 MAX_DISTANCE_TO_COAST_KM = 100  # Only basins within 100 km of coast
-SIMPLIFY_TOLERANCE = 0.02       # Simplification for web (degrees, ~2.2 km at equator)
-DIST_SINK_PERCENTILE = 0.15     # Use 15th percentile (more aggressive filtering)
+SIMPLIFY_TOLERANCE = 0.05       # Simplification for web (degrees, ~5.5 km at equator - more aggressive!)
+DIST_SINK_PERCENTILE = 0.50     # Use 50th percentile (more inclusive for deltas)
 
 # Dürr columns (from process_durr.py output):
 # - name: Estuary/basin name

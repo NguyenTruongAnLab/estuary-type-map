@@ -5,11 +5,12 @@ MASTER SCRIPT: Complete ML Pipeline with DynQual + GCC Integration
 
 Runs entire ML classification pipeline with coastal features:
 1. Extract baseline features (GRIT, Dürr, GlobSalt)
-2. Add DynQual features (salinity, discharge, temperature)
-3. Add GCC features (tidal range, waves, slopes, land cover) ⭐ NEW!
-4. Train Random Forest model
+2. Add DynQual features (temperature only - climate proxy)
+3. Add GCC features (tidal range, waves, slopes, land cover) ⭐
+4. Train Random Forest model (hybrid coastal/inland)
 5. Predict for all segments
 6. Validate with multiple methods
+7. Calculate surface areas by salinity class ⭐ NEW!
 
 Usage:
     # Full pipeline (recommended - 1-2 hours total)
@@ -45,13 +46,14 @@ def print_header():
     """Print pipeline header"""
     print("\n" + "="*80)
     print("="*80)
-    print("  🚀 ML PIPELINE WITH DYNQUAL ENSEMBLE FEATURES")
+    print("  🚀 COMPLETE ML PIPELINE: CLASSIFICATION → SURFACE AREAS")
     print("="*80)
     print("="*80)
     print(f"\nStarted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Expected duration: 1-2 hours (all regions)")
-    print(f"   Features: Baseline (23) + DynQual (8) = 31 total")
-    print(f"   Note: GCC features optional (currently degrading performance!)")
+    print(f"   Features: GRIT (13) + Dürr (2) + Temperature (1) + GCC (30)")
+    print(f"   Models: Hybrid coastal/inland approach")
+    print(f"   Output: Global surface areas by salinity class (Venice System)")
 
 
 def print_section(title: str, step: int, total: int):
@@ -110,6 +112,10 @@ def main():
                         help='Skip prediction step (Step 5)')
     parser.add_argument('--skip-validation', action='store_true',
                         help='Skip validation step (Step 6)')
+    parser.add_argument('--skip-surface-areas', action='store_true',
+                        help='Skip surface area calculation (Step 7)')
+    parser.add_argument('--use-osm', action='store_true',
+                        help='Use OSM water polygons for surface areas (more accurate but slower)')
     args = parser.parse_args()
     
     # Determine regions
@@ -140,7 +146,7 @@ def main():
     # STEP 1: Extract Baseline Features
     # =========================================================================
     if not args.skip_baseline:
-        print_section("Extract Baseline Features (GRIT, Dürr, GlobSalt)", 1, 6)
+        print_section("Extract Baseline Features (GRIT, Dürr, GlobSalt)", 1, 7)
         print("📊 Expected time: 45-60 minutes (all regions)")
         print("📂 Output: data/processed/ml_features/features_{region}.parquet")
         
@@ -156,7 +162,7 @@ def main():
             print("   Cannot proceed without baseline features.")
             return 1
     else:
-        print_section("SKIPPED: Baseline Feature Extraction", 1, 6)
+        print_section("SKIPPED: Baseline Feature Extraction", 1, 7)
         print("⏭️  Using existing feature files")
         
         # Check if features exist
@@ -178,7 +184,7 @@ def main():
     # STEP 2: Add DynQual Features
     # =========================================================================
     if not args.skip_dynqual:
-        print_section("Add DynQual Ensemble Features", 2, 6)
+        print_section("Add DynQual Ensemble Features", 2, 7)
         print("🔬 Stacking approach: DynQual predictions as features, GlobSalt as labels")
         print("📊 Expected time: 30-45 minutes (NetCDF extraction)")
         print("📂 Output: Updates existing feature files with DynQual columns")
@@ -192,22 +198,18 @@ def main():
         if result != 0:
             failed_steps.append("Step 2: DynQual feature addition")
             print("\n⚠️  DynQual integration failed!")
-            print("   Pipeline can continue with baseline features only.")
-            print("   Press Enter to continue, or Ctrl+C to abort...")
-            try:
-                input()
-            except KeyboardInterrupt:
-                print("\n❌ Pipeline aborted by user")
-                return 1
+            print("   Pipeline will continue with baseline features only.")
+            print("   This is acceptable - GRIT and GCC features are sufficient!")
+            # Automatically continue without user interaction (for overnight runs)
     else:
-        print_section("SKIPPED: DynQual Feature Addition", 2, 6)
+        print_section("SKIPPED: DynQual Feature Addition", 2, 7)
         print("⏭️  Using features without DynQual enhancement")
     
     # =========================================================================
     # STEP 3: Add GCC Features (NEW!)
     # =========================================================================
     if not args.skip_gcc:
-        print_section("Add GCC Coastal Features (Athanasiou 2024)", 3, 6)
+        print_section("Add GCC Coastal Features (Athanasiou 2024)", 3, 7)
         print("🌊 Adding 32 high-resolution coastal indicators:")
         print("   - Tidal range (mhhw, mllw) ⭐⭐⭐⭐⭐ PRIMARY ESTUARINE INDICATOR!")
         print("   - Wave energy (mixing proxy)")
@@ -241,13 +243,12 @@ def main():
     # STEP 4: Train Model
     # =========================================================================
     if not args.skip_training:
-        print_section("Train Random Forest Model", 4, 6)
+        print_section("Train Hybrid Random Forest Model", 4, 7)
         print("🌲 Training on global GlobSalt-validated segments")
-        print("📊 Expected time: 20-30 minutes (with hyperparameter tuning)")
         print("📂 Output: data/processed/ml_models/")
         
         result = run_script(
-            'ml_salinity/ml_step2_train_model.py',
+            'ml_salinity/ml_step2_train_model_hybrid.py',
             [],
             'Training Random Forest with 5-fold cross-validation'
         )
@@ -258,7 +259,7 @@ def main():
             print("   Cannot proceed without trained model.")
             return 1
     else:
-        print_section("SKIPPED: Model Training", 4, 6)
+        print_section("SKIPPED: Model Training", 4, 7)
         print("⏭️  Using existing trained model")
         
         # Check if model exists
@@ -274,13 +275,13 @@ def main():
     # STEP 5: Predict for All Segments
     # =========================================================================
     if not args.skip_prediction:
-        print_section("Predict Salinity Classes", 5, 6)
+        print_section("Predict for All Segments", 5, 7)
         print("🔮 Predicting for all segments (including those without GlobSalt data)")
         print("📊 Expected time: 10-15 minutes")
         print("📂 Output: data/processed/ml_classified/")
         
         result = run_script(
-            'ml_salinity/ml_step3_predict.py',
+            'ml_salinity/ml_step3_predict_hybrid.py',
             regions_arg,
             'Applying trained model to all segments'
         )
@@ -291,16 +292,15 @@ def main():
             print("   Cannot validate without predictions.")
             return 1
     else:
-        print_section("SKIPPED: Prediction", 5, 6)
+        print_section("SKIPPED: Prediction", 5, 7)
         print("⏭️  Using existing predictions")
     
     # =========================================================================
     # STEP 6: Validate with Multiple Methods (IMPROVED)
     # =========================================================================
     if not args.skip_validation:
-        print_section("Validate with Multiple Methods", 6, 6)
+        print_section("Validate with Multiple Methods", 6, 7)
         print("✅ Multi-method validation for robust assessment")
-        print("📊 Expected time: 5-10 minutes")
         print("📂 Output: data/processed/validation_improved/")
         print("\n   Methods:")
         print("   1. GlobSalt Holdout (PRIMARY - Gold Standard)")
@@ -320,8 +320,40 @@ def main():
             print("\n⚠️  Validation failed!")
             print("   But predictions are still valid and usable.")
     else:
-        print_section("SKIPPED: Validation", 6, 6)
+        print_section("SKIPPED: Validation", 6, 7)
         print("⏭️  Skipping validation")
+    
+    # =========================================================================
+    # STEP 7: Calculate Surface Areas by Salinity Class (NEW!)
+    # =========================================================================
+    if not args.skip_surface_areas:
+        print_section("Calculate Water Body Surface Areas by Salinity Class", 7, 7)
+        print("🎯 ULTIMATE GOAL: Connect ML predictions to biogeochemical budgets!")
+        print("📂 Output: data/processed/surface_areas_by_salinity/")
+        print("\n   Two Approaches:")
+        print("   1. GRIT surface_area attribute (FAST - default)")
+        print("   2. OSM water polygons (PRECISE - if --use-osm specified)")
+        
+        surface_args = regions_arg.copy()
+        if args.use_osm:
+            surface_args.append('--use-osm')
+            print("\n   Using OSM water polygons (more accurate but slower)")
+        else:
+            print("\n   Using GRIT surface areas (faster)")
+        
+        result = run_script(
+            'ml_salinity/ml_step5_calculate_surface_areas.py',
+            surface_args,
+            'Calculating global water body surface areas by salinity class'
+        )
+        
+        if result != 0:
+            failed_steps.append("Step 7: Surface area calculation")
+            print("\n⚠️  Surface area calculation failed!")
+            print("   But ML predictions are still valid.")
+    else:
+        print_section("SKIPPED: Surface Area Calculation", 7, 7)
+        print("⏭️  Skipping surface area calculation")
     
     # =========================================================================
     # PIPELINE COMPLETE
@@ -353,27 +385,15 @@ def main():
         print(f"\n📁 Output Locations:")
         print(f"   Features: data/processed/ml_features/")
         print(f"   Model: data/processed/ml_models/")
-        print(f"   Predictions: data/processed/ml_classified/")
+        print(f"   Predictions: data/processed/ml_classified_hybrid/")
         print(f"   Validation: data/processed/validation_improved/")
+        print(f"   Surface Areas: data/processed/surface_areas_by_salinity/")
         
-        print(f"\n📊 Next Steps:")
+        print(f"\n📊 Results:")
         print(f"   1. Review feature_importance.csv in ml_models/")
         print(f"   2. Check validation reports in validation_improved/")
-        print(f"   3. Compare distance patterns (expect 40-50% estuarine @ 0-20km)")
-        
-        # Check if GCC was used
-        if not args.skip_gcc:
-            print(f"\n🌊 GCC Integration Results:")
-            print(f"   ⭐ Check if gcc_tidal_range ranks in TOP 5 importance")
-            print(f"   ⭐ Distance pattern should be more realistic (not 69% @ 0-20km!)")
-            print(f"   ⭐ Estuarine extent should follow Savenije (2012) equations")
-            print(f"   Expected: 10-20% improvement in estuarine classification")
-        
-        print(f"\n🎉 Your global water body classification is complete!")
-        print(f"   - 100% of segments classified (not just 0.7-25%!)")
-        print(f"   - Confidence levels for transparent uncertainty")
-        print(f"   - Validated against independent Dürr 2011 database")
-        print(f"   - Publication-ready results!")
+        print(f"   3. ⭐ VIEW SURFACE AREAS: surface_areas_by_salinity/global_surface_areas_*.csv")
+        print(f"   4. Compare with literature (Dürr 2011, Laruelle 2025)")
         
         return 0
 

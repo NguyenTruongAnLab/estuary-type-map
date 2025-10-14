@@ -1,15 +1,13 @@
 // ============================================================================
-// Global Estuary Type Map - COMPLETE FINAL VERSION
+// Global Water Body Surface Area Atlas - Interactive Map
 // ============================================================================
-// Features:
-// - Dürr Estuary Types (geomorphology)
+// Complete implementation with all data layers:
+// - Dürr Estuary Types (geomorphology) - 2 versions
 // - Baum Morphometry (large estuaries)
-// - Salinity Zones
-// - Tidal Zones 
-// - Multiple view modes
-// - All filters working properly
-// - Complete legends with ranges
-// Total Data: ~27 MB | Load Time: 3-7 seconds
+// - GlobSalt Stations (salinity monitoring)
+// - DynQual River Characteristics (discharge/salinity)
+// - GCC Coastal Characteristics
+// - Salinity Zones & Tidal Zones
 // ============================================================================
 
 // ============================================================================
@@ -35,24 +33,12 @@ const SALINITY_COLORS = {
 };
 
 const SALINITY_RANGES = {
-    'freshwater': '<0.5 ppt',
-    'oligohaline': '0.5-5 ppt',
-    'mesohaline': '5-18 ppt',
-    'polyhaline': '18-25 ppt',
-    'euhaline': '25-35 ppt',
-    'hyperhaline': '>35 ppt'
-};
-
-const TIDAL_ZONE_COLORS = {
-    'tidal_freshwater': '#2E7D32',
-    'tidal_saline': '#1976D2',
-    'non_tidal': '#757575'
-};
-
-const TIDAL_ZONE_LABELS = {
-    'tidal_freshwater': 'Tidal Freshwater',
-    'tidal_saline': 'Tidal Saline',
-    'non_tidal': 'Non-Tidal'
+    'freshwater': '<0.5 PSU',
+    'oligohaline': '0.5-5 PSU',
+    'mesohaline': '5-18 PSU',
+    'polyhaline': '18-25 PSU',
+    'euhaline': '25-35 PSU',
+    'hyperhaline': '>35 PSU'
 };
 
 const BAUM_COLORS = {
@@ -69,31 +55,29 @@ const BAUM_COLORS = {
 
 let map;
 let layerGroups = {
-    coastalBasins: L.layerGroup(),
-    durrReference: L.layerGroup(),
-    baum: L.layerGroup(),
-    salinityZones: L.layerGroup(),
-    tidalZones: L.layerGroup(),
-    rivers: L.layerGroup(),
-    basins: L.layerGroup()
+    coastalBasins: L.layerGroup(),    // Coastal basins with Dürr types
+    durrReference: L.layerGroup(),    // Original Dürr full catchments
+    baum: L.layerGroup(),             // Baum morphometry points
+    globsalt: L.layerGroup(),         // GlobSalt monitoring stations
+    dynqual: L.layerGroup(),          // DynQual river characteristics
+    gcc: L.layerGroup()               // GCC coastal characteristics
 };
 
 let datasets = {};
 let activeFilters = {
-    durr: new Set(['all']),
-    salinity: new Set(['all']),
-    tidal: new Set(['all'])
+    durr: new Set(['all'])
 };
 
-let currentViewMode = 'geomorphology'; // 'geomorphology', 'salinity', or 'tidal'
+let currentViewMode = 'coastal'; // 'coastal' or 'reference'
 let loadingIndicator;
+let pieChart = null;
 
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
 
 function initMap() {
-    console.log('🗺️ Initializing Global Estuary Type Map - Complete Version...');
+    console.log('🗺️ Initializing Global Water Body Surface Area Atlas...');
     
     map = L.map('map', {
         center: [20, 0],
@@ -111,11 +95,9 @@ function initMap() {
 
     // Add default layers
     layerGroups.coastalBasins.addTo(map);
-    layerGroups.baum.addTo(map);
 
     setupLayerControls();
     setupFilters();
-    setupViewModeSelector();
     setupMapEvents();
     createLoadingIndicator();
 }
@@ -148,115 +130,110 @@ async function loadAllData() {
     try {
         setLoading(true);
         
-        // Load core data first
+        // Load data in parallel for faster loading
         await Promise.all([
-            loadDurrBasins(),
-            loadBaumData()
+            loadCoastalBasins(),
+            loadDurrReference(),
+            loadBaumData(),
+            loadGlobSaltStations(),
+            loadDynQualData(),
+            loadGCCData()
         ]);
         
-        updateDurrBasins();
+        console.log('✅ All data loaded successfully!');
+        
+        // Initialize visualization
+        updateCoastalBasins();
+        updateDurrReference();
         updateBaumLayer();
         updateLegend();
         
-        console.log('✓ Core data loaded');
-        
-        // Load optional data in background
-        setTimeout(async () => {
-            await Promise.all([
-                loadSalinityData(),
-                loadTidalZones()
-            ]);
-            console.log('✓ Optional data loaded (Salinity & Tidal zones)');
-        }, 1000);
-        
-        setLoading(false);
+        // Create pie chart
+        setTimeout(() => {
+            createPieChart();
+            setupStatsToggle();
+        }, 500);
         
     } catch (error) {
         console.error('❌ Error loading data:', error);
+        showError('Failed to load data: ' + error.message);
+    } finally {
         setLoading(false);
-        showError('Failed to load map data. Please refresh the page.');
     }
 }
 
 async function loadCoastalBasins() {
-    console.log('📂 Loading coastal basins (BasinATLAS Level 7)...');
+    console.log('📂 Loading coastal basins with estuary types...');
     const response = await fetch('data/web/coastal_basins_estuarine_types.geojson');
     if (!response.ok) throw new Error('Failed to load coastal basins');
     datasets.coastalBasins = await response.json();
     console.log(`✓ Loaded ${datasets.coastalBasins.features.length} coastal basins`);
-    updateCountElement('count-coastal-basins', datasets.coastalBasins.features.length);
-    updateDurrCounts(); // Still updates type counts
 }
 
 async function loadDurrReference() {
-    console.log('📂 Loading Dürr reference (optional full watersheds)...');
-    const response = await fetch('data/optimized/durr_basins.geojson');
+    console.log('📂 Loading Dürr reference catchments...');
+    const response = await fetch('data/web/durr_estuaries.geojson');
     if (!response.ok) throw new Error('Failed to load Dürr reference');
     datasets.durrReference = await response.json();
-    console.log(`✓ Loaded ${datasets.durrReference.features.length} Dürr reference catchments`);
-    updateCountElement('count-durr-ref', datasets.durrReference.features.length);
+    console.log(`✓ Loaded ${datasets.durrReference.features.length} Dürr catchments`);
 }
 
 async function loadBaumData() {
     console.log('📂 Loading Baum morphometry...');
-    const response = await fetch('data/optimized/baum_morphometry.geojson');
+    const response = await fetch('data/web/baum_morphometry.geojson');
     if (!response.ok) throw new Error('Failed to load Baum data');
     datasets.baum = await response.json();
     console.log(`✓ Loaded ${datasets.baum.features.length} Baum estuaries`);
-    updateCountElement('count-baum-all', datasets.baum.features.length);
 }
 
-async function loadSalinityData() {
-    console.log('📂 Loading salinity zones (POLYGONS)...');
-    const response = await fetch('data/optimized/basins_by_salinity.geojson');
-    if (!response.ok) throw new Error('Failed to load salinity data');
-    datasets.salinityZones = await response.json();
-    console.log(`✓ Loaded ${datasets.salinityZones.features.length} salinity polygons`);
-    updateCountElement('count-salinity', datasets.salinityZones.features.length);
-    updateSalinityCounts();
+async function loadGlobSaltStations() {
+    console.log('📂 Loading GlobSalt stations...');
+    try {
+        const response = await fetch('data/web/globsalt_stations.geojson');
+        if (!response.ok) throw new Error('GlobSalt file not found');
+        datasets.globsalt = await response.json();
+        console.log(`✓ Loaded ${datasets.globsalt.features.length} GlobSalt stations`);
+    } catch (error) {
+        console.warn('⚠️ GlobSalt data not available:', error.message);
+        datasets.globsalt = null;
+    }
 }
 
-async function loadTidalZones() {
-    console.log('📂 Loading tidal zones...');
-    const response = await fetch('data/optimized/basins_by_tidal_zone.geojson');
-    if (!response.ok) throw new Error('Failed to load tidal zone data');
-    datasets.tidalZones = await response.json();
-    console.log(`✓ Loaded ${datasets.tidalZones.features.length} tidal zone polygons`);
-    updateCountElement('count-tidal', datasets.tidalZones.features.length);
-    updateTidalCounts();
+async function loadDynQualData() {
+    console.log('📂 Loading DynQual river characteristics...');
+    try {
+        const response = await fetch('data/web/dynqual_river_characteristics.geojson');
+        if (!response.ok) throw new Error('DynQual file not found');
+        datasets.dynqual = await response.json();
+        console.log(`✓ Loaded ${datasets.dynqual.features.length} DynQual points`);
+    } catch (error) {
+        console.warn('⚠️ DynQual data not available:', error.message);
+        datasets.dynqual = null;
+    }
 }
 
-// Rivers and basins loading DISABLED - not meaningful without salinity data
-// They would just show blue lines/polygons with no classification
-// If needed in future, join with salinity/tidal data first!
-
-// async function loadRiversData() {
-//     console.log('📂 Loading rivers...');
-//     const response = await fetch('data/optimized/rivers_estuaries.geojson');
-//     if (!response.ok) throw new Error('Failed to load rivers');
-//     datasets.rivers = await response.json();
-//     console.log(`✓ Loaded ${datasets.rivers.features.length} river reaches`);
-//     updateCountElement('count-rivers', datasets.rivers.features.length);
-// }
-
-// async function loadBasinsData() {
-//     console.log('📂 Loading HydroSHEDS basins...');
-//     const response = await fetch('data/optimized/basins_lev06.geojson');
-//     if (!response.ok) throw new Error('Failed to load basins');
-//     datasets.basins = await response.json();
-//     console.log(`✓ Loaded ${datasets.basins.features.length} basins`);
-// }
+async function loadGCCData() {
+    console.log('📂 Loading GCC coastal characteristics...');
+    try {
+        const response = await fetch('data/web/gcc_coastal_characteristics.geojson');
+        if (!response.ok) throw new Error('GCC file not found');
+        datasets.gcc = await response.json();
+        console.log(`✓ Loaded ${datasets.gcc.features.length} GCC segments`);
+    } catch (error) {
+        console.warn('⚠️ GCC data not available:', error.message);
+        datasets.gcc = null;
+    }
+}
 
 // ============================================================================
 // LAYER RENDERING
 // ============================================================================
 
-function updateDurrBasins() {
+function updateCoastalBasins() {
     layerGroups.coastalBasins.clearLayers();
     if (!datasets.coastalBasins) return;
     
-    console.log('📊 Updating Dürr basins...');
-    console.log('Total features:', datasets.coastalBasins.features.length);
+    console.log('📊 Updating coastal basins...');
     
     const filteredFeatures = datasets.coastalBasins.features.filter(feature => {
         const type = feature.properties.estuary_type;
@@ -270,22 +247,21 @@ function updateDurrBasins() {
         const polygon = L.geoJSON(feature, {
             style: {
                 fillColor: color,
-                fillOpacity: 0.5,
+                fillOpacity: 0.6,
                 color: color,
                 weight: 1,
                 opacity: 0.8
             }
         }).bindPopup(`
             <div class="popup-content">
-                <h3 class="popup-title">${props.estuary_name || 'Unnamed'}</h3>
+                <h3 class="popup-title">${props.estuary_name || 'Coastal Basin'}</h3>
                 <div class="popup-type" style="background: ${color};">${props.estuary_type}</div>
                 <div class="popup-info">
                     <strong>Basin ID:</strong> ${props.HYBAS_ID}<br>
-                    <strong>Sub Area:</strong> ${(props.SUB_AREA || 0).toLocaleString()} km²<br>
-                    <strong>Upstream Area:</strong> ${(props.UP_AREA || 0).toLocaleString()} km²
+                    <strong>Area:</strong> ${(props.SUB_AREA || 0).toLocaleString()} km²
                 </div>
                 <div class="popup-source">
-                    <strong>Source:</strong> HydroSHEDS + Dürr et al. (2011)
+                    <strong>Source:</strong> BasinATLAS Level 7 + Dürr et al. (2011)
                 </div>
             </div>
         `);
@@ -293,7 +269,7 @@ function updateDurrBasins() {
         layerGroups.coastalBasins.addLayer(polygon);
     });
     
-    console.log(`📍 Displayed ${filteredFeatures.length} coastal basins with Dürr classification`);
+    console.log(`📍 Displayed ${filteredFeatures.length} coastal basins`);
 }
 
 function updateDurrReference() {
@@ -304,27 +280,28 @@ function updateDurrReference() {
     
     datasets.durrReference.features.forEach(feature => {
         const props = feature.properties;
-        const type = props.estuary_type || 'Unclassified';
+        const type = props.type || 'Unclassified';
         const color = DURR_COLORS[type] || '#808080';
         
         const polygon = L.geoJSON(feature, {
             style: {
                 fillColor: color,
-                fillOpacity: 0.3,
+                fillOpacity: 0.2,
                 color: '#666',
                 weight: 1,
-                opacity: 0.5,
-                dashArray: '3, 3'
+                opacity: 0.6,
+                dashArray: '5, 5'
             }
         }).bindPopup(`
             <div class="popup-content">
-                <h3 class="popup-title">${props.estuary_name || 'Unnamed Catchment'}</h3>
+                <h3 class="popup-title">${props.name || 'Unnamed'}</h3>
                 <div class="popup-type" style="background: ${color};">${type}</div>
                 <div class="popup-info">
-                    <strong>Type:</strong> ${props.type_detailed || 'N/A'}
+                    <strong>Detailed Type:</strong> ${props.type_detailed || 'N/A'}<br>
+                    <strong>Basin Area:</strong> ${(props.basin_area_km2 || 0).toLocaleString()} km²
                 </div>
                 <div class="popup-source">
-                    <strong>Source:</strong> Dürr et al. (2011) - Full Catchments
+                    <strong>Source:</strong> Dürr et al. (2011) - Full Watershed
                 </div>
             </div>
         `);
@@ -332,12 +309,12 @@ function updateDurrReference() {
         layerGroups.durrReference.addLayer(polygon);
     });
     
-    console.log(`📍 Displayed ${datasets.durrReference.features.length} Dürr reference catchments`);
+    console.log(`📍 Displayed ${datasets.durrReference.features.length} Dürr catchments`);
 }
 
 function updateBaumLayer() {
     layerGroups.baum.clearLayers();
-    if (!datasets.baum || !datasets.baum.features) return;
+    if (!datasets.baum) return;
     
     datasets.baum.features.forEach(feature => {
         const props = feature.properties;
@@ -354,6 +331,10 @@ function updateBaumLayer() {
             <div class="popup-content">
                 <h3 class="popup-title">${props.name}</h3>
                 <div class="popup-type" style="background: ${color};">${props.geomorphotype}</div>
+                <div class="popup-info">
+                    <strong>Country:</strong> ${props.country || 'N/A'}<br>
+                    <strong>Coordinates:</strong> ${props.lat.toFixed(2)}, ${props.lon.toFixed(2)}
+                </div>
                 <div class="popup-source">
                     <strong>Source:</strong> Baum et al. (2024)
                 </div>
@@ -366,36 +347,33 @@ function updateBaumLayer() {
     console.log(`📍 Displayed ${datasets.baum.features.length} Baum estuaries`);
 }
 
-function updateSalinityLayer() {
-    layerGroups.salinityZones.clearLayers();
-    if (!datasets.salinityZones || !datasets.salinityZones.features) return;
+function updateGlobSaltLayer() {
+    layerGroups.globsalt.clearLayers();
+    if (!datasets.globsalt) return;
     
-    const filteredFeatures = datasets.salinityZones.features.filter(feature => {
-        const zone = feature.properties.salinity_zone;
-        return activeFilters.salinity.has('all') || activeFilters.salinity.has(zone);
-    });
-    
-    filteredFeatures.forEach(feature => {
+    datasets.globsalt.features.forEach(feature => {
         const props = feature.properties;
-        const zone = props.salinity_zone || 'unknown';
-        const color = SALINITY_COLORS[zone] || '#808080';
-        const range = SALINITY_RANGES[zone] || 'Unknown';
+        const salinity = props.salinity_mean_psu || props.salinity_median_psu || 0;
+        const salinityClass = props.salinity_zone || props.salinity_class || 'freshwater';
+        const color = SALINITY_COLORS[salinityClass] || '#808080';
         
-        const polygon = L.geoJSON(feature, {
-            style: {
-                fillColor: color,
-                fillOpacity: 0.6,
-                color: color,
-                weight: 1,
-                opacity: 0.8
-            }
+        const coords = feature.geometry.coordinates;
+        const marker = L.circleMarker([coords[1], coords[0]], {
+            radius: 4,
+            fillColor: color,
+            color: '#fff',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.7
         }).bindPopup(`
             <div class="popup-content">
-                <h3 class="popup-title">Salinity Zone</h3>
-                <div class="popup-type" style="background: ${color};">${zone.charAt(0).toUpperCase() + zone.slice(1)}</div>
+                <h3 class="popup-title">GlobSalt Station</h3>
+                <div class="popup-type" style="background: ${color};">${salinityClass}</div>
                 <div class="popup-info">
-                    <strong>Range:</strong> ${range}<br>
-                    <strong>Area:</strong> ${(props.SUB_AREA || 0).toFixed(0)} km²
+                    <strong>Mean Salinity:</strong> ${salinity.toFixed(2)} PSU<br>
+                    <strong>Std Dev:</strong> ${(props.salinity_std_psu || 0).toFixed(2)} PSU<br>
+                    <strong>Measurements:</strong> ${props.n_measurements || 'N/A'}<br>
+                    <strong>Water Type:</strong> ${props.Water_type || 'N/A'}
                 </div>
                 <div class="popup-source">
                     <strong>Source:</strong> GlobSalt v2.0
@@ -403,140 +381,86 @@ function updateSalinityLayer() {
             </div>
         `);
         
-        layerGroups.salinityZones.addLayer(polygon);
+        layerGroups.globsalt.addLayer(marker);
     });
     
-    console.log(`📍 Displayed ${filteredFeatures.length} salinity zones`);
+    console.log(`📍 Displayed ${datasets.globsalt.features.length} GlobSalt stations`);
 }
 
-function updateTidalZoneLayer() {
-    layerGroups.tidalZones.clearLayers();
-    if (!datasets.tidalZones || !datasets.tidalZones.features) return;
+function updateDynQualLayer() {
+    layerGroups.dynqual.clearLayers();
+    if (!datasets.dynqual) return;
     
-    const filteredFeatures = datasets.tidalZones.features.filter(feature => {
-        const zone = feature.properties.tidal_zone;
-        return activeFilters.tidal.has('all') || activeFilters.tidal.has(zone);
-    });
-    
-    filteredFeatures.forEach(feature => {
+    datasets.dynqual.features.forEach(feature => {
         const props = feature.properties;
-        const zone = props.tidal_zone || 'unknown';
-        const color = TIDAL_ZONE_COLORS[zone] || '#808080';
-        const label = TIDAL_ZONE_LABELS[zone] || zone;
+        const discharge = props.discharge || 0;
+        const salinity = props.salinity || 0;
+        const salinityClass = props.salinity_class || 'freshwater';
+        const color = SALINITY_COLORS[salinityClass] || '#4a90e2';
         
-        const polygon = L.geoJSON(feature, {
-            style: {
-                fillColor: color,
-                fillOpacity: 0.6,
-                color: color,
-                weight: 1,
-                opacity: 0.8
-            }
+        const coords = feature.geometry.coordinates;
+        const marker = L.circleMarker([coords[1], coords[0]], {
+            radius: 5,
+            fillColor: color,
+            color: '#fff',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.7
         }).bindPopup(`
             <div class="popup-content">
-                <h3 class="popup-title">Tidal Zone Classification</h3>
-                <div class="popup-type" style="background: ${color};">${label}</div>
+                <h3 class="popup-title">DynQual River Point</h3>
                 <div class="popup-info">
-                    <strong>Salinity:</strong> ${props.salinity_zone || 'N/A'}<br>
-                    <strong>Tidal Influence:</strong> ${props.is_tidal ? 'Yes' : 'No'}<br>
-                    <strong>Area:</strong> ${(props.SUB_AREA || 0).toFixed(0)} km²
+                    <strong>Discharge:</strong> ${discharge.toFixed(1)} m³/s<br>
+                    <strong>Salinity:</strong> ${salinity.toFixed(2)} PSU<br>
+                    <strong>Classification:</strong> ${salinityClass}
+                    ${props.temperature ? `<br><strong>Temperature:</strong> ${props.temperature.toFixed(1)}°C` : ''}
                 </div>
                 <div class="popup-source">
-                    <strong>Source:</strong> Ensign et al. (2012)
+                    <strong>Source:</strong> Jones et al. (2023) - DynQual 10km
                 </div>
             </div>
         `);
         
-        layerGroups.tidalZones.addLayer(polygon);
+        layerGroups.dynqual.addLayer(marker);
     });
     
-    console.log(`📍 Displayed ${filteredFeatures.length} tidal zones`);
+    console.log(`📍 Displayed ${datasets.dynqual.features.length} DynQual points`);
 }
 
-function updateRiversLayer() {
-    layerGroups.rivers.clearLayers();
-    if (!datasets.rivers || !datasets.rivers.features) return;
+function updateGCCLayer() {
+    layerGroups.gcc.clearLayers();
+    if (!datasets.gcc) return;
     
-    datasets.rivers.features.forEach(feature => {
-        const line = L.geoJSON(feature, {
-            style: {
-                color: '#4a90e2',
-                weight: 1.5,
-                opacity: 0.7
-            }
-        });
-        layerGroups.rivers.addLayer(line);
+    datasets.gcc.features.forEach(feature => {
+        const props = feature.properties;
+        const coords = feature.geometry.coordinates;
+        
+        const marker = L.circleMarker([coords[1], coords[0]], {
+            radius: 4,
+            fillColor: '#3498db',
+            color: '#fff',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.6
+        }).bindPopup(`
+            <div class="popup-content">
+                <h3 class="popup-title">GCC Coastal Segment</h3>
+                <div class="popup-info">
+                    <strong>ID:</strong> ${props.id || 'N/A'}<br>
+                    ${Object.entries(props).slice(0, 5).map(([key, val]) => 
+                        key !== 'id' ? `<strong>${key}:</strong> ${typeof val === 'number' ? val.toFixed(2) : val}<br>` : ''
+                    ).join('')}
+                </div>
+                <div class="popup-source">
+                    <strong>Source:</strong> Athanasiou et al. (2024) - GCC
+                </div>
+            </div>
+        `);
+        
+        layerGroups.gcc.addLayer(marker);
     });
     
-    console.log(`📍 Displayed ${datasets.rivers.features.length} river reaches`);
-}
-
-function updateBasinsLayer() {
-    layerGroups.basins.clearLayers();
-    if (!datasets.basins || !datasets.basins.features) return;
-    
-    datasets.basins.features.forEach(feature => {
-        const polygon = L.geoJSON(feature, {
-            style: {
-                fillColor: '#3498db',
-                fillOpacity: 0.2,
-                color: '#3498db',
-                weight: 1,
-                opacity: 0.5
-            }
-        });
-        layerGroups.basins.addLayer(polygon);
-    });
-    
-    console.log(`📍 Displayed ${datasets.basins.features.length} basins`);
-}
-
-// ============================================================================
-// VIEW MODE SELECTOR
-// ============================================================================
-
-function setupViewModeSelector() {
-    const viewModeRadios = document.querySelectorAll('input[name="view-mode"]');
-    viewModeRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            currentViewMode = e.target.value;
-            switchViewMode(currentViewMode);
-        });
-    });
-}
-
-function switchViewMode(mode) {
-    console.log(`🎛️ Switching to ${mode} view mode`);
-    
-    // Hide all classification layers
-    map.removeLayer(layerGroups.coastalBasins);
-    map.removeLayer(layerGroups.salinityZones);
-    map.removeLayer(layerGroups.tidalZones);
-    
-    // Show appropriate layer based on mode
-    switch(mode) {
-        case 'geomorphology':
-            layerGroups.durrBasins.addTo(map);
-            document.getElementById('layer-durr-basins').checked = true;
-            break;
-        case 'salinity':
-            if (!layerGroups.salinityZones.getLayers().length && datasets.salinityZones) {
-                updateSalinityLayer();
-            }
-            layerGroups.salinityZones.addTo(map);
-            document.getElementById('layer-salinity').checked = true;
-            break;
-        case 'tidal':
-            if (!layerGroups.tidalZones.getLayers().length && datasets.tidalZones) {
-                updateTidalZoneLayer();
-            }
-            layerGroups.tidalZones.addTo(map);
-            document.getElementById('layer-tidal').checked = true;
-            break;
-    }
-    
-    updateLegend();
-    updateSidebarFilters();
+    console.log(`📍 Displayed ${datasets.gcc.features.length} GCC segments`);
 }
 
 // ============================================================================
@@ -545,14 +469,12 @@ function switchViewMode(mode) {
 
 function setupLayerControls() {
     const layerToggles = {
-        'layer-coastal-basins': { group: layerGroups.coastalBasins, update: updateDurrBasins },
+        'layer-coastal-basins': { group: layerGroups.coastalBasins, update: updateCoastalBasins },
         'layer-durr-reference': { group: layerGroups.durrReference, update: updateDurrReference },
         'layer-baum': { group: layerGroups.baum, update: updateBaumLayer },
-        'layer-salinity': { group: layerGroups.salinityZones, update: updateSalinityLayer },
-        'layer-tidal': { group: layerGroups.tidalZones, update: updateTidalZoneLayer }
-        // Rivers and basins disabled - not meaningful without data
-        // 'layer-rivers': { group: layerGroups.rivers, update: updateRiversLayer },
-        // 'layer-basins': { group: layerGroups.basins, update: updateBasinsLayer }
+        'layer-globsalt': { group: layerGroups.globsalt, update: updateGlobSaltLayer },
+        'layer-dynqual': { group: layerGroups.dynqual, update: updateDynQualLayer },
+        'layer-gcc': { group: layerGroups.gcc, update: updateGCCLayer }
     };
     
     Object.entries(layerToggles).forEach(([id, config]) => {
@@ -568,7 +490,6 @@ function setupLayerControls() {
                     map.removeLayer(config.group);
                 }
                 updateLegend();
-                updateSidebarFilters();
             });
         }
     });
@@ -582,16 +503,6 @@ function setupFilters() {
     // Dürr filters
     document.querySelectorAll('[id^="filter-durr-"]').forEach(cb => {
         cb.addEventListener('change', handleDurrFilter);
-    });
-    
-    // Salinity filters
-    document.querySelectorAll('[id^="filter-salinity-"]').forEach(cb => {
-        cb.addEventListener('change', handleSalinityFilter);
-    });
-    
-    // Tidal filters
-    document.querySelectorAll('[id^="filter-tidal-"]').forEach(cb => {
-        cb.addEventListener('change', handleTidalFilter);
     });
 }
 
@@ -621,50 +532,6 @@ function handleDurrFilter() {
     updateLegend();
 }
 
-function handleSalinityFilter() {
-    const allCheckbox = document.getElementById('filter-salinity-all');
-    const checkboxes = document.querySelectorAll('[id^="filter-salinity-"]:not(#filter-salinity-all)');
-    
-    if (allCheckbox && allCheckbox.checked) {
-        activeFilters.salinity = new Set(['all']);
-        checkboxes.forEach(cb => cb.checked = true);
-    } else {
-        activeFilters.salinity = new Set();
-        checkboxes.forEach(cb => {
-            if (cb.checked) {
-                const zone = cb.id.replace('filter-salinity-', '');
-                activeFilters.salinity.add(zone);
-            }
-        });
-        if (activeFilters.salinity.size === 0) activeFilters.salinity.add('all');
-    }
-    
-    updateSalinityLayer();
-    updateLegend();
-}
-
-function handleTidalFilter() {
-    const allCheckbox = document.getElementById('filter-tidal-all');
-    const checkboxes = document.querySelectorAll('[id^="filter-tidal-"]:not(#filter-tidal-all)');
-    
-    if (allCheckbox && allCheckbox.checked) {
-        activeFilters.tidal = new Set(['all']);
-        checkboxes.forEach(cb => cb.checked = true);
-    } else {
-        activeFilters.tidal = new Set();
-        checkboxes.forEach(cb => {
-            if (cb.checked) {
-                const zone = cb.id.replace('filter-tidal-', '');
-                activeFilters.tidal.add(zone);
-            }
-        });
-        if (activeFilters.tidal.size === 0) activeFilters.tidal.add('all');
-    }
-    
-    updateTidalZoneLayer();
-    updateLegend();
-}
-
 // ============================================================================
 // LEGEND
 // ============================================================================
@@ -676,22 +543,19 @@ function updateLegend() {
     
     legendContent.innerHTML = '';
     
-    const isCoastalBasinsActive = map.hasLayer(layerGroups.coastalBasins);
+    const isCoastalActive = map.hasLayer(layerGroups.coastalBasins);
     const isDurrRefActive = map.hasLayer(layerGroups.durrReference);
     const isBaumActive = map.hasLayer(layerGroups.baum);
-    const isSalinityActive = map.hasLayer(layerGroups.salinityZones);
-    const isTidalActive = map.hasLayer(layerGroups.tidalZones);
+    const isGlobSaltActive = map.hasLayer(layerGroups.globsalt);
+    const isDynQualActive = map.hasLayer(layerGroups.dynqual);
+    const isGCCActive = map.hasLayer(layerGroups.gcc);
     
     // Update title
-    let title = 'Map Legend';
-    if (currentViewMode === 'geomorphology') title = 'Estuary Types (Coastal Only)';
-    else if (currentViewMode === 'salinity') title = 'Salinity Zones';
-    else if (currentViewMode === 'tidal') title = 'Tidal Zones';
-    if (legendTitle) legendTitle.textContent = title;
+    if (legendTitle) legendTitle.textContent = 'Map Legend';
     
-    // Coastal Basins legend
-    if (isCoastalBasinsActive) {
-        legendContent.innerHTML += '<div class="legend-section-title">Coastal Basins (BasinATLAS L7)</div>';
+    // Coastal Basins
+    if (isCoastalActive) {
+        legendContent.innerHTML += '<div class="legend-section-title">Estuarine Types (Basins)</div>';
         Object.entries(DURR_COLORS).forEach(([type, color]) => {
             const isActive = activeFilters.durr.has('all') || activeFilters.durr.has(type);
             legendContent.innerHTML += `
@@ -703,51 +567,20 @@ function updateLegend() {
         });
     }
     
-    // Dürr Reference legend (if enabled)
+    // Dürr Reference
     if (isDurrRefActive) {
-        legendContent.innerHTML += '<div class="legend-section-title" style="margin-top:10px;">Dürr Reference (Outline)</div>';
+        legendContent.innerHTML += '<div class="legend-section-title" style="margin-top:10px;">Full Dürr Watersheds</div>';
         legendContent.innerHTML += `
-            <div class="legend-item" style="opacity:0.6">
-                <div style="width:20px; height:2px; background:#666; border-top:1px dashed #666; margin:8px 0;"></div>
-                <span class="legend-label" style="font-size:0.85em;">Full Watersheds</span>
+            <div class="legend-item">
+                <div style="width:20px; height:2px; border-top:2px dashed #666;"></div>
+                <span class="legend-label" style="font-size:0.85em;">Original Catchments</span>
             </div>
         `;
     }
     
-    // Salinity legend
-    if (isSalinityActive) {
-        legendContent.innerHTML += '<div class="legend-section-title">Salinity Zones</div>';
-        Object.entries(SALINITY_COLORS).forEach(([zone, color]) => {
-            const label = zone.charAt(0).toUpperCase() + zone.slice(1);
-            const range = SALINITY_RANGES[zone];
-            const isActive = activeFilters.salinity.has('all') || activeFilters.salinity.has(zone);
-            legendContent.innerHTML += `
-                <div class="legend-item" style="opacity:${isActive ? 1 : 0.3}">
-                    <div class="legend-color" style="background:${color};"></div>
-                    <span class="legend-label">${label} (${range})</span>
-                </div>
-            `;
-        });
-    }
-    
-    // Tidal zone legend
-    if (isTidalActive) {
-        legendContent.innerHTML += '<div class="legend-section-title">Tidal Zones</div>';
-        Object.entries(TIDAL_ZONE_COLORS).forEach(([zone, color]) => {
-            const label = TIDAL_ZONE_LABELS[zone];
-            const isActive = activeFilters.tidal.has('all') || activeFilters.tidal.has(zone);
-            legendContent.innerHTML += `
-                <div class="legend-item" style="opacity:${isActive ? 1 : 0.3}">
-                    <div class="legend-color" style="background:${color};"></div>
-                    <span class="legend-label">${label}</span>
-                </div>
-            `;
-        });
-    }
-    
-    // Baum legend
+    // Baum
     if (isBaumActive) {
-        legendContent.innerHTML += '<div class="legend-section-title">Baum Morphometry</div>';
+        legendContent.innerHTML += '<div class="legend-section-title" style="margin-top:10px;">Baum Morphometry</div>';
         Object.entries(BAUM_COLORS).forEach(([type, color]) => {
             legendContent.innerHTML += `
                 <div class="legend-item">
@@ -758,79 +591,184 @@ function updateLegend() {
         });
     }
     
+    // GlobSalt
+    if (isGlobSaltActive) {
+        legendContent.innerHTML += '<div class="legend-section-title" style="margin-top:10px;">GlobSalt Stations</div>';
+        legendContent.innerHTML += `
+            <div class="legend-item">
+                <div class="legend-color" style="background:#3498db; border-radius:50%; width:8px; height:8px;"></div>
+                <span class="legend-label" style="font-size:0.85em;">Monitoring Stations</span>
+            </div>
+        `;
+    }
+    
+    // DynQual
+    if (isDynQualActive) {
+        legendContent.innerHTML += '<div class="legend-section-title" style="margin-top:10px;">DynQual River Data</div>';
+        legendContent.innerHTML += `
+            <div class="legend-item">
+                <div class="legend-color" style="background:#4a90e2; border-radius:50%; width:10px; height:10px;"></div>
+                <span class="legend-label" style="font-size:0.85em;">Discharge & Salinity (10km)</span>
+            </div>
+        `;
+    }
+    
+    // GCC
+    if (isGCCActive) {
+        legendContent.innerHTML += '<div class="legend-section-title" style="margin-top:10px;">GCC Coastal Segments</div>';
+        legendContent.innerHTML += `
+            <div class="legend-item">
+                <div class="legend-color" style="background:#3498db; border-radius:50%; width:8px; height:8px;"></div>
+                <span class="legend-label" style="font-size:0.85em;">100km Coastal Segments</span>
+            </div>
+        `;
+    }
+    
     // Hide legend if no layers active
     const legend = document.querySelector('.legend');
     if (legend) {
-        legend.style.display = (isDurrActive || isBaumActive || isSalinityActive || isTidalActive) ? 'block' : 'none';
+        const anyActive = isCoastalActive || isDurrRefActive || isBaumActive || isGlobSaltActive || isDynQualActive || isGCCActive;
+        legend.style.display = anyActive ? 'block' : 'none';
     }
 }
 
 // ============================================================================
-// SIDEBAR FILTERS
+// PIE CHART - SURFACE AREA DISTRIBUTION
 // ============================================================================
 
-function updateSidebarFilters() {
-    const isDurrActive = map.hasLayer(layerGroups.durrBasins);
-    const isSalinityActive = map.hasLayer(layerGroups.salinityZones);
-    const isTidalActive = map.hasLayer(layerGroups.tidalZones);
+function createPieChart() {
+    if (!datasets.durrReference) {
+        console.log('⏳ Waiting for Dürr data to create pie chart...');
+        return;
+    }
     
-    // Show/hide filter sections
-    const durrSection = document.getElementById('durr-filters-section');
-    const salinitySection = document.getElementById('salinity-filters-section');
-    const tidalSection = document.getElementById('tidal-filters-section');
+    // Calculate counts and surface area by type
+    const statsByType = {};
     
-    if (durrSection) durrSection.style.display = isDurrActive ? 'block' : 'none';
-    if (salinitySection) salinitySection.style.display = isSalinityActive ? 'block' : 'none';
-    if (tidalSection) tidalSection.style.display = isTidalActive ? 'block' : 'none';
+    datasets.durrReference.features.forEach(feature => {
+        const type = feature.properties.type || 'Unclassified';
+        const area = feature.properties.basin_area_km2 || 0;
+        
+        if (!statsByType[type]) {
+            statsByType[type] = { count: 0, area: 0 };
+        }
+        statsByType[type].count++;
+        statsByType[type].area += area;
+    });
+    
+    // Sort by area descending
+    const sortedTypes = Object.entries(statsByType)
+        .sort((a, b) => b[1].area - a[1].area)
+        .slice(0, 6); // Top 6 types
+    
+    const labels = sortedTypes.map(([type]) => type);
+    const data = sortedTypes.map(([, stats]) => stats.area);
+    const colors = sortedTypes.map(([type]) => DURR_COLORS[type] || '#808080');
+    
+    // Calculate total
+    const totalArea = data.reduce((sum, val) => sum + val, 0);
+    const totalCount = Object.values(statsByType).reduce((sum, stats) => sum + stats.count, 0);
+    
+    // Create chart
+    const ctx = document.getElementById('pieChart');
+    if (!ctx) return;
+    
+    pieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: colors,
+                borderColor: 'white',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const type = labels[context.dataIndex];
+                            const area = data[context.dataIndex];
+                            const count = statsByType[type].count;
+                            const percent = ((area / totalArea) * 100).toFixed(1);
+                            return [
+                                `${type}`,
+                                `Area: ${area.toLocaleString()} km²`,
+                                `Count: ${count} estuaries`,
+                                `${percent}% of total`
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    // Create custom legend
+    updateStatsLegend(sortedTypes, totalArea, totalCount, statsByType);
+    
+    console.log('✓ Pie chart created');
 }
 
-// ============================================================================
-// COUNTS
-// ============================================================================
-
-function updateDurrCounts() {
-    if (!datasets.coastalBasins) return;
-    const typeGroups = {};
-    Object.keys(DURR_COLORS).forEach(type => typeGroups[type] = []);
-    datasets.coastalBasins.features.forEach(feature => {
-        const type = feature.properties.estuary_type;
-        if (type && typeGroups[type]) typeGroups[type].push(feature);
-    });
-    Object.entries(typeGroups).forEach(([type, features]) => {
-        const id = `count-durr-${type.toLowerCase().replace(/\s+/g, '-')}`;
-        updateCountElement(id, features.length);
-    });
-}
-
-function updateSalinityCounts() {
-    if (!datasets.salinityZones) return;
-    const zoneGroups = {};
-    Object.keys(SALINITY_COLORS).forEach(zone => zoneGroups[zone] = []);
-    datasets.salinityZones.features.forEach(feature => {
-        const zone = feature.properties.salinity_zone;
-        if (zoneGroups[zone]) zoneGroups[zone].push(feature);
-    });
-    Object.entries(zoneGroups).forEach(([zone, features]) => {
-        updateCountElement(`count-salinity-${zone}`, features.length);
-    });
-}
-
-function updateTidalCounts() {
-    if (!datasets.tidalZones) return;
-    const zoneGroups = {};
-    Object.keys(TIDAL_ZONE_COLORS).forEach(zone => zoneGroups[zone] = []);
-    datasets.tidalZones.features.forEach(feature => {
-        const zone = feature.properties.tidal_zone;
-        if (zoneGroups[zone]) zoneGroups[zone].push(feature);
-    });
-    Object.entries(zoneGroups).forEach(([zone, features]) => {
-        updateCountElement(`count-tidal-${zone}`, features.length);
+function updateStatsLegend(sortedTypes, totalArea, totalCount, statsByType) {
+    const legendDiv = document.getElementById('stats-legend');
+    if (!legendDiv) return;
+    
+    legendDiv.innerHTML = `
+        <div style="text-align:center; margin-bottom:10px; padding:10px; background:#f8f9fa; border-radius:5px;">
+            <strong>Total: ${totalCount} estuaries</strong><br>
+            <span style="font-size:0.9em;">${(totalArea / 1000000).toFixed(2)} million km²</span>
+        </div>
+    `;
+    
+    sortedTypes.forEach(([type, stats]) => {
+        const percent = ((stats.area / totalArea) * 100).toFixed(1);
+        const color = DURR_COLORS[type] || '#808080';
+        
+        const item = document.createElement('div');
+        item.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            border-left: 4px solid ${color};
+            background: #f8f9fa;
+            border-radius: 3px;
+        `;
+        
+        item.innerHTML = `
+            <span style="font-weight:500; font-size:0.9em;">${type}</span>
+            <div style="text-align:right;">
+                <div style="font-size:0.85em;">${stats.count} estuaries</div>
+                <div style="font-size:0.85em; color:#666;">${(stats.area / 1000).toFixed(0)}k km² (${percent}%)</div>
+            </div>
+        `;
+        
+        legendDiv.appendChild(item);
     });
 }
 
-function updateCountElement(id, count) {
-    const element = document.getElementById(id);
-    if (element) element.textContent = count;
+function setupStatsToggle() {
+    const header = document.querySelector('.stats-header');
+    const overlay = document.querySelector('.stats-overlay');
+    const toggle = document.getElementById('toggle-stats');
+    
+    if (header && overlay) {
+        header.addEventListener('click', () => {
+            overlay.classList.toggle('collapsed');
+            if (toggle) {
+                toggle.textContent = overlay.classList.contains('collapsed') ? '▶' : '▼';
+            }
+        });
+    }
 }
 
 // ============================================================================
@@ -855,135 +793,9 @@ function setupMapEvents() {
 // INITIALIZATION
 // ============================================================================
 
-// ============================================================================
-// PIE CHART - SURFACE AREA DISTRIBUTION
-// ============================================================================
-
-let pieChart = null;
-
-function createPieChart() {
-    if (!datasets.durrBasins) {
-        console.log('⏳ Waiting for Dürr data to create pie chart...');
-        return;
-    }
-    
-    // Calculate surface area by type
-    const areaByType = {};
-    datasets.durrBasins.features.forEach(feature => {
-        const type = feature.properties.type;
-        const area = feature.properties.basin_area_km2 || 0;
-        areaByType[type] = (areaByType[type] || 0) + area;
-    });
-    
-    // Sort by area descending
-    const sortedTypes = Object.entries(areaByType)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 6); // Top 6 types
-    
-    const labels = sortedTypes.map(([type]) => type);
-    const data = sortedTypes.map(([, area]) => area);
-    const colors = sortedTypes.map(([type]) => DURR_COLORS[type] || '#808080');
-    
-    // Calculate total and percentages
-    const total = data.reduce((sum, val) => sum + val, 0);
-    const percentages = data.map(val => ((val / total) * 100).toFixed(1));
-    
-    // Create chart
-    const ctx = document.getElementById('pieChart');
-    if (!ctx) return;
-    
-    pieChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data,
-                backgroundColor: colors,
-                borderColor: 'white',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    display: false // We'll create custom legend
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const label = context.label || '';
-                            const value = context.parsed || 0;
-                            const percent = ((value / total) * 100).toFixed(1);
-                            return `${label}: ${value.toLocaleString()} km² (${percent}%)`;
-                        }
-                    }
-                }
-            }
-        }
-    });
-    
-    // Create custom legend
-    updateStatsLegend(sortedTypes, total);
-    
-    console.log('✓ Pie chart created');
-}
-
-function updateStatsLegend(sortedTypes, total) {
-    const legendDiv = document.getElementById('stats-legend');
-    if (!legendDiv) return;
-    
-    legendDiv.innerHTML = '';
-    
-    sortedTypes.forEach(([type, area]) => {
-        const percent = ((area / total) * 100).toFixed(1);
-        const color = DURR_COLORS[type] || '#808080';
-        
-        const item = document.createElement('div');
-        item.className = 'legend-item';
-        item.style.borderLeftColor = color;
-        
-        item.innerHTML = `
-            <span class="legend-item-label">${type}</span>
-            <span class="legend-item-value">
-                ${(area / 1000).toFixed(0)}k km²
-                <span class="legend-item-percent">(${percent}%)</span>
-            </span>
-        `;
-        
-        legendDiv.appendChild(item);
-    });
-}
-
-function setupStatsToggle() {
-    const header = document.querySelector('.stats-header');
-    const overlay = document.querySelector('.stats-overlay');
-    const toggle = document.getElementById('toggle-stats');
-    
-    if (header && overlay) {
-        header.addEventListener('click', () => {
-            overlay.classList.toggle('collapsed');
-            if (toggle) {
-                toggle.textContent = overlay.classList.contains('collapsed') ? '▶' : '▼';
-            }
-        });
-    }
-}
-
-// ============================================================================
-// INITIALIZATION
-// ============================================================================
-
 document.addEventListener('DOMContentLoaded', () => {
     initMap();
-    loadAllData().then(() => {
-        // Create pie chart after data loads
-        setTimeout(() => {
-            createPieChart();
-            setupStatsToggle();
-        }, 1500);
-    });
+    loadAllData();
 });
 
 window.addEventListener('resize', () => {
@@ -991,4 +803,4 @@ window.addEventListener('resize', () => {
     if (pieChart) pieChart.resize();
 });
 
-console.log('✅ Complete final map script loaded - All features integrated!');
+console.log('✅ Global Water Body Surface Area Atlas - Map Script Loaded!');

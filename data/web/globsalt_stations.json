@@ -1,0 +1,18 @@
+{
+  "title": "GlobSalt Salinity Monitoring Stations",
+  "description": "Global network of salinity monitoring stations",
+  "source": "GlobSalt v2.0 (GEMS/Water, GRDC, national agencies)",
+  "temporal_coverage": "1980-2023",
+  "features_count": 22937,
+  "file_size_mb": 7.28,
+  "attributes": {
+    "Station_ID": "Unique station identifier",
+    "salinity_mean_psu": "Mean salinity (PSU)",
+    "salinity_median_psu": "Median salinity (PSU)",
+    "salinity_std_psu": "Standard deviation (PSU)",
+    "salinity_zone": "Venice System classification",
+    "n_measurements": "Number of measurements",
+    "Water_type": "Water body type"
+  },
+  "generated": "2025-10-13T16:06:51.049331"
+}

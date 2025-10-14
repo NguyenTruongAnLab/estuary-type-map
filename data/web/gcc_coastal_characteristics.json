@@ -1,0 +1,23 @@
+{
+  "title": "GCC - Global Coastal Characteristics",
+  "description": "Comprehensive coastal segment database (100km resolution)",
+  "source": "Athanasiou et al. (2024) - Global Coastal Characteristics",
+  "spatial_resolution": "100 km coastal segments",
+  "features_count": 1252,
+  "file_size_mb": 0.5,
+  "attributes": {
+    "id": "Coastal characteristic: id",
+    "angle": "Coastal characteristic: angle",
+    "z_peak_first_copdem": "Coastal characteristic: z_peak_first_copdem",
+    "z_peak_max_1km_copdem": "Coastal characteristic: z_peak_max_1km_copdem",
+    "x_peak_first_copdem": "Coastal characteristic: x_peak_first_copdem",
+    "x_peak_max_1km_copdem": "Coastal characteristic: x_peak_max_1km_copdem",
+    "z_peak_first_deltadtm": "Coastal characteristic: z_peak_first_deltadtm",
+    "z_peak_max_1km_deltadtm": "Coastal characteristic: z_peak_max_1km_deltadtm",
+    "x_peak_first_deltadtm": "Coastal characteristic: x_peak_first_deltadtm",
+    "x_peak_max_1km_deltadtm": "Coastal characteristic: x_peak_max_1km_deltadtm",
+    "he": "Coastal characteristic: he"
+  },
+  "reference": "Athanasiou, P., et al. (2024). doi:10.5281/zenodo.8200199",
+  "generated": "2025-10-13T14:37:32.015210"
+}

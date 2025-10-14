@@ -1,0 +1,16 @@
+dist_to_coast_km
+log_dist_to_coast
+strahler_order
+length
+upstream_area
+sinuosity
+azimuth
+is_mainstem
+log_upstream_area
+length_km
+abs_latitude
+dist_x_strahler
+area_per_length
+in_durr_estuary
+durr_type_encoded
+dynqual_temperature_C

@@ -205,7 +205,6 @@ Every request MUST include:
 - `process_grit_all_regions.py` - Process 20.5M river reaches (7 regions)
 - `process_durr.py` - Process 7,057 estuary catchments
 - `process_baum.py` - Process 106 large estuary measurements
-- `process_globsalt_integrated.py` - Integrate 270K salinity stations
 
 **Output**: `data/processed/*.gpkg` (full-resolution)  
 **Why**: Unified schema from diverse formats (PBF, SHP, CSV, NetCDF)
@@ -281,40 +280,6 @@ Euhaline:     >30 PSU    (marine)
 4. **Dürr catchments ≠ salinity extent**  
    - A "Delta" catchment is 99% freshwater inland
    - Only coastal portions (<50 km) are estuarine
-
-### 🎓 Programming Style Guide
-
-**Defensive Coding**:
-```python
-# ✅ GOOD: Check existence before using
-if 'column_name' in df.columns:
-    df['new_col'] = df['column_name'] * 2
-
-# ❌ BAD: Assume column exists
-df['new_col'] = df['column_name'] * 2  # Crashes if missing!
-```
-
-**Data Type Verification**:
-```python
-# ✅ GOOD: Inspect actual data structure
-print(df['FIN_TYP'].dtype)  # Might be int32, not string!
-
-# ❌ BAD: Assume data types
-for estuary_type in df['FIN_TYP']:  # Crashes if int!
-    print(f"{estuary_type:20s}")
-```
-
-**Scientific Transparency**:
-```python
-# ✅ GOOD: Document assumptions
-# Using 45 PSU as max plausible (Dead Sea is 34 PSU)
-MAX_SALINITY_PSU = 45.0
-
-# ❌ BAD: Magic numbers
-if salinity > 45:  # Why 45? Not documented!
-```
-
----
 
 ## 🔬 Scientific Standards
 

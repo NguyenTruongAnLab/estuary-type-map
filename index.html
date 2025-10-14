@@ -56,48 +56,37 @@
                 <h1>🌊 Global Estuary Type Map</h1>
             </div>
             <ul class="nav-menu">
-                <li><a href="#" class="nav-link active" id="nav-map">Map</a></li>
-                <li><a href="#" class="nav-link" id="nav-about">About</a></li>
-                <li><a href="#" class="nav-link" id="nav-methodology">Methodology</a></li>
-                <li><a href="#" class="nav-link" id="nav-credits">Credits</a></li>
+                <li><a href="index.html" class="nav-link active">Map</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="methodology.html" class="nav-link">Methodology</a></li>
+                <li><a href="maps.html" class="nav-link">Map Collection</a></li>
+                <li><a href="changelog.html" class="nav-link">Changelog</a></li>
+                <li><a href="credits.html" class="nav-link">Credits</a></li>
                 <li><a href="https://github.com/NguyenTruongAnLab/estuary-type-map" class="nav-link" target="_blank">GitHub ↗</a></li>
-            </ul>
-        </div>
+            </ul>        </div>
     </nav>
     
     <div id="sidebar">
         <div class="sidebar-content">
-            <!-- VIEW MODE SELECTOR -->
-            <h2>🎛️ View Mode</h2>
-            <p class="info-text">Choose classification system:</p>
-            <div class="view-mode-section" style="margin-bottom: 25px;">
-                <label class="view-mode-item" style="display: block; margin: 8px 0; padding: 10px; background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 6px; cursor: pointer;">
-                    <input type="radio" name="view-mode" value="geomorphology" checked style="margin-right: 8px;">
-                    <span style="font-weight: 500;">🗺️ Estuary Types</span>
-                </label>
-                <label class="view-mode-item" style="display: block; margin: 8px 0; padding: 10px; background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 6px; cursor: pointer;">
-                    <input type="radio" name="view-mode" value="salinity" style="margin-right: 8px;">
-                    <span style="font-weight: 500;">💧 Salinity Zones</span>
-                </label>
-                <label class="view-mode-item" style="display: block; margin: 8px 0; padding: 10px; background: #e8f5e9; border: 2px solid #4caf50; border-radius: 6px; cursor: pointer;">
-                    <input type="radio" name="view-mode" value="tidal" style="margin-right: 8px;">
-                    <span style="font-weight: 500;">🌊 Tidal Zones</span>
-                </label>
-            </div>
-            
             <h2>📊 Data Layers</h2>
             <p class="info-text">Toggle datasets on/off:</p>
             
             <div class="filter-section">
-                <label class="filter-item" title="Fine-resolution coastal basins (NOT entire watersheds!)">
-                    <input type="checkbox" class="filter-checkbox" id="layer-coastal-basins" checked>
-                    <span class="filter-label">🗺️ Coastal Basins (HydroSheds)</span>
+                <label class="filter-item" title="NEW! High-resolution tidal basins with Dürr 2011 classification (BasinATLAS Level 7, 0-300km from coast)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-tidal-basins" checked>
+                    <span class="filter-label">🌊 Tidal Basins (NEW 2025)</span>
+                    <span class="count" id="count-tidal-basins">16189</span>
+                </label>
+                
+                <label class="filter-item" title="Estuarine classification by basin (coastal areas only - LEGACY)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-coastal-basins">
+                    <span class="filter-label">🗺️ Estuarine Types (Legacy)</span>
                     <span class="count" id="count-coastal-basins">4536</span>
                 </label>
                 
-                <label class="filter-item" style="opacity: 0.6;" title="Reference: Full watersheds (for context only)">
+                <label class="filter-item" style="opacity: 0.6;" title="Complete Dürr watersheds (entire drainage basins for reference)">
                     <input type="checkbox" class="filter-checkbox" id="layer-durr-reference">
-                    <span class="filter-label">📍 Dürr Reference</span>
+                    <span class="filter-label">📍 Full Dürr Watersheds</span>
                     <span class="count" id="count-durr-ref">6226</span>
                 </label>
                 
@@ -107,16 +96,22 @@
                     <span class="count" id="count-baum-all">271</span>
                 </label>
                 
-                <label class="filter-item" title="Basins colored by salinity levels (POLYGONS - optimized!)">
-                    <input type="checkbox" class="filter-checkbox" id="layer-salinity">
-                    <span class="filter-label">💧 Salinity Zones</span>
-                    <span class="count" id="count-salinity">1714</span>
+                <label class="filter-item" title="GlobSalt salinity monitoring stations (global network)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-globsalt">
+                    <span class="filter-label">🔬 GlobSalt Stations</span>
+                    <span class="count" id="count-globsalt">16399</span>
                 </label>
                 
-                <label class="filter-item" title="🌊 NEW! Tidal zone classification based on Ensign et al. (2012)">
-                    <input type="checkbox" class="filter-checkbox" id="layer-tidal">
-                    <span class="filter-label">🌊 Tidal Zones</span>
-                    <span class="count" id="count-tidal">1714</span>
+                <label class="filter-item" title="DynQual global river discharge & salinity (Jones et al. 2023)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-dynqual">
+                    <span class="filter-label">📊 DynQual Rivers (Global)</span>
+                    <span class="count" id="count-dynqual">5000</span>
+                </label>
+                
+                <label class="filter-item" title="Global Coastal Characteristics (Athanasiou et al. 2024)">
+                    <input type="checkbox" class="filter-checkbox" id="layer-gcc">
+                    <span class="filter-label">� GCC Coastal Segments</span>
+                    <span class="count" id="count-gcc">1252</span>
                 </label>
             </div>
             
@@ -161,83 +156,6 @@
                 </label>
             </div>
             
-            <h2 id="salinity-filters-header">💧 Salinity Zones</h2>
-            <p class="info-text">Venice System classification (with ranges):</p>
-            
-            <div class="filter-section" id="salinity-filters-section">
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-all" checked>
-                    <span class="filter-label">All Zones</span>
-                    <span class="count" id="count-salinity-all">1714</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-freshwater" checked>
-                    <span class="filter-label">Freshwater (&lt;0.5 ppt)</span>
-                    <span class="count" id="count-salinity-freshwater">1347</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-oligohaline" checked>
-                    <span class="filter-label">Oligohaline (0.5-5 ppt)</span>
-                    <span class="count" id="count-salinity-oligohaline">285</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-mesohaline" checked>
-                    <span class="filter-label">Mesohaline (5-18 ppt)</span>
-                    <span class="count" id="count-salinity-mesohaline">0</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-polyhaline" checked>
-                    <span class="filter-label">Polyhaline (18-25 ppt)</span>
-                    <span class="count" id="count-salinity-polyhaline">0</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-euhaline" checked>
-                    <span class="filter-label">Euhaline (25-35 ppt)</span>
-                    <span class="count" id="count-salinity-euhaline">2</span>
-                </label>
-                
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-salinity-hyperhaline" checked>
-                    <span class="filter-label">Hyperhaline (&gt;35 ppt)</span>
-                    <span class="count" id="count-salinity-hyperhaline">80</span>
-                </label>
-            </div>
-            
-            <!-- TIDAL ZONE FILTERS -->
-            <h2 id="tidal-filters-header">🌊 Tidal Zones</h2>
-            <p class="info-text">Tidal influence classification (Ensign et al. 2012):</p>
-            
-            <div class="filter-section" id="tidal-filters-section">
-                <label class="filter-item">
-                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-all" checked>
-                    <span class="filter-label">All Zones</span>
-                    <span class="count" id="count-tidal-all">1714</span>
-                </label>
-                
-                <label class="filter-item" style="border-left: 4px solid #2E7D32;">
-                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-tidal_freshwater" checked>
-                    <span class="filter-label">🟢 Tidal Freshwater</span>
-                    <span class="count" id="count-tidal-tidal_freshwater">1442</span>
-                </label>
-                
-                <label class="filter-item" style="border-left: 4px solid #1976D2;">
-                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-tidal_saline" checked>
-                    <span class="filter-label">🔵 Tidal Saline</span>
-                    <span class="count" id="count-tidal-tidal_saline">81</span>
-                </label>
-                
-                <label class="filter-item" style="border-left: 4px solid #757575;">
-                    <input type="checkbox" class="filter-checkbox" id="filter-tidal-non_tidal" checked>
-                    <span class="filter-label">⚫ Non-Tidal</span>
-                    <span class="count" id="count-tidal-non_tidal">191</span>
-                </label>
-            </div>
-            
             <div class="definitions-section">
                 <div class="reference-section">
                     <h4>📚 Data Sources</h4>
@@ -245,39 +163,43 @@
                         <strong>Dürr et al. (2011)</strong><br>
                         <em>Estuaries and Coasts</em><br>
                         DOI: 10.1007/s12237-011-9381-y<br>
-                        <span style="color: #e65100; font-weight: bold;">⚠️ Coastal basins only!</span>
+                        Two versions: Coastal + Full Watershed
                     </div>
                     <div class="reference">
                         <strong>BasinATLAS v1.0</strong><br>
                         <em>HydroSHEDS Level 7</em><br>
-                        <span style="color: #1976D2; font-weight: bold;">NEW!</span> Fine-resolution basins
+                        Fine-resolution coastal basins
                     </div>
                     <div class="reference">
                         <strong>Baum et al. (2024)</strong><br>
-                        <em>Geomorphology</em>
+                        <em>Geomorphology</em><br>
+                        Large estuary morphometry
                     </div>
                     <div class="reference">
                         <strong>GlobSalt v2.0</strong><br>
-                        <em>Global river salinity database</em>
+                        <em>Global river salinity</em><br>
+                        22,937 monitoring stations
                     </div>
                     <div class="reference">
-                        <strong>HydroSHEDS v1.0</strong><br>
-                        <em>DOI: 10.5067/9SQ1S6VFQQ20</em>
+                        <strong>Jones et al. (2023)</strong><br>
+                        <em>DynQual - Global 10km</em><br>
+                        Discharge & salinity data
                     </div>
-                    <div class="reference" style="background: #e8f5e9; border-left: 4px solid #4caf50;">
-                        <strong>Ensign et al. (2012)</strong><br>
-                        <em>Tidal freshwater zones</em><br>
-                        <span style="color: #2E7D32; font-weight: bold;">NEW!</span>
+                    <div class="reference">
+                        <strong>Athanasiou et al. (2024)</strong><br>
+                        <em>Global Coastal Characteristics</em><br>
+                        DOI: 10.5281/zenodo.8200199
                     </div>
                 </div>
                 
                 <div class="info-box" style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 6px; font-size: 0.9em;">
-                    <strong>🌟 World First!</strong><br>
-                    This map shows the first global classification of tidal freshwater zones!
+                    <strong>🌟 Complete Global Coverage!</strong><br>
+                    All major estuary and coastal datasets integrated
                     <ul style="margin: 8px 0 0 20px; padding: 0;">
-                        <li>1.57M km² tidal freshwater</li>
-                        <li>Critical GHG hotspots</li>
-                        <li>High biodiversity zones</li>
+                        <li>6,226+ estuaries worldwide</li>
+                        <li>22K+ salinity stations</li>
+                        <li>10km river characteristics</li>
+                        <li>728K coastal segments</li>
                     </ul>
                 </div>
             </div>

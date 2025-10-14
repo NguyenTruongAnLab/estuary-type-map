@@ -275,10 +275,18 @@ def predict_hybrid(region_code: str, models: dict):
     # Combine all
     all_classified = pd.concat([validated, all_predicted], ignore_index=True)
     
+    # CRITICAL: Always merge dist_to_coast_km from features (it's not in segments!)
+    # This is needed for breakdown statistics
+    all_classified_with_dist = all_classified.merge(
+        features[['global_id', 'dist_to_coast_km']],
+        on='global_id',
+        how='left'
+    )
+    
     # Merge with geometries
     result = segments.merge(
-        all_classified[['global_id', 'predicted_class', 'prediction_probability',
-                        'confidence_level', 'classification_method']],
+        all_classified_with_dist[['global_id', 'predicted_class', 'prediction_probability',
+                                   'confidence_level', 'classification_method', 'dist_to_coast_km']],
         on='global_id',
         how='left'
     )

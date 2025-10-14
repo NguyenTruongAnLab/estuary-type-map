@@ -1,0 +1,19 @@
+{
+  "title": "DynQual River Characteristics (Jones et al. 2023)",
+  "description": "Global 10km resolution river discharge, TDS, temperature, and calculated salinity",
+  "source": "Jones et al. (2023) - Global hydrology and water quality",
+  "temporal_coverage": "1980-2019 (annual average)",
+  "spatial_resolution": "10 km",
+  "features_count": 5000,
+  "file_size_mb": 1.12,
+  "data_quality": "Outliers removed using 2nd-98th percentile filter for TDS and temperature",
+  "attributes": {
+    "discharge": "Annual average discharge (m\u00b3/s)",
+    "tds": "Total Dissolved Solids (mg/L)",
+    "salinity_psu": "Calculated salinity (PSU) = TDS / 640",
+    "temperature": "Annual average water temperature (\u00b0C)",
+    "salinity_class": "Venice System classification based on calculated salinity"
+  },
+  "reference": "Jones, E.R., et al. (2023). doi:10.5194/essd-15-5287-2023",
+  "generated": "2025-10-13T15:44:45.453235"
+}

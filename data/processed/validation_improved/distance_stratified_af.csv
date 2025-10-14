@@ -1,5 +1,0 @@
-distance_bin,min_dist,max_dist,total_segments,estuarine_count,estuarine_pct
-0-20 km (Expected: HIGH estuarine),0,20,10994,10608,96.4889939967255
-20-50 km (Expected: MEDIUM estuarine),20,50,12889,11788,91.45783226006672
-50-100 km (Expected: LOW estuarine),50,100,17641,15243,86.40666628875914
->100 km (Expected: VERY LOW estuarine),100,999999,309555,438,0.14149343412317683
