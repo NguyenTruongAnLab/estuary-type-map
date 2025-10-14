@@ -1,0 +1,356 @@
+{
+  "generated": "2025-10-14T15:19:39.269135",
+  "description": "Large files (>50MB) for GitHub release attachment",
+  "total_files": 58,
+  "total_size_mb": 62785.0,
+  "files": [
+    {
+      "path": "data\\raw\\hydrosheds\\RiverATLAS_v10_QGIS.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\hydrosheds\\RiverATLAS_v10_QGIS.gpkg",
+      "size_mb": 7678.9,
+      "size_bytes": 8051863552
+    },
+    {
+      "path": "data\\raw\\OSM-Water-Layer-Yamazaki_2021\\OSM_WaterLayer.pbf",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\OSM-Water-Layer-Yamazaki_2021\\OSM_WaterLayer.pbf",
+      "size_mb": 6677.5,
+      "size_bytes": 7001819881
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_AF_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_AF_EPSG4326.gpkg",
+      "size_mb": 2782.8,
+      "size_bytes": 2917937152
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_AS_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_AS_EPSG4326.gpkg",
+      "size_mb": 2537.5,
+      "size_bytes": 2660786176
+    },
+    {
+      "path": "data\\raw\\hydrosheds\\LakeATLAS_v10_QGIS.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\hydrosheds\\LakeATLAS_v10_QGIS.gpkg",
+      "size_mb": 2503.6,
+      "size_bytes": 2625179648
+    },
+    {
+      "path": "data\\processed\\rivers_grit_reaches_classified_af.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_reaches_classified_af.gpkg",
+      "size_mb": 2371.4,
+      "size_bytes": 2486616064
+    },
+    {
+      "path": "data\\processed\\rivers_grit_reaches_classified_as.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_reaches_classified_as.gpkg",
+      "size_mb": 2172.0,
+      "size_bytes": 2277490688
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_NA_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_NA_EPSG4326.gpkg",
+      "size_mb": 2075.3,
+      "size_bytes": 2176069632
+    },
+    {
+      "path": "data\\processed\\rivers_grit_reaches_classified_na.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_reaches_classified_na.gpkg",
+      "size_mb": 1773.9,
+      "size_bytes": 1860026368
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_SA_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_SA_EPSG4326.gpkg",
+      "size_mb": 1694.1,
+      "size_bytes": 1776410624
+    },
+    {
+      "path": "data\\processed\\rivers_grit_reaches_classified_sa.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_reaches_classified_sa.gpkg",
+      "size_mb": 1455.8,
+      "size_bytes": 1526534144
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_SI_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_SI_EPSG4326.gpkg",
+      "size_mb": 1365.4,
+      "size_bytes": 1431703552
+    },
+    {
+      "path": "data\\raw\\GlobSalt\\GlobSalt_v2.0.csv",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GlobSalt\\GlobSalt_v2.0.csv",
+      "size_mb": 1238.3,
+      "size_bytes": 1298401482
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_AF_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_AF_EPSG4326.gpkg",
+      "size_mb": 1205.7,
+      "size_bytes": 1264275456
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_EU_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_EU_EPSG4326.gpkg",
+      "size_mb": 1204.9,
+      "size_bytes": 1263390720
+    },
+    {
+      "path": "data\\processed\\rivers_grit_reaches_classified_si.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_reaches_classified_si.gpkg",
+      "size_mb": 1163.5,
+      "size_bytes": 1220026368
+    },
+    {
+      "path": "data\\processed\\rivers_grit_segments_classified_af.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_segments_classified_af.gpkg",
+      "size_mb": 1160.9,
+      "size_bytes": 1217265664
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_AS_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_AS_EPSG4326.gpkg",
+      "size_mb": 1156.5,
+      "size_bytes": 1212674048
+    },
+    {
+      "path": "data\\processed\\rivers_grit_segments_classified_as.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_segments_classified_as.gpkg",
+      "size_mb": 1112.7,
+      "size_bytes": 1166725120
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_NA_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_NA_EPSG4326.gpkg",
+      "size_mb": 1061.9,
+      "size_bytes": 1113501696
+    },
+    {
+      "path": "data\\processed\\rivers_grit_reaches_classified_eu.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_reaches_classified_eu.gpkg",
+      "size_mb": 1031.9,
+      "size_bytes": 1081999360
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_SP_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_reaches_SP_EPSG4326.gpkg",
+      "size_mb": 1028.7,
+      "size_bytes": 1078718464
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_NA_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_NA_EPSG4326.gpkg",
+      "size_mb": 965.2,
+      "size_bytes": 1012113408
+    },
+    {
+      "path": "data\\processed\\rivers_grit_segments_classified_na.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_segments_classified_na.gpkg",
+      "size_mb": 926.7,
+      "size_bytes": 971722752
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_AS_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_AS_EPSG4326.gpkg",
+      "size_mb": 915.1,
+      "size_bytes": 959528960
+    },
+    {
+      "path": "data\\processed\\rivers_grit_reaches_classified_sp.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_reaches_classified_sp.gpkg",
+      "size_mb": 871.0,
+      "size_bytes": 913297408
+    },
+    {
+      "path": "data\\raw\\hydrosheds\\BasinATLAS_v10_lev08_QGIS.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\hydrosheds\\BasinATLAS_v10_lev08_QGIS.gpkg",
+      "size_mb": 825.7,
+      "size_bytes": 865787904
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_SA_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_SA_EPSG4326.gpkg",
+      "size_mb": 777.5,
+      "size_bytes": 815255552
+    },
+    {
+      "path": "data\\processed\\rivers_grit_segments_classified_sa.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_segments_classified_sa.gpkg",
+      "size_mb": 749.2,
+      "size_bytes": 785559552
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_EU_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_EU_EPSG4326.gpkg",
+      "size_mb": 667.7,
+      "size_bytes": 700088320
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_SI_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_SI_EPSG4326.gpkg",
+      "size_mb": 654.7,
+      "size_bytes": 686493696
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_SP_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_SP_EPSG4326.gpkg",
+      "size_mb": 637.0,
+      "size_bytes": 667963392
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_AF_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_AF_EPSG4326.gpkg",
+      "size_mb": 633.7,
+      "size_bytes": 664449024
+    },
+    {
+      "path": "data\\processed\\rivers_grit_segments_classified_si.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_segments_classified_si.gpkg",
+      "size_mb": 626.6,
+      "size_bytes": 657059840
+    },
+    {
+      "path": "data\\raw\\esri_water_bodies\\World_Water_Bodies.lpk",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\esri_water_bodies\\World_Water_Bodies.lpk",
+      "size_mb": 600.4,
+      "size_bytes": 629562109
+    },
+    {
+      "path": "data\\raw\\OSM-Water-Layer-Yamazaki_2021\\OSM_WaterLayer_POLYGONS.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\OSM-Water-Layer-Yamazaki_2021\\OSM_WaterLayer_POLYGONS.gpkg",
+      "size_mb": 574.9,
+      "size_bytes": 602804224
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_EU_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_EU_EPSG4326.gpkg",
+      "size_mb": 537.1,
+      "size_bytes": 563183616
+    },
+    {
+      "path": "data\\processed\\rivers_grit_segments_classified_eu.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_segments_classified_eu.gpkg",
+      "size_mb": 517.3,
+      "size_bytes": 542380032
+    },
+    {
+      "path": "data\\processed\\tidal_basins_distance_based.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\tidal_basins_distance_based.gpkg",
+      "size_mb": 495.9,
+      "size_bytes": 519983104
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_SP_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_SP_EPSG4326.gpkg",
+      "size_mb": 456.0,
+      "size_bytes": 478162944
+    },
+    {
+      "path": "data\\processed\\rivers_grit_segments_classified_sp.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\rivers_grit_segments_classified_sp.gpkg",
+      "size_mb": 438.3,
+      "size_bytes": 459632640
+    },
+    {
+      "path": "data\\raw\\hydrosheds\\BasinATLAS_v10_lev07_QGIS.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\hydrosheds\\BasinATLAS_v10_lev07_QGIS.gpkg",
+      "size_mb": 401.8,
+      "size_bytes": 421269504
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_SA_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_SA_EPSG4326.gpkg",
+      "size_mb": 394.0,
+      "size_bytes": 413151232
+    },
+    {
+      "path": "data\\raw\\DynQual-Jones_2023\\channelStorage_annualAvg_1980_2019.nc",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\DynQual-Jones_2023\\channelStorage_annualAvg_1980_2019.nc",
+      "size_mb": 297.3,
+      "size_bytes": 311776254
+    },
+    {
+      "path": "data\\raw\\DynQual-Jones_2023\\discharge_annualAvg_1980_2019.nc",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\DynQual-Jones_2023\\discharge_annualAvg_1980_2019.nc",
+      "size_mb": 292.9,
+      "size_bytes": 307170399
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_SI_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_component_catchments_SI_EPSG4326.gpkg",
+      "size_mb": 275.4,
+      "size_bytes": 288763904
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_segments_simple_GLOBAL_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_segments_simple_GLOBAL_EPSG4326.gpkg",
+      "size_mb": 226.9,
+      "size_bytes": 237936640
+    },
+    {
+      "path": "data\\raw\\DynQual-Jones_2023\\salinity_annualAvg_1980_2019.nc",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\DynQual-Jones_2023\\salinity_annualAvg_1980_2019.nc",
+      "size_mb": 209.3,
+      "size_bytes": 219453170
+    },
+    {
+      "path": "data\\raw\\GCC-Panagiotis-Athanasiou_2024\\GCC_geophysical.csv",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GCC-Panagiotis-Athanasiou_2024\\GCC_geophysical.csv",
+      "size_mb": 203.5,
+      "size_bytes": 213407568
+    },
+    {
+      "path": "data\\raw\\DynQual-Jones_2023\\waterTemperature_annualAvg_1980_2019.nc",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\DynQual-Jones_2023\\waterTemperature_annualAvg_1980_2019.nc",
+      "size_mb": 198.1,
+      "size_bytes": 207755324
+    },
+    {
+      "path": "data\\processed\\tidal_basins_basinatlas_durr_analysis.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\tidal_basins_basinatlas_durr_analysis.gpkg",
+      "size_mb": 170.6,
+      "size_bytes": 178835456
+    },
+    {
+      "path": "data\\raw\\GCC-Panagiotis-Athanasiou_2024\\GCC_hydrometeorological.csv",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GCC-Panagiotis-Athanasiou_2024\\GCC_hydrometeorological.csv",
+      "size_mb": 141.0,
+      "size_bytes": 147818964
+    },
+    {
+      "path": "data\\processed\\tidal_basins_topology_traced_full.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\tidal_basins_topology_traced_full.gpkg",
+      "size_mb": 135.2,
+      "size_bytes": 141758464
+    },
+    {
+      "path": "data\\processed\\tidal_basins_connected_lev07.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\tidal_basins_connected_lev07.gpkg",
+      "size_mb": 122.1,
+      "size_bytes": 127987712
+    },
+    {
+      "path": "data\\raw\\GRIT-Michel_2025\\GRITv06_sinks_GLOBAL_EPSG4326.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GRIT-Michel_2025\\GRITv06_sinks_GLOBAL_EPSG4326.gpkg",
+      "size_mb": 112.7,
+      "size_bytes": 118214656
+    },
+    {
+      "path": "data\\processed\\tidal_basins_river_based_lev07.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\tidal_basins_river_based_lev07.gpkg",
+      "size_mb": 111.4,
+      "size_bytes": 116801536
+    },
+    {
+      "path": "data\\processed\\tidal_basins_grit_validated.gpkg",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\processed\\tidal_basins_grit_validated.gpkg",
+      "size_mb": 96.8,
+      "size_bytes": 101462016
+    },
+    {
+      "path": "data\\raw\\GCC-Panagiotis-Athanasiou_2024\\GCC_socioeconomic.csv",
+      "absolute_path": "H:\\My Drive\\Project\\TROPECOS\\Github\\estuary-type-map\\data\\raw\\GCC-Panagiotis-Athanasiou_2024\\GCC_socioeconomic.csv",
+      "size_mb": 72.8,
+      "size_bytes": 76324149
+    }
+  ]
+}
