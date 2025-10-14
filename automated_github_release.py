@@ -1,145 +1,27 @@
 #!/usr/bin/env python3
 """
-Automated GitHub Release v1.0.0
-===============================
+Automated GitHub Release with Markdown File List
+===============================================
 
-Auto-generated script to create GitHub release with all large file attachments
+Creates GitHub release v1.0.0 reading file list from release_dataset.md
 
 Usage: python automated_github_release.py
 """
 
 import subprocess
 import sys
+import re
 from pathlib import Path
 from datetime import datetime
 
 BASE_DIR = Path(__file__).resolve().parent
 RELEASE_TAG = "v1.0.0"
 RELEASE_TITLE = "v1.0.0 - High-Resolution Global Tidal Basin Atlas"
-RELEASE_NOTES_FILE = BASE_DIR / "docs/RELEASE_NOTES_v1.0.0.md"
+RELEASE_NOTES_FILE = BASE_DIR / "docs" / "RELEASE_NOTES_v1.0.0.md"
+RELEASE_DATASET_FILE = BASE_DIR / "release_dataset.md"
 
 # Files to attach (generated 2025-10-14 15:39)
 RELEASE_FILES = [
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_reaches_classified_af.gpkg",
-        'name': "rivers_grit_reaches_classified_af.gpkg",
-        'size_mb': 2371.4,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_reaches_classified_as.gpkg",
-        'name': "rivers_grit_reaches_classified_as.gpkg",
-        'size_mb': 2172.0,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_reaches_classified_na.gpkg",
-        'name': "rivers_grit_reaches_classified_na.gpkg",
-        'size_mb': 1773.9,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_reaches_classified_sa.gpkg",
-        'name': "rivers_grit_reaches_classified_sa.gpkg",
-        'size_mb': 1455.8,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_reaches_classified_si.gpkg",
-        'name': "rivers_grit_reaches_classified_si.gpkg",
-        'size_mb': 1163.5,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_segments_classified_af.gpkg",
-        'name': "rivers_grit_segments_classified_af.gpkg",
-        'size_mb': 1160.9,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_segments_classified_as.gpkg",
-        'name': "rivers_grit_segments_classified_as.gpkg",
-        'size_mb': 1112.7,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_reaches_classified_eu.gpkg",
-        'name': "rivers_grit_reaches_classified_eu.gpkg",
-        'size_mb': 1031.9,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_segments_classified_na.gpkg",
-        'name': "rivers_grit_segments_classified_na.gpkg",
-        'size_mb': 926.7,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_reaches_classified_sp.gpkg",
-        'name': "rivers_grit_reaches_classified_sp.gpkg",
-        'size_mb': 871.0,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\raw\hydrosheds\BasinATLAS_v10_lev08_QGIS.gpkg",
-        'name': "BasinATLAS_v10_lev08_QGIS.gpkg",
-        'size_mb': 825.7,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_segments_classified_sa.gpkg",
-        'name': "rivers_grit_segments_classified_sa.gpkg",
-        'size_mb': 749.2,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_segments_classified_si.gpkg",
-        'name': "rivers_grit_segments_classified_si.gpkg",
-        'size_mb': 626.6,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_segments_classified_eu.gpkg",
-        'name': "rivers_grit_segments_classified_eu.gpkg",
-        'size_mb': 517.3,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\tidal_basins_distance_based.gpkg",
-        'name': "tidal_basins_distance_based.gpkg",
-        'size_mb': 495.9,
-        'category': "primary_dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\rivers_grit_segments_classified_sp.gpkg",
-        'name': "rivers_grit_segments_classified_sp.gpkg",
-        'size_mb': 438.3,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\raw\hydrosheds\BasinATLAS_v10_lev07_QGIS.gpkg",
-        'name': "BasinATLAS_v10_lev07_QGIS.gpkg",
-        'size_mb': 401.8,
-        'category': "dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\tidal_basins_basinatlas_durr_analysis.gpkg",
-        'name': "tidal_basins_basinatlas_durr_analysis.gpkg",
-        'size_mb': 170.6,
-        'category': "primary_dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\tidal_basins_topology_traced_full.gpkg",
-        'name': "tidal_basins_topology_traced_full.gpkg",
-        'size_mb': 135.2,
-        'category': "primary_dataset"
-    },
-    {
-        'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\tidal_basins_connected_lev07.gpkg",
-        'name': "tidal_basins_connected_lev07.gpkg",
-        'size_mb': 122.1,
-        'category': "primary_dataset"
-    },
     {
         'local_path': r"H:\My Drive\Project\TROPECOS\Github\estuary-type-map\data\processed\tidal_basins_river_based_lev07.gpkg",
         'name': "tidal_basins_river_based_lev07.gpkg",

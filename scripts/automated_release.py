@@ -33,6 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_TAG = "v1.0.0"
 DEFAULT_TITLE = "v1.0.0 - High-Resolution Global Tidal Basin Atlas"
 RELEASE_NOTES_FILE = "docs/RELEASE_NOTES_v1.0.0.md"
+RELEASE_DATASET_FILE = "release_dataset.md"
 
 def get_file_size_mb(file_path):
     """Get file size in MB"""
@@ -60,7 +61,6 @@ def find_large_files():
     print(f"\n🔍 Scanning repository for files larger than {MAX_FILE_SIZE_MB} MB...")
     
     large_files = []
-    important_files = []
     
     # Walk through all files in the repository
     for root, dirs, files in os.walk(BASE_DIR):
@@ -84,19 +84,13 @@ def find_large_files():
                 }
                 
                 large_files.append(file_info)
-                
-                # Check if this is an important file for release
-                if is_important_for_release(file_path):
-                    important_files.append(file_info)
     
     # Sort by size (largest first)
     large_files.sort(key=lambda x: x['size_mb'], reverse=True)
-    important_files.sort(key=lambda x: x['size_mb'], reverse=True)
     
     print(f"   Found {len(large_files)} files > {MAX_FILE_SIZE_MB} MB")
-    print(f"   Important for release: {len(important_files)} files")
     
-    return large_files, important_files
+    return large_files, []
 
 def categorize_file(file_path):
     """Categorize files for release organization"""
@@ -117,28 +111,62 @@ def categorize_file(file_path):
     else:
         return 'other'
 
-def is_important_for_release(file_path):
-    """Determine if a file is important enough for GitHub release"""
-    path_str = str(file_path).lower()
+def parse_release_dataset_file():
+    """Parse release_dataset.md to get file list for release"""
+    dataset_file = BASE_DIR / RELEASE_DATASET_FILE
+    if not dataset_file.exists():
+        print(f"❌ Release dataset file not found: {RELEASE_DATASET_FILE}")
+        return []
     
-    # Primary datasets
-    if 'tidal_basins_river_based_lev07.gpkg' in path_str:
-        return True
+    release_files = []
+    with open(dataset_file, 'r', encoding='utf-8') as f:
+        content = f.read()
     
-    # Interactive maps
-    if 'diagnostics_html' in path_str and 'tidal_basins' in path_str and file_path.suffix == '.html':
-        return True
+    # Parse markdown to extract file paths
+    import re
+    # Find all **Path**: `filepath` patterns
+    path_pattern = r'\*\*Path\*\*: `([^`]+)`'
+    size_pattern = r'\*\*Size\*\*: ([^\n]+)'
+    desc_pattern = r'\*\*Description\*\*: ([^\n]+)'
     
-    # Web-ready datasets
-    if 'tidal_basins_precise.geojson' in path_str:
-        return True
+    lines = content.split('\n')
+    current_file = None
     
-    # Important processed datasets
-    if any(keyword in path_str for keyword in ['classified', 'processed', 'basinatlas']):
-        if file_path.suffix in ['.gpkg', '.geojson'] and get_file_size_mb(file_path) > 100:
-            return True
+    for i, line in enumerate(lines):
+        # Look for file headers (### filename)
+        if line.startswith('### ') and not line.startswith('### ') or 'Path' in line:
+            if '**Path**' in line:
+                path_match = re.search(path_pattern, line)
+                if path_match:
+                    file_path = path_match.group(1)
+                    full_path = BASE_DIR / file_path
+                    
+                    if full_path.exists():
+                        # Get size and description from nearby lines
+                        size_str = "Unknown"
+                        desc_str = "No description"
+                        
+                        # Look for size and description in next few lines
+                        for j in range(i+1, min(i+5, len(lines))):
+                            if '**Size**' in lines[j]:
+                                size_match = re.search(size_pattern, lines[j])
+                                if size_match:
+                                    size_str = size_match.group(1).strip()
+                            elif '**Description**' in lines[j]:
+                                desc_match = re.search(desc_pattern, lines[j])
+                                if desc_match:
+                                    desc_str = desc_match.group(1).strip()
+                        
+                        release_files.append({
+                            'path': file_path,
+                            'absolute_path': str(full_path),
+                            'size_mb': get_file_size_mb(full_path),
+                            'name': full_path.name,
+                            'description': desc_str,
+                            'size_str': size_str
+                        })
     
-    return False
+    return release_files
 
 def update_gitignore(large_files):
     """Update .gitignore with large files"""
@@ -411,7 +439,10 @@ def main():
         print("\\n⚠️ DRY RUN MODE - No changes will be made")
     
     # Step 1: Find large files
-    large_files, important_files = find_large_files()
+    large_files, _ = find_large_files()
+    
+    # Step 2: Parse release dataset file
+    important_files = parse_release_dataset_file()
     
     if not large_files:
         print(f"\\n✅ No files larger than {MAX_FILE_SIZE_MB} MB found!")
