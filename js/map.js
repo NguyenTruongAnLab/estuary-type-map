@@ -14,12 +14,17 @@
 // COLOR SCHEMES
 // ============================================================================
 
+// Corrected Dürr et al. (2011) color scheme
 const DURR_COLORS = {
-    'Delta': '#8b4513',
-    'Coastal Plain': '#ff8c00',
-    'Lagoon': '#50c878',
-    'Fjord': '#4a90e2',
+    'Small deltas': '#8b4513',
+    'Tidal systems': '#ff8c00',
+    'Lagoons': '#50c878',
+    'Fjords and fjaerds': '#4a90e2',
+    'Large Rivers': '#27ae60',
+    'Large Rivers with tidal deltas': '#16a085',
     'Karst': '#9370db',
+    'Arheic': '#e74c3c',
+    'Endorheic or Glaciated': '#95a5a6',
     'Unclassified': '#808080'
 };
 
@@ -163,11 +168,11 @@ async function loadAllData() {
 }
 
 async function loadCoastalBasins() {
-    console.log('📂 Loading coastal basins with estuary types...');
-    const response = await fetch('data/web/coastal_basins_estuarine_types.geojson');
-    if (!response.ok) throw new Error('Failed to load coastal basins');
+    console.log('📂 Loading tidal basins (precise Dürr classification)...');
+    const response = await fetch('data/web/tidal_basins_precise.geojson');
+    if (!response.ok) throw new Error('Failed to load tidal basins');
     datasets.coastalBasins = await response.json();
-    console.log(`✓ Loaded ${datasets.coastalBasins.features.length} coastal basins`);
+    console.log(`✓ Loaded ${datasets.coastalBasins.features.length} tidal basins (HydroSHEDS Level 7 + GRIT network)`);
 }
 
 async function loadDurrReference() {
@@ -254,14 +259,18 @@ function updateCoastalBasins() {
             }
         }).bindPopup(`
             <div class="popup-content">
-                <h3 class="popup-title">${props.estuary_name || 'Coastal Basin'}</h3>
+                <h3 class="popup-title">${props.estuary_name || 'Tidal Basin'}</h3>
                 <div class="popup-type" style="background: ${color};">${props.estuary_type}</div>
                 <div class="popup-info">
                     <strong>Basin ID:</strong> ${props.HYBAS_ID}<br>
-                    <strong>Area:</strong> ${(props.SUB_AREA || 0).toLocaleString()} km²
+                    <strong>Area:</strong> ${(props.basin_area_km2 || 0).toLocaleString()} km²<br>
+                    <strong>Distance to Coast:</strong> ${(props.distance_to_coast_km || 0).toFixed(1)} km<br>
+                    <strong>Stream Order:</strong> ${props.stream_order || 'N/A'}<br>
+                    <strong>Seed Basin:</strong> ${props.is_seed ? 'Yes (Ocean Outlet)' : 'No (Upstream)'}
                 </div>
                 <div class="popup-source">
-                    <strong>Source:</strong> BasinATLAS Level 7 + Dürr et al. (2011)
+                    <strong>Method:</strong> HydroSHEDS Level 7 + GRIT river connectivity<br>
+                    <strong>Classification:</strong> Corrected Dürr et al. (2011)
                 </div>
             </div>
         `);
@@ -637,16 +646,16 @@ function updateLegend() {
 // ============================================================================
 
 function createPieChart() {
-    if (!datasets.durrReference) {
-        console.log('⏳ Waiting for Dürr data to create pie chart...');
+    if (!datasets.coastalBasins) {
+        console.log('⏳ Waiting for tidal basins data to create pie chart...');
         return;
     }
     
-    // Calculate counts and surface area by type
+    // Calculate counts and surface area by type from TIDAL BASINS (not Dürr reference)
     const statsByType = {};
     
-    datasets.durrReference.features.forEach(feature => {
-        const type = feature.properties.type || 'Unclassified';
+    datasets.coastalBasins.features.forEach(feature => {
+        const type = feature.properties.estuary_type || 'Unclassified';
         const area = feature.properties.basin_area_km2 || 0;
         
         if (!statsByType[type]) {
@@ -658,8 +667,9 @@ function createPieChart() {
     
     // Sort by area descending
     const sortedTypes = Object.entries(statsByType)
-        .sort((a, b) => b[1].area - a[1].area)
-        .slice(0, 6); // Top 6 types
+        .sort((a, b) => b[1].area - a[1].area);
+    
+    // Show all types (not just top 6)
     
     const labels = sortedTypes.map(([type]) => type);
     const data = sortedTypes.map(([, stats]) => stats.area);
@@ -723,7 +733,7 @@ function updateStatsLegend(sortedTypes, totalArea, totalCount, statsByType) {
     
     legendDiv.innerHTML = `
         <div style="text-align:center; margin-bottom:10px; padding:10px; background:#f8f9fa; border-radius:5px;">
-            <strong>Total: ${totalCount} estuaries</strong><br>
+            <strong>Total: ${totalCount.toLocaleString()} tidal basins</strong><br>
             <span style="font-size:0.9em;">${(totalArea / 1000000).toFixed(2)} million km²</span>
         </div>
     `;
