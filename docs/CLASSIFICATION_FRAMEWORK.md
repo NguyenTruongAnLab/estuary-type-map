@@ -1,3 +1,8 @@
+---
+layout: default
+title: CLASSIFICATION FRAMEWORK
+---
+
 # Classification Framework and Methodology
 
 **Document Type**: Scientific Methods - Peer Review Documentation  
@@ -515,3 +520,4 @@ class_weight = 'balanced'  # scikit-learn automatic weighting
 - DATA_SOURCES.md - Complete dataset descriptions
 - MACHINE_LEARNING_METHODS.md - Detailed ML methodology
 - scripts/ml_salinity/README.md - ML pipeline implementation
+

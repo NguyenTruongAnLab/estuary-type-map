@@ -1,3 +1,8 @@
+---
+layout: default
+title: RELEASE NOTES v1.0.0
+---
+
 # 🌊 Milestone Release: High-Resolution Global Tidal Basin Atlas
 
 ## Version 1.0.0 - October 14, 2025
@@ -167,3 +172,4 @@ Nguyen, T. A. (2025). Global Tidal Basin Surface Area Atlas v1.0.
 GitHub: https://github.com/NguyenTruongAnLab/estuary-type-map
 Based on Dürr et al. (2011) DOI: 10.1007/s12237-011-9381-y
 ```
+

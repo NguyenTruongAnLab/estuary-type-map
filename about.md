@@ -1,3 +1,8 @@
+---
+layout: default
+title: About the Global Water Body Surface Area Atlas
+---
+
 # 📘 About the Global Water Body Surface Area Atlas
 
 **Status**: Educational/Research Project in Active Development  
@@ -167,18 +172,3 @@ Our project implements this globally for the first time.
 3. **O'Connor et al. (2022)**: "The Tidal Freshwater Zone" - *Estuarine, Coastal and Shelf Science*
 4. **Baum et al. (2024)**: "Structural estuaries" - Marine dataset
 5. **GRIT v0.6 (2025)**: Global River Topology - Michel et al.
-
----
-
-## 🔗 Quick Links
-
-- [📊 Interactive Map](index.html)
-- [🗺️ Project Roadmap](docs/ROADMAP.md)
-- [📁 Technical Documentation](docs/TECHNICAL.md)
-- [🐛 Known Issues](docs/GRIT_DATA_ISSUE_ANALYSIS.md)
-- [👥 Credits](credits.md)
-
----
-
-**Questions? Suggestions?**  
-Open an issue on [GitHub](https://github.com/NguyenTruongAnLab/estuary-type-map/issues)

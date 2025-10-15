@@ -1,3 +1,8 @@
+---
+layout: default
+title: MAP VISUALIZATION UPDATE
+---
+
 # ✅ Map Visualization Updated - Coastal Basins Integrated!
 
 **Date**: October 13, 2025  
@@ -198,3 +203,4 @@ If 17.1 MB is too large:
 4. Deploy to GitHub Pages
 
 🎉 **Your map now shows scientifically accurate estuarine extents!**
+

@@ -1,6 +1,6 @@
 # 🗺️ Project Roadmap — Project: Global Water Body Surface Area Atlas
 
-**Last Updated**: October 12, 2025 (Complete Audit)  
+**Last Updated**: October 15, 2025 (UI Improvements Complete)  
 **Project Status**: Phase 1 — 65% Complete (Foundation — River Systems & Data Infrastructure)  
 **Vision**: First comprehensive, polygon-based global water body atlas for precise biogeochemical budgeting
 
@@ -33,6 +33,7 @@
 | **GlobSalt baseline** | Salinity zone boundaries | `salinity_zones.geojson`, `globsalt_stations.gpkg` | Oct 2025 |
 | **GRIT processing (ALL 7 regions)** | 20.5M reaches classified | `rivers_grit_*_classified_{AF,AS,EU,NA,SA,SI,SP}.gpkg` | Oct 12, 2025 |
 | **Interactive map v0.2** | Multi-layer visualization | `index.html`, `js/map.js` (847 lines) | Oct 12, 2025 |
+| **UI/UX improvements complete** | Fixed navigation, sidebar cleanup, methodology TOC | All HTML pages | Oct 15, 2025 |
 | **Complete script suite** | 25+ processing scripts | `scripts/*.py` | Oct 2025 |
 | **Comprehensive docs** | 15+ documentation files | `docs/*.md`, `README.md` | Oct 12, 2025 |
 

@@ -1,20 +1,43 @@
-theme: jekyll-theme-minimal
 title: Global Water Body Surface Area Atlas
-description: Polygon-based inventory of global aquatic surface areas for biogeochemical budgeting
+description: A comprehensive polygon-based global water body atlas for biogeochemical budgeting
+author: NguyenTruongAnLab
 
-# Enable Markdown processing
+# GitHub Pages configuration - this baseurl is automatically set by GitHub
+# Leave empty for simplicity - GitHub Pages will handle it
+baseurl: ""
+url: "https://NguyenTruongAnLab.github.io/estuary-type-map"
+
+# Custom permalink style to ensure .md files become .html in output
+permalink: pretty
+
+# Markdown processing configuration
 markdown: kramdown
 kramdown:
-  input: GFM
-  hard_wrap: false
-  
-# Navigation
-navigation:
-  - title: Home
-    url: /
-  - title: About
-    url: /about
-  - title: Methodology
-    url: /methodology
-  - title: Credits
-    url: /credits
+  syntax_highlighter_opts:
+    disable: true
+
+# Jekyll settings
+highlighter: none
+
+# Exclude large folders from Jekyll processing
+exclude:
+  - "data/processed/"
+  - "data/raw/"
+  - "scripts/"
+  - "*.gpkg"
+  - "*.nc"
+  - "*.csv"
+  - ".git/"
+  - ".gitignore"
+  - "Gemfile"
+  - "Gemfile.lock"
+  - "README.md"
+  - "ROADMAP.md"
+  - "LICENSE"
+
+# Include all Jekyll processing and site configuration files
+include:
+  - "_includes"
+  - "_layouts"
+  - "_data"
+  - ".nojekyll"

@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # 📚 Scientific Documentation
 
 **Purpose**: Publication-ready scientific documentation for peer review  
@@ -205,3 +210,4 @@ python scripts/master_pipeline.py --all
 ---
 
 **Document Structure**: Publication-focused, peer-review-ready scientific documentation.
+

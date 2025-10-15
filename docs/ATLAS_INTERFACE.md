@@ -1,3 +1,8 @@
+---
+layout: default
+title: ATLAS INTERFACE
+---
+
 # Visualization Layers & Modes
 
 **Last Updated**: October 10, 2025  
@@ -443,3 +448,4 @@ enriched = durr.sjoin_nearest(baum, max_distance=50000, how='left')
 
 **Status**: Architecture defined, layers ready for implementation  
 **Next Step**: Process datasets → Integrate into map.js
+

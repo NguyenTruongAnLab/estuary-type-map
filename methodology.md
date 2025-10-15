@@ -1,3 +1,9 @@
+---
+layout: default
+title: Methodology
+permalink: /methodology/
+---
+
 # 🛠️ Methodology: Global Water Body Surface Area Atlas
 
 ## 🎯 Project Objectives

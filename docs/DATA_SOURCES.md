@@ -1,3 +1,8 @@
+---
+layout: default
+title: DATA SOURCES
+---
+
 # Data Sources and Provenance
 
 **Document Type**: Scientific Methods - Peer Review Documentation  
@@ -357,3 +362,4 @@ See individual dataset citations above. Complete reference list:
 ---
 
 **For reproducibility**: See `scripts/raw_data_processing/README.md` for complete processing workflow.
+

@@ -1,0 +1,92 @@
+[
+  {
+    "category": "Classification by Morphology",
+    "id": "morphology",
+    "layers": [
+      {
+        "id": "coastal-basins",
+        "name": "Tidal Basin Type (Updated)",
+        "layerId": "layer-coastal-basins",
+        "dataPath": "data/web/tidal_basins_precise.geojson",
+        "description": "16,189 tidal basins classified by Dürr typology",
+        "geometryType": "polygon",
+        "styleProperty": "estuary_type",
+        "colorScheme": "DURR_COLORS",
+        "legendTitle": "Estuarine Types (Basins)"
+      },
+      {
+        "id": "durr-reference",
+        "name": "Catchment Type (Dürr 2011)",
+        "layerId": "layer-durr-reference",
+        "dataPath": "data/web/durr_estuaries.geojson",
+        "description": "Original Dürr 2011 estuary catchments",
+        "geometryType": "polygon",
+        "styleProperty": "type_detailed",
+        "colorScheme": "DURR_COLORS",
+        "legendTitle": "Estuarine Types (Catchments)"
+      }
+    ]
+  },
+  {
+    "category": "Salinity & Hydrology",
+    "id": "salinity",
+    "layers": [
+      {
+        "id": "salinity-zones",
+        "name": "Salinity Zones",
+        "layerId": "layer-salinity-zones",
+        "dataPath": "data/web/salinity_zones.geojson",
+        "description": "Venice System salinity classification",
+        "geometryType": "polygon",
+        "layerColor": "#2166AC",
+        "legendTitle": "Salinity Zones"
+      },
+      {
+        "id": "globsalt",
+        "name": "GlobSalt Stations",
+        "layerId": "layer-globsalt",
+        "dataPath": "data/web/globsalt_stations.geojson",
+        "description": "270K salinity monitoring stations",
+        "geometryType": "point",
+        "layerColor": "#67A9CF",
+        "legendTitle": "GlobSalt Stations"
+      },
+      {
+        "id": "dynqual",
+        "name": "DynQual Rivers",
+        "layerId": "layer-dynqual",
+        "dataPath": "data/web/dynqual_river_characteristics.geojson",
+        "description": "Global river discharge and water quality",
+        "geometryType": "point",
+        "layerColor": "#4A90E2",
+        "legendTitle": "DynQual Rivers"
+      }
+    ]
+  },
+  {
+    "category": "Coastal Characteristics",
+    "id": "coastal",
+    "layers": [
+      {
+        "id": "baum",
+        "name": "Baum Morphometry",
+        "layerId": "layer-baum",
+        "dataPath": "data/web/baum_morphometry.geojson",
+        "description": "271 large structural estuaries",
+        "geometryType": "point",
+        "layerColor": "#E74C3C",
+        "legendTitle": "Baum Morphometry"
+      },
+      {
+        "id": "gcc",
+        "name": "GCC Coastal",
+        "layerId": "layer-gcc",
+        "dataPath": "data/web/gcc_coastal_characteristics.geojson",
+        "description": "728K coastal characteristic segments",
+        "geometryType": "point",
+        "layerColor": "#27AE60",
+        "legendTitle": "GCC Coastal"
+      }
+    ]
+  }
+]

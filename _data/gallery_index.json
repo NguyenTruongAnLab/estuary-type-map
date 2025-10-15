@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Gcc Comprehensive",
+    "category": "Coastal Characteristics (GCC)",
+    "path": "diagnostics_html/gcc_comprehensive.html",
+    "filename": "gcc_comprehensive.html",
+    "size_mb": 22.95,
+    "modified": "2025-10-13"
+  },
+  {
+    "title": "Baum Morphometry",
+    "category": "Morphometry",
+    "path": "diagnostics_html/baum_morphometry.html",
+    "filename": "baum_morphometry.html",
+    "size_mb": 4.47,
+    "modified": "2025-10-13"
+  },
+  {
+    "title": "Dynqual Rivers",
+    "category": "River Network Analysis",
+    "path": "diagnostics_html/dynqual_rivers.html",
+    "filename": "dynqual_rivers.html",
+    "size_mb": 10.2,
+    "modified": "2025-10-13"
+  },
+  {
+    "title": "Globsalt Stations",
+    "category": "Salinity Classification",
+    "path": "diagnostics_html/globsalt_stations.html",
+    "filename": "globsalt_stations.html",
+    "size_mb": 13.63,
+    "modified": "2025-10-13"
+  },
+  {
+    "title": "Tidal Basins Web",
+    "category": "Tidal Basin Analysis",
+    "path": "diagnostics_html/tidal_basins_web.html",
+    "filename": "tidal_basins_web.html",
+    "size_mb": 22.84,
+    "modified": "2025-10-14"
+  }
+]
