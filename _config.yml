@@ -9,14 +9,15 @@ url: "https://nguyentruonganlab.github.io"
 # Custom permalink style to ensure .md files become .html in output
 permalink: pretty
 
-# Markdown processing configuration
+# Markdown processing configuration - using GitHub Pages defaults
 markdown: kramdown
 kramdown:
+  input: GFM
   syntax_highlighter_opts:
     disable: true
 
 # Jekyll settings
-highlighter: none
+highlighter: rouge
 
 # Exclude large folders from Jekyll processing
 exclude:
@@ -39,4 +40,4 @@ include:
   - "_includes"
   - "_layouts"
   - "_data"
-  - ".nojekyll"
+  # Removed .nojekyll as it prevents Jekyll processing
