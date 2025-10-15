@@ -2,10 +2,9 @@ title: Global Water Body Surface Area Atlas
 description: A comprehensive polygon-based global water body atlas for biogeochemical budgeting
 author: NguyenTruongAnLab
 
-# GitHub Pages configuration - this baseurl is automatically set by GitHub
-# Leave empty for simplicity - GitHub Pages will handle it
-baseurl: ""
-url: "https://NguyenTruongAnLab.github.io/estuary-type-map"
+# GitHub Pages configuration
+baseurl: "/estuary-type-map"
+url: "https://nguyentruonganlab.github.io"
 
 # Custom permalink style to ensure .md files become .html in output
 permalink: pretty
