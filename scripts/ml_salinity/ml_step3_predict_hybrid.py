@@ -219,7 +219,17 @@ def predict_hybrid(region_code: str, models: dict):
     # =========================================================================
     # COMBINE PREDICTIONS
     # =========================================================================
-    all_predicted = pd.concat([coastal_segments, inland_segments], ignore_index=True)
+    # Combine coastal and inland predictions
+    predicted_dfs = []
+    if len(coastal_segments) > 0:
+        predicted_dfs.append(coastal_segments)
+    if len(inland_segments) > 0:
+        predicted_dfs.append(inland_segments)
+    
+    if len(predicted_dfs) == 0:
+        all_predicted = pd.DataFrame()
+    else:
+        all_predicted = pd.concat(predicted_dfs, ignore_index=True)
     
     # Assign confidence levels
     def get_confidence_level(prob):
@@ -272,21 +282,23 @@ def predict_hybrid(region_code: str, models: dict):
     validated['confidence_level'] = 'HIGH'
     validated['classification_method'] = 'GlobSalt_Validated'
     
-    # Combine all
+    # Combine all (make sure we have dist_to_coast_km from both sources)
+    # Validated segments already have it from features df
+    # Predicted segments have it from to_predict df (which came from features)
     all_classified = pd.concat([validated, all_predicted], ignore_index=True)
     
-    # CRITICAL: Always merge dist_to_coast_km from features (it's not in segments!)
-    # This is needed for breakdown statistics
-    all_classified_with_dist = all_classified.merge(
-        features[['global_id', 'dist_to_coast_km']],
-        on='global_id',
-        how='left'
-    )
+    # Ensure dist_to_coast_km is present (should already be there, but double-check)
+    if 'dist_to_coast_km' not in all_classified.columns:
+        all_classified = all_classified.merge(
+            features[['global_id', 'dist_to_coast_km']],
+            on='global_id',
+            how='left'
+        )
     
     # Merge with geometries
     result = segments.merge(
-        all_classified_with_dist[['global_id', 'predicted_class', 'prediction_probability',
-                                   'confidence_level', 'classification_method', 'dist_to_coast_km']],
+        all_classified[['global_id', 'predicted_class', 'prediction_probability',
+                        'confidence_level', 'classification_method', 'dist_to_coast_km']],
         on='global_id',
         how='left'
     )

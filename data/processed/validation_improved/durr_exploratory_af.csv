@@ -1,0 +1,10 @@
+estuary_type_code,estuary_type_name,total_segments,estuarine_count,estuarine_pct
+-9999,Unknown,635,614,96.69291338582677
+0,Karst,73,73,100.0
+1,Coastal Plain,7431,7018,94.44220158794239
+2,Delta,5572,5319,95.45944005743002
+3,Lagoon,3836,3711,96.74139728884255
+5,Large River,68,68,100.0
+6,Small Delta,54,49,90.74074074074075
+7,Archipelagic,5013,4985,99.44145222421703
+51,Tidal System,347,346,99.71181556195965

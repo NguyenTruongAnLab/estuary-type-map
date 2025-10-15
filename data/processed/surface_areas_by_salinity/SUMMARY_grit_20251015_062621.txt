@@ -1,0 +1,27 @@
+================================================================================
+GLOBAL WATER BODY SURFACE AREAS BY SALINITY CLASS
+================================================================================
+
+Date: 2025-10-15 06:26:21
+Method: GRIT
+Regions: AF, AS, EU, NA, SA, SI, SP
+
+salinity_class  total_area_km2  n_features  percent_of_total
+           NaN      1063360.77     1654747             96.82
+           NaN        21072.88       61329              1.92
+           NaN        13860.80       47993              1.26
+
+================================================================================
+REFERENCE
+================================================================================
+Salinity Classification: Venice System (1958)
+  - Freshwater: <0.5 PSU
+  - Oligohaline: 0.5-5 PSU (Tidal Freshwater Zone)
+  - Mesohaline: 5-18 PSU
+  - Polyhaline: 18-30 PSU
+  - Euhaline: >30 PSU
+
+Data Sources:
+  - ML Model: Random Forest trained on GlobSalt data
+  - River Network: GRIT v0.6 (Wortmann et al. 2025)
+  - Surface Areas: GRIT attributes

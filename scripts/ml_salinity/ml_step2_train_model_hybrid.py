@@ -371,6 +371,11 @@ def main():
     print_section("PHASE 2: COASTAL MODEL")
     coastal_model, coastal_encoder, coastal_features = train_coastal_model(global_data)
     
+    # Save holdout region for validation
+    with open(MODEL_DIR / 'holdout_region.txt', 'w') as f:
+        f.write(HOLDOUT_REGION)
+    print(f"\n💾 Saved holdout region: {HOLDOUT_REGION}")
+    
     # Summary
     print_section("✅ TRAINING COMPLETE")
     print(f"\n📁 Models saved to: {MODEL_DIR}")

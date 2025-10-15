@@ -73,45 +73,67 @@ def calculate_areas_from_grit(region_code: str) -> pd.DataFrame:
     """
     print_section(f"APPROACH 1: GRIT Surface Areas - {region_code}")
     
-    # Load ML-classified segments
-    classified_file = ML_DIR / f'segments_classified_{region_code.lower()}.gpkg'
+    # Load ML-classified segments (NEW FILENAME FORMAT!)
+    classified_file = ML_DIR / f'rivers_grit_ml_classified_hybrid_{region_code.lower()}.gpkg'
     
     if not classified_file.exists():
         print(f"❌ No classified segments found: {classified_file.name}")
+        print(f"   Run prediction first: python scripts/ml_salinity/ml_step3_predict_hybrid.py --region {region_code}")
         return None
     
     print(f"\n📂 Loading classified segments...")
     segments = gpd.read_file(classified_file)
     print(f"✅ Loaded {len(segments):,} segments")
     
-    # Check if surface_area exists
+    # Check if surface_area exists, if not calculate from GRIT width × length
     if 'surface_area' not in segments.columns:
-        print(f"⚠️  No surface_area attribute in GRIT data!")
-        print(f"   Attempting to load from original GRIT segments...")
+        print(f"⚠️  No surface_area attribute - calculating from GRIT width × length...")
         
-        # Try to load surface_area from original GRIT
+        # Try to load width and length from original GRIT
         grit_file = PROCESSED_DIR / f'rivers_grit_segments_classified_{region_code.lower()}.gpkg'
         if grit_file.exists():
-            grit_orig = gpd.read_file(grit_file, columns=['global_id', 'surface_area'])
-            segments = segments.merge(grit_orig[['global_id', 'surface_area']], 
-                                     on='global_id', how='left')
+            print(f"   Loading width_adjusted and length from GRIT...")
+            grit_orig = gpd.read_file(grit_file, columns=['global_id', 'width_adjusted', 'length'])
+            
+            # Check what we got
+            print(f"   GRIT columns: {list(grit_orig.columns)}")
+            print(f"   Segments columns before merge: {list(segments.columns)}")
+            
+            segments = segments.merge(grit_orig[['global_id', 'width_adjusted', 'length']], 
+                                     on='global_id', how='left', suffixes=('', '_grit'))
+            
+            print(f"   Segments columns after merge: {list(segments.columns)}")
+            
+            # Calculate surface area (m²) = width (m) × length (m)
+            # Convert to km²
+            # Handle suffix if there's a collision
+            width_col = 'width_adjusted' if 'width_adjusted' in segments.columns else 'width_adjusted_grit'
+            length_col = 'length' if 'length' in segments.columns else 'length_grit'
+            
+            segments['surface_area_km2'] = (segments[width_col] * segments[length_col]) / 1_000_000
+            print(f"   ✓ Calculated surface area for {len(segments):,} segments")
+            print(f"   ✓ Total surface area: {segments['surface_area_km2'].sum():,.0f} km²")
         else:
-            print(f"❌ Cannot find surface_area data!")
+            print(f"❌ Cannot find GRIT data!")
             return None
+    else:
+        # surface_area already exists, assume it's in km²
+        segments['surface_area_km2'] = segments['surface_area']
     
     # Calculate areas by salinity class
     print(f"\n📊 Calculating surface areas by salinity class...")
     
-    # Get ML prediction column
-    pred_col = 'ml_predicted_class'
+    # Get ML prediction column (from hybrid prediction script)
+    pred_col = 'salinity_class_final'
     if pred_col not in segments.columns:
-        print(f"❌ No ML predictions found!")
+        print(f"❌ No ML predictions found! Missing column: {pred_col}")
+        print(f"   Available columns: {list(segments.columns)}")
         return None
     
     # Group by salinity class
     area_summary = segments.groupby(pred_col).agg({
         'global_id': 'count',
-        'surface_area': ['sum', 'mean', 'std', 'min', 'max']
+        'surface_area_km2': ['sum', 'mean', 'std', 'min', 'max']
     }).round(2)
     
     area_summary.columns = ['_'.join(col).strip() for col in area_summary.columns.values]
@@ -136,11 +158,12 @@ def calculate_areas_from_osm(region_code: str) -> pd.DataFrame:
     """
     print_section(f"APPROACH 2: OSM Water Polygons - {region_code}")
     
-    # Load ML-classified segments
-    classified_file = ML_DIR / f'segments_classified_{region_code.lower()}.gpkg'
+    # Load ML-classified segments (NEW FILENAME FORMAT!)
+    classified_file = ML_DIR / f'rivers_grit_ml_classified_hybrid_{region_code.lower()}.gpkg'
     
     if not classified_file.exists():
         print(f"❌ No classified segments found: {classified_file.name}")
+        print(f"   Run prediction first: python scripts/ml_salinity/ml_step3_predict_hybrid.py --region {region_code}")
         return None
     
     print(f"\n📂 Loading classified segments...")
@@ -210,8 +233,8 @@ def aggregate_global_results(all_results: list) -> pd.DataFrame:
     print(f"\n📊 Calculating global totals...")
     
     # Get column names (depends on approach used)
-    if 'surface_area_sum' in global_summary.columns:
-        area_col = 'surface_area_sum'
+    if 'surface_area_km2_sum' in global_summary.columns:
+        area_col = 'surface_area_km2_sum'
         count_col = 'global_id_count'
     elif 'area_km2_sum' in global_summary.columns:
         area_col = 'area_km2_sum'
@@ -220,8 +243,18 @@ def aggregate_global_results(all_results: list) -> pd.DataFrame:
         print(f"❌ Cannot identify area column!")
         return None
     
-    # Group by salinity class
-    global_totals = global_summary.groupby('ml_predicted_class').agg({
+    # Group by salinity class (use correct column name based on data source)
+    # GRIT approach uses 'salinity_class_final', OSM uses 'ml_predicted_class'
+    if 'salinity_class_final' in global_summary.columns:
+        class_col = 'salinity_class_final'
+    elif 'ml_predicted_class' in global_summary.columns:
+        class_col = 'ml_predicted_class'
+    else:
+        print(f"❌ Cannot identify salinity class column!")
+        print(f"   Available columns: {list(global_summary.columns)}")
+        return None
+    
+    global_totals = global_summary.groupby(class_col).agg({
         area_col: 'sum',
         count_col: 'sum'
     }).round(2)
@@ -235,14 +268,17 @@ def aggregate_global_results(all_results: list) -> pd.DataFrame:
         global_totals['total_area_km2'] / total_area * 100
     ).round(2)
     
-    # Sort by Venice System order
+    # Sort by Venice System order (case-insensitive matching)
+    # Normalize to lowercase for matching
+    global_totals['salinity_class_lower'] = global_totals['salinity_class'].str.lower()
     venice_order = ['freshwater', 'oligohaline', 'mesohaline', 'polyhaline', 'euhaline']
-    global_totals['salinity_class'] = pd.Categorical(
-        global_totals['salinity_class'],
+    global_totals['salinity_class_lower'] = pd.Categorical(
+        global_totals['salinity_class_lower'],
         categories=venice_order,
         ordered=True
     )
-    global_totals = global_totals.sort_values('salinity_class')
+    global_totals = global_totals.sort_values('salinity_class_lower')
+    global_totals = global_totals.drop(columns=['salinity_class_lower'])
     
     print(f"\n" + "="*80)
     print("🌍 GLOBAL WATER BODY SURFACE AREAS BY SALINITY CLASS")
@@ -251,13 +287,18 @@ def aggregate_global_results(all_results: list) -> pd.DataFrame:
     print(f"\nTotal Global Surface Area: {total_area:,.0f} km²")
     
     # Calculate tidal/estuarine total (everything except freshwater)
+    # Case-insensitive matching
+    freshwater_area = global_totals[
+        global_totals['salinity_class'].str.lower() == 'freshwater'
+    ]['total_area_km2'].sum()
+    
     tidal_classes = ['oligohaline', 'mesohaline', 'polyhaline', 'euhaline']
     tidal_area = global_totals[
-        global_totals['salinity_class'].isin(tidal_classes)
+        global_totals['salinity_class'].str.lower().isin(tidal_classes)
     ]['total_area_km2'].sum()
     
     print(f"\n📊 Key Metrics:")
-    print(f"   Total Freshwater: {global_totals[global_totals['salinity_class']=='freshwater']['total_area_km2'].sum():,.0f} km²")
+    print(f"   Total Freshwater: {freshwater_area:,.0f} km²")
     print(f"   Total Tidal/Estuarine: {tidal_area:,.0f} km²")
     print(f"   Tidal % of Total: {tidal_area/total_area*100:.1f}%")
     

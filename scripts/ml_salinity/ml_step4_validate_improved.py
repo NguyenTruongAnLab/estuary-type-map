@@ -31,7 +31,7 @@ warnings.filterwarnings('ignore')
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 RAW_DIR = BASE_DIR / 'data' / 'raw'
 ML_DIR = BASE_DIR / 'data' / 'processed' / 'ml_features'
-OUTPUT_DIR = BASE_DIR / 'data' / 'processed' / 'ml_classified'
+OUTPUT_DIR = BASE_DIR / 'data' / 'processed' / 'ml_classified_hybrid'
 VALIDATION_DIR = BASE_DIR / 'data' / 'processed' / 'validation_improved'
 VALIDATION_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -78,17 +78,17 @@ def validate_globsalt_holdout(region_code: str):
     print(f"✅ {region_code} is TRUE SPATIAL HOLDOUT (never seen in training)")
     print(f"   Now running ACTUAL model predictions (not pre-assigned labels!)\n")
     
-    # Load the trained model and metadata
+    # Load the trained model and metadata (use INLAND model for consistency)
     try:
         import joblib
-        model = joblib.load(MODEL_DIR / 'salinity_classifier_rf.pkl')
-        label_encoder = joblib.load(MODEL_DIR / 'label_encoder.pkl')
-        with open(MODEL_DIR / 'feature_columns.txt', 'r') as f:
+        model = joblib.load(MODEL_DIR / 'salinity_classifier_rf_inland.pkl')
+        label_encoder = joblib.load(MODEL_DIR / 'label_encoder_inland.pkl')
+        with open(MODEL_DIR / 'feature_columns_inland.txt', 'r') as f:
             feature_cols = [line.strip() for line in f if line.strip()]
-        print(f"✓ Loaded model: {len(feature_cols)} features")
+        print(f"✓ Loaded inland model: {len(feature_cols)} features")
     except FileNotFoundError as e:
         print(f"❌ Model files not found: {e}")
-        print("   Run training first: python scripts/ml_step2_train_model.py")
+        print("   Run training first: python scripts/ml_salinity/ml_step2_train_model_hybrid.py")
         return None
     
     # Load features for the holdout region
@@ -210,23 +210,32 @@ def validate_distance_stratified(region_code: str):
     """
     print_section(f"📏 METHOD 2: Distance-Stratified Analysis - {region_code}")
     
-    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_{region_code.lower()}.gpkg'
+    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_hybrid_{region_code.lower()}.gpkg'
     features_file = ML_DIR / f'features_{region_code.lower()}.parquet'
     
-    if not predictions_file.exists() or not features_file.exists():
-        print(f"❌ Required files not found")
+    if not predictions_file.exists():
+        print(f"❌ Predictions not found: {predictions_file.name}")
+        print(f"   Run prediction first: python scripts/ml_salinity/ml_step3_predict_hybrid.py --region {region_code}")
+        return None
+    
+    if not features_file.exists():
+        print(f"❌ Features not found: {features_file.name}")
         return None
     
     # Load data
     predictions = gpd.read_file(predictions_file)
-    features = pd.read_parquet(features_file)
     
-    # Merge distance
-    predictions = predictions.merge(
-        features[['global_id', 'dist_to_coast_km']],
-        on='global_id',
-        how='left'
-    )
+    # Check if dist_to_coast_km already in predictions (hybrid model includes it)
+    if 'dist_to_coast_km' not in predictions.columns:
+        print(f"   Merging distance from features...")
+        features = pd.read_parquet(features_file)
+        predictions = predictions.merge(
+            features[['global_id', 'dist_to_coast_km']],
+            on='global_id',
+            how='left'
+        )
+    else:
+        print(f"   Using distance from predictions file...")
     
     # Define distance bins
     distance_bins = [
@@ -354,7 +363,7 @@ def validate_literature_tidal_extent(region_code: str):
     """
     print_section(f"📚 METHOD 3: Literature-Based Tidal Extent - {region_code}")
     
-    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_{region_code.lower()}.gpkg'
+    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_hybrid_{region_code.lower()}.gpkg'
     features_file = ML_DIR / f'features_{region_code.lower()}.parquet'
     
     if not predictions_file.exists() or not features_file.exists():
@@ -363,14 +372,18 @@ def validate_literature_tidal_extent(region_code: str):
     
     # Load data
     predictions = gpd.read_file(predictions_file)
-    features = pd.read_parquet(features_file)
     
-    # Merge distance
-    predictions = predictions.merge(
-        features[['global_id', 'dist_to_coast_km']],
-        on='global_id',
-        how='left'
-    )
+    # Check if dist_to_coast_km already in predictions (hybrid model includes it)
+    if 'dist_to_coast_km' not in predictions.columns:
+        print(f"   Merging distance from features...")
+        features = pd.read_parquet(features_file)
+        predictions = predictions.merge(
+            features[['global_id', 'dist_to_coast_km']],
+            on='global_id',
+            how='left'
+        )
+    else:
+        print(f"   Using distance from predictions file...")
     
     # Get literature values
     lit_systems = get_literature_tidal_extents()
@@ -477,7 +490,7 @@ def validate_discharge_proxy(region_code: str):
     """
     print_section(f"💧 METHOD 4: Discharge-Based Proxy - {region_code}")
     
-    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_{region_code.lower()}.gpkg'
+    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_hybrid_{region_code.lower()}.gpkg'
     features_file = ML_DIR / f'features_{region_code.lower()}.parquet'
     
     if not predictions_file.exists() or not features_file.exists():
@@ -578,7 +591,7 @@ def validate_durr_exploratory(region_code: str):
         -9999: 'Unknown'
     }
     
-    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_{region_code.lower()}.gpkg'
+    predictions_file = OUTPUT_DIR / f'rivers_grit_ml_classified_hybrid_{region_code.lower()}.gpkg'
     features_file = ML_DIR / f'features_{region_code.lower()}.parquet'
     
     if not predictions_file.exists() or not features_file.exists():
@@ -621,12 +634,13 @@ def validate_durr_exploratory(region_code: str):
         print(f"   Skipping Dürr exploratory analysis for {region_code}")
         return None
     
-    # Merge distance
-    predictions_with_durr = predictions_with_durr.merge(
-        features[['global_id', 'dist_to_coast_km']],
-        on='global_id',
-        how='left'
-    )
+    # Merge distance (check if already present from predictions)
+    if 'dist_to_coast_km' not in predictions_with_durr.columns:
+        predictions_with_durr = predictions_with_durr.merge(
+            features[['global_id', 'dist_to_coast_km']],
+            on='global_id',
+            how='left'
+        )
     
     # Only look at coastal segments (<50 km)
     coastal_in_durr = predictions_with_durr[
