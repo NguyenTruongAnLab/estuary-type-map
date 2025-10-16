@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+</head>
+<body>
+    <header>
+        <h1>{{ site.title }}</h1>
+        <nav>
+            <a href="{{ '/' | relative_url }}">Map</a>
+            <a href="{{ '/about.html' | relative_url }}">About</a>
+            <a href="{{ '/methodology.html' | relative_url }}">Methodology</a>
+            <a href="{{ '/dataset.html' | relative_url }}">Dataset</a>
+            <a href="{{ '/changelog.html' | relative_url }}">Changelog</a>
+        </nav>
+    </header>
+    
+    <main>
+        {{ content }}
+    </main>
+    
+    <footer>
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. Licensed under MIT.</p>
+    </footer>
+</body>
+</html>

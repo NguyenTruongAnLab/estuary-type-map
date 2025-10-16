@@ -136,3 +136,6 @@ data/processed/ml_features/features_na.parquet
 data/processed/globsalt_salinity_zones.gpkg
 **/*.geojson
 **/*.html
+# Exception: Include Jekyll layout and include files
+!_layouts/**/*.html
+!_includes/**/*.html
