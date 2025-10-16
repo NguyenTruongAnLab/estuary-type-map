@@ -44,6 +44,7 @@ data/processed/raw/*.nc
 
 # Jekyll local development config
 _config_local.yml
+Gemfile.lock
 
 # OS
 .DS_Store
