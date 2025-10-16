@@ -24,6 +24,7 @@ exclude:
   - "data/processed/"
   - "data/raw/"
   - "scripts/"
+  - "docs/"
   - "*.gpkg"
   - "*.nc"
   - "*.csv"

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Global Water Body Atlas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Gallery fullscreen layout */
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .gallery-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .gallery-controls {
+            padding: 15px 20px;
+            background: #34495e;
+            border-bottom: 1px solid #2c3e50;
+            flex-shrink: 0;
+        }
+        
+        .viewer-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #contentFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Site Navigation -->
+    <nav class="site-navigation">
+        <div class="nav-wrapper">
+            <a href="index.html" class="nav-logo">🌊 Water Body Atlas</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Interactive Atlas</a></li>
+                <li>
+                    <select id="galleryDropdownNav" style="padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; cursor: pointer;">
+                        <option value="">Gallery</option>
+                    </select>
+                </li>
+                <li><a href="methodology.html">Methodology</a></li>
+                <li><a href="dataset.html">Dataset</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="gallery-container">
+        <div class="gallery-controls" style="padding: 12px 20px; background: #34495e; color: white;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <label for="itemSelect" style="font-weight: 600; white-space: nowrap; margin: 0;">📊 Select:</label>
+                <select id="itemSelect" style="flex: 1; max-width: 600px; padding: 8px; font-size: 0.95rem; border-radius: 4px; border: none;">
+                    <option value="">-- Select a visualization --</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="viewer-container">
+            <iframe id="contentFrame" style="display:none;"></iframe>
+            
+            <div id="emptyState" class="empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: #ecf0f1; color: #7f8c8d;">
+                <h2 style="margin: 0 0 1rem 0;">👆 Select a visualization</h2>
+                <p style="margin: 0;">Choose from the dropdown above to view interactive maps</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let galleryData = [];
+        
+        async function loadGalleryIndex() {
+            try {
+                const response = await fetch('_data/gallery_index.json');
+                if (!response.ok) {
+                    throw new Error('Gallery index not found. Run: python scripts/generate_gallery_index.py');
+                }
+                galleryData = await response.json();
+                console.log(`✅ Loaded ${galleryData.length} visualizations`);
+                populateItemDropdown();
+            } catch (error) {
+                console.error('❌ Error loading gallery index:', error);
+                document.getElementById('emptyState').innerHTML = `
+                    <h2>⚠️ Gallery Index Not Found</h2>
+                    <p>Please run: <code>python scripts/generate_gallery_index.py</code></p>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+        }
+        
+        function populateItemDropdown() {
+            const itemSelect = document.getElementById('itemSelect');
+            const navDropdown = document.getElementById('galleryDropdownNav');
+            
+            itemSelect.innerHTML = '<option value="">-- Select a visualization --</option>';
+            navDropdown.innerHTML = '<option value="">Gallery</option>';
+            
+            // Group by category
+            const grouped = {};
+            galleryData.forEach(item => {
+                if (!grouped[item.category]) grouped[item.category] = [];
+                grouped[item.category].push(item);
+            });
+            
+            // Add optgroups to both dropdowns
+            Object.keys(grouped).sort().forEach(category => {
+                // Main dropdown
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = `${category} (${grouped[category].length})`;
+                
+                // Nav dropdown
+                const navOptgroup = document.createElement('optgroup');
+                navOptgroup.label = category;
+                
+                grouped[category].forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = galleryData.indexOf(item);
+                    option.textContent = item.title;
+                    optgroup.appendChild(option);
+                    
+                    const navOption = document.createElement('option');
+                    navOption.value = galleryData.indexOf(item);
+                    navOption.textContent = item.title;
+                    navOptgroup.appendChild(navOption);
+                });
+                
+                itemSelect.appendChild(optgroup);
+                navDropdown.appendChild(navOptgroup);
+            });
+            
+            // Nav dropdown event listener
+            navDropdown.addEventListener('change', (e) => {
+                if (e.target.value !== '') {
+                    displayVisualization(parseInt(e.target.value));
+                    // Sync main dropdown
+                    itemSelect.value = e.target.value;
+                }
+            });
+        }
+        
+        function displayVisualization(index) {
+            const item = galleryData[index];
+            
+            // Show iframe
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('contentFrame').style.display = 'block';
+            document.getElementById('contentFrame').src = item.path;
+            
+            console.log(`📊 Displaying: ${item.title}`);
+        }
+        
+        // Event listeners
+        document.getElementById('itemSelect').addEventListener('change', (e) => {
+            if (e.target.value) {
+                displayVisualization(parseInt(e.target.value));
+            }
+        });
+        
+        // Initialize
+        loadGalleryIndex();
+    </script>
+</body>
+</html>

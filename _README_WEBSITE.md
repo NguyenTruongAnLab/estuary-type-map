@@ -91,6 +91,3 @@ patterns = [
 **Navigation missing**: Check `_includes/navigation.html` exists  
 **Styles broken**: Clear cache (Ctrl+F5)
 
-## Documentation
-
-See `docs/WEBSITE_UPGRADE_COMPLETE.md` for full details.

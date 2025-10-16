@@ -1,0 +1,44 @@
+<nav class="site-navigation">
+    <div class="nav-wrapper">
+        <a href="{{ '/' | relative_url }}" class="nav-logo">🌊 Water Body Atlas</a>
+        <ul class="nav-links">
+            <li><a href="{{ '/index.html' | relative_url }}" {% if page.url == '/' or page.url == '/index.html' %}class="active"{% endif %}>Atlas</a></li>
+            <li>
+                <select id="galleryDropdown" onchange="if(this.value) window.open(this.value, '_blank'); this.value='';" style="padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; cursor: pointer; font-size: 0.95rem;">
+                    <option value="">Gallery</option>
+                    <!-- Populated dynamically from gallery_index.json -->
+                </select>
+                <script>
+                // Dynamically populate gallery dropdown from gallery_index.json
+                (function() {
+                    const baseUrl = '{{ "/" | relative_url }}'; // Get baseurl from Jekyll
+                    
+                    fetch('{{ "/data/gallery_index.json" | relative_url }}')
+                        .then(response => response.json())
+                        .then(data => {
+                            const dropdown = document.getElementById('galleryDropdown');
+                            
+                            // Add all items as simple list
+                            data.forEach(item => {
+                                const option = document.createElement('option');
+                                // Apply baseurl prefix if not already in path
+                                let fullPath = item.path;
+                                if (baseUrl !== '/' && !item.path.startsWith(baseUrl)) {
+                                    fullPath = baseUrl.replace(/\/$/, '') + item.path;
+                                }
+                                option.value = fullPath;
+                                option.textContent = item.title;
+                                dropdown.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error('Error loading gallery index:', error));
+                })();
+                </script>
+            </li>
+            <li><a href="{{ '/methodology/' | relative_url }}" {% if page.url == '/methodology/' or page.url contains '/methodology' %}class="active"{% endif %}>Methodology</a></li>
+            <li><a href="{{ '/dataset/' | relative_url }}" {% if page.url == '/dataset/' or page.url contains '/dataset' %}class="active"{% endif %}>Dataset</a></li>
+            <li><a href="{{ '/changelog/' | relative_url }}" {% if page.url == '/changelog/' or page.url contains '/changelog' %}class="active"{% endif %}>Changelog</a></li>
+            <li><a href="{{ '/about/' | relative_url }}" {% if page.url == '/about/' or page.url contains '/about' %}class="active"{% endif %}>About</a></li>
+        </ul>
+    </div>
+</nav>
