@@ -4,8 +4,6 @@ title: Methodology
 permalink: /methodology/
 ---
 
-# 🛠️ Methodology: Global Water Body Surface Area Atlas
-
 ## 🎯 Project Objectives
 
 ### 1. Definitive Water Body Surface Area Database

@@ -437,7 +437,7 @@ def intersect_with_osm_water(reaches: gpd.GeoDataFrame) -> Optional[pd.DataFrame
         osm_water = osm_water.to_crs(reaches.crs)
     
     # Spatial intersection
-    print(f"\n� Intersecting GRIT reaches with OSM water polygons...")
+    print(f"\n Intersecting GRIT reaches with OSM water polygons...")
     print(f"    This may take 10-20 minutes for large datasets...")
     
     start_time = time.time()

@@ -36,6 +36,9 @@
                     <script>
                     // Dynamically populate gallery dropdown from gallery_index.json
                     (function() {
+                        const baseUrl = '{{ site.baseurl }}'; // Get baseurl from Jekyll config
+                        console.log('Gallery: baseUrl =', baseUrl);
+                        
                         fetch('{{ "/data/gallery_index.json" | relative_url }}')
                             .then(response => response.json())
                             .then(data => {
@@ -44,7 +47,10 @@
                                 // Add all items as simple list
                                 data.forEach(item => {
                                     const option = document.createElement('option');
-                                    option.value = item.path;
+                                    // Always prepend baseurl to the path from gallery_index.json
+                                    let fullPath = baseUrl + item.path;
+                                    console.log('Gallery item:', item.title, '| Original path:', item.path, '| Full path:', fullPath);
+                                    option.value = fullPath;
                                     option.textContent = item.title;
                                     dropdown.appendChild(option);
                                 });
@@ -62,7 +68,26 @@
     
     <div id="sidebar">
         <div class="sidebar-content" id="sidebar-categories">
-            <!-- Sidebar categories will be dynamically generated here -->
+            <!-- Basemap Selector -->
+            <div class="category-section" style="margin-bottom: 1.5rem;">
+                <h3 class="category-title" style="margin-bottom: 0.5rem;">🗺️ Basemap</h3>
+                <div class="filter-section">
+                    <div style="position: relative;">
+                        <select id="basemap-select" style="width: 100%; padding: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 4px; font-size: 0.9rem; cursor: pointer; appearance: none;">
+                            <option value="natgeo" selected>ESRI National Geographic</option>
+                            <option value="imagery-hybrid">ESRI Imagery Hybrid</option>
+                            <option value="imagery">ESRI World Imagery</option>
+                            <option value="ocean">ESRI Ocean Basemap</option>
+                            <option value="topo">ESRI World Topo</option>
+                            <option value="osm">OpenStreetMap</option>
+                            <option value="cartodb-light">CartoDB Positron (Light)</option>
+                        </select>
+                        <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">▼</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Layer categories will be dynamically generated here -->
         </div>
     </div>
     
@@ -174,6 +199,16 @@
         }
         
         function initializeLayerControls() {
+            // Setup basemap selector
+            const basemapSelect = document.getElementById('basemap-select');
+            if (basemapSelect) {
+                basemapSelect.addEventListener('change', (e) => {
+                    if (typeof switchBasemap === 'function') {
+                        switchBasemap(e.target.value);
+                    }
+                });
+            }
+            
             // Setup event listeners for all category selects
             document.querySelectorAll('.category-select').forEach(select => {
                 select.addEventListener('change', (e) => {

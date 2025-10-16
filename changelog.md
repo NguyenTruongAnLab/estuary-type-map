@@ -4,8 +4,6 @@ title: Changelog
 permalink: /changelog/
 ---
 
-# Changelog
-
 ## Version 1.0.0 - October 14, 2025
 
 ### 🎯 Major Achievement: First Direct Polygon-Based Global Tidal Basin Database

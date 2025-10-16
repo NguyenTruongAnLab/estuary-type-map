@@ -11,7 +11,8 @@
                 <script>
                 // Dynamically populate gallery dropdown from gallery_index.json
                 (function() {
-                    const baseUrl = '{{ "/" | relative_url }}'; // Get baseurl from Jekyll
+                    const baseUrl = '{{ site.baseurl }}'; // Get baseurl from Jekyll config
+                    console.log('Gallery: baseUrl =', baseUrl);
                     
                     fetch('{{ "/data/gallery_index.json" | relative_url }}')
                         .then(response => response.json())
@@ -21,11 +22,9 @@
                             // Add all items as simple list
                             data.forEach(item => {
                                 const option = document.createElement('option');
-                                // Apply baseurl prefix if not already in path
-                                let fullPath = item.path;
-                                if (baseUrl !== '/' && !item.path.startsWith(baseUrl)) {
-                                    fullPath = baseUrl.replace(/\/$/, '') + item.path;
-                                }
+                                // Always prepend baseurl to the path from gallery_index.json
+                                let fullPath = baseUrl + item.path;
+                                console.log('Gallery item:', item.title, '| Original path:', item.path, '| Full path:', fullPath);
                                 option.value = fullPath;
                                 option.textContent = item.title;
                                 dropdown.appendChild(option);

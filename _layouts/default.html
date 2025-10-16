@@ -25,6 +25,31 @@
     
     {% include footer.html %}
     
+    <!-- Mermaid diagram support -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        // Initialize Mermaid on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({ 
+                startOnLoad: true, 
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+            
+            // Find all code blocks with language-mermaid class and render them
+            document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+                const pre = block.parentElement;
+                const mermaidDiv = document.createElement('div');
+                mermaidDiv.className = 'mermaid';
+                mermaidDiv.textContent = block.textContent;
+                pre.replaceWith(mermaidDiv);
+            });
+            
+            // Trigger Mermaid rendering
+            mermaid.run();
+        });
+    </script>
+    
     {% if page.extra_js %}
         {% for js in page.extra_js %}
         <script src="{{ js | relative_url }}"></script>

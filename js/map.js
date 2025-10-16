@@ -42,6 +42,61 @@ window.SALINITY_COLORS = {
 let map;
 let layerGroups = {};
 let datasets = {};
+let currentBasemap = null;
+let currentLabels = null;
+
+// Define available basemaps
+const basemaps = {
+    'natgeo': {
+        name: 'ESRI National Geographic',
+        layer: 'https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+        maxZoom: 16,
+        labels: null
+    },
+    'imagery-hybrid': {
+        name: 'ESRI Imagery Hybrid',
+        layer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+        maxZoom: 18,
+        labels: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'
+    },
+    'imagery': {
+        name: 'ESRI World Imagery',
+        layer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+        maxZoom: 18,
+        labels: null
+    },
+    'ocean': {
+        name: 'ESRI Ocean Basemap',
+        layer: 'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+        maxZoom: 13,
+        labels: 'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}'
+    },
+    'topo': {
+        name: 'ESRI World Topo',
+        layer: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+        maxZoom: 18,
+        labels: null
+    },
+    'osm': {
+        name: 'OpenStreetMap',
+        layer: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+        labels: null
+    },
+    'cartodb-light': {
+        name: 'CartoDB Positron',
+        layer: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        maxZoom: 19,
+        labels: null
+    }
+};
 
 function initMap() {
     console.log('🗺️ Initializing map...');
@@ -51,11 +106,43 @@ function initMap() {
         zoomControl: true,
         preferCanvas: true
     });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 18
+
+    // Initialize with ESRI National Geographic (default)
+    switchBasemap('natgeo');
+
+    console.log('✅ Map initialized with ESRI National Geographic');
+}
+
+function switchBasemap(basemapId) {
+    const basemapConfig = basemaps[basemapId];
+    if (!basemapConfig) {
+        console.error(`❌ Unknown basemap: ${basemapId}`);
+        return;
+    }
+    
+    // Remove existing basemap and labels
+    if (currentBasemap) {
+        map.removeLayer(currentBasemap);
+    }
+    if (currentLabels) {
+        map.removeLayer(currentLabels);
+    }
+    
+    // Add new basemap
+    currentBasemap = L.tileLayer(basemapConfig.layer, {
+        attribution: basemapConfig.attribution,
+        maxZoom: basemapConfig.maxZoom
     }).addTo(map);
-    console.log('✅ Map initialized');
+    
+    // Add labels if specified
+    if (basemapConfig.labels) {
+        currentLabels = L.tileLayer(basemapConfig.labels, {
+            attribution: '',
+            maxZoom: basemapConfig.maxZoom
+        }).addTo(map);
+    }
+    
+    console.log(`✅ Switched to basemap: ${basemapConfig.name}`);
 }
 
 async function loadAllData() {

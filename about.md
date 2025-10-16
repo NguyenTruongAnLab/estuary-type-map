@@ -3,19 +3,14 @@ layout: default
 title: About the Global Water Body Surface Area Atlas
 ---
 
-# 📘 About the Global Water Body Surface Area Atlas
-
 **Status**: Educational/Research Project in Active Development  
 **Last Updated**: October 12, 2025  
 **Lead**: Nguyen Truong An
-
----
 
 ## ⚠️ Important Disclaimer
 
 This is an **educational research project** created with AI assistance (GitHub Copilot). It demonstrates modern geospatial data processing techniques but is **NOT peer-reviewed scientific work**. Do not cite this as authoritative research.
 
----
 
 ## 🎯 Project Objectives
 
@@ -51,7 +46,6 @@ Create the world's **first comprehensive, polygon-based global water body surfac
 
 5. **Compare results with Laruelle 2025** to validate methodology
 
----
 
 ## 🔬 Scientific Background
 
@@ -77,9 +71,6 @@ The **Tidal Freshwater Zone (TFZ)** is a distinct biogeochemical reactor:
 - High methane emissions (anaerobic sediments + organic matter)
 - Critical for global GHG budgets
 
-Our project implements this globally for the first time.
-
----
 
 ## 🛠️ Technology Stack
 
@@ -97,8 +88,6 @@ Our project implements this globally for the first time.
 - **VS Code** with Copilot AI assistance
 - **Git/GitHub** for version control
 - **Markdown** for documentation
-
----
 
 ## 📊 Dataset Overview
 
@@ -119,8 +108,6 @@ Our project implements this globally for the first time.
 - **Lagoon**: 510 estuaries (8%)
 - **Coastal Plain**: 1,645 estuaries (27%)
 - **Others**: Karst, tectonic, etc.
-
----
 
 ## 🎓 Intended Use Cases
 
